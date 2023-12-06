@@ -13,12 +13,14 @@
   padding: 30px;
   width: 65%;
   border-radius: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0 auto;
 }
 
 .auth-div ::placeholder {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .auth-div .form button {
@@ -116,22 +118,267 @@
 
 .auth-div .btn:hover {
   border: 1px solid #2d79f3;
-  ;
 }
-.auth-div .show-pwd-div:hover{
+.auth-div .show-pwd-div:hover {
   cursor: pointer;
 }
-.auth-div .show-pwd-div{
+.auth-div .show-pwd-div {
   position: relative;
 }
-.auth-div .show-pwd-div i{
+.auth-div .show-pwd-div i {
   position: absolute;
   bottom: -8px;
   right: 15px;
   font-size: 20px;
 }
-.auth-div .show-pwd-div i#pwdClose{
+.auth-div .show-pwd-div i#pwdClose {
   display: none;
 }
 
-    
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+h1 {
+  margin: 0;
+  color: #ddd;
+  padding: 10px;
+  border-bottom: 1px solid #666;
+}
+button:focus {
+  outline: none;
+}
+aside {
+  background: #1a1d23;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  transition: 0.3s;
+  left: -250px;
+  top: 0;
+  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+}
+aside.close {
+  left: 0;
+  transition: 0.3s;
+  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+}
+nav a {
+  display: block;
+  color: #ddd;
+  text-decoration: none;
+  padding: 10px;
+}
+nav a:hover {
+  color: red;
+}
+aside button {
+  border: none;
+  background: none;
+  position: absolute;
+  right: -40px;
+  top: 7px;
+  font-size: 30px;
+  transform: rotate(90deg);
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Header
+---------------*/
+
+.icons a {
+  position: relative;
+}
+
+.icons.active .drop-down {
+  display: block;
+}
+
+.drop-down {
+  display: none;
+  z-index: 9999;
+  width: 275px;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  transform: translateY(50px);
+  transition: all 0.4s ease-in-out;
+  border-top: 0;
+  border: 1px solid /* Note: Replace with actual color or variable */
+}
+
+.dropdown-content-heading {
+  padding: 15px 15px;
+  line-height: 1.25;
+}
+
+.dropdown-content-heading span {
+  font-size: 16px;
+
+}
+
+.dropdown-content-body ul > li {
+  float: none;
+  padding: 10px 15px;
+  line-height: 1.25;
+}
+
+.dropdown-content-body ul > li:last-child {
+  padding: 10px 15px;
+  line-height: 1.25;
+}
+
+.notification-heading {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  /* color: $l-ctd!important; */
+}
+
+.avatar-img {
+  border-radius: 100px;
+  width: 40px;
+  position: relative;
+  top: -3px;
+}
+
+.user-avatar {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  /* position: relative;
+  top: -3px; */
+}
+
+.notification-text {
+  font-size: 14px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 3px;
+  line-height: 1.25;
+  font-weight: 400;
+}
+
+.notification-timestamp {
+  font-size: 12px;
+}
+
+.notification-percentage {
+  font-size: 12px;
+  position: relative;
+  top: 12px;
+}
+
+.more-link {
+  /* font-size: 1px!important; */
+  display: inline-block;
+}
+
+.dropdown-profile {
+  width: 160px;
+}
+
+.dropdown-profile li {
+  padding: 7px 15px;
+}
+
+.dropdown-profile li a {
+  display: block;
+}
+
+.dropdown-profile li a i {
+  margin-right: 5px;
+  font-size: 16px;
+  position: relative;
+  top: 2px;
+}
+
+.dropdown-profile li a span {
+
+}
+
+.dropdown-profile li:last-child {
+  padding: 7px 15px;
+}
+
+.dropdown-task .progress {
+  box-shadow: none;
+  height: 5px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.dropdown-task .progress-bar {
+  box-shadow: none;
+}
+
+/* CSS Pulse Effect */
+
+.pulse-svg {
+  overflow: visible;
+}
+
+.pulse-svg .first-circle,
+.pulse-svg .second-circle,
+.pulse-svg .third-circle {
+  transform: scale(0.3);
+  transform-origin: center center;
+  animation: pulse-me 3s linear infinite;
+}
+
+.pulse-svg .second-circle {
+  animation-delay: 1s;
+}
+
+.pulse-svg .third-circle {
+  animation-delay: 2s;
+}
+
+.pulse-css {
+  width: 10px;
+  height: 5px;
+  border-radius: 25px;
+  position: absolute;
+  right: 0px;
+  top: -4px;
+}
+
+.pulse-css:after,
+.pulse-css:before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -2px;
+  margin: auto;
+  transform: scale(0.3);
+  transform-origin: center center;
+  animation: pulse-me 3s linear infinite;
+}
+
+@keyframes pulse-me {
+  0% {
+      transform: scale(0.3);
+      opacity: 0;
+  }
+
+  50% {
+      opacity: 0.1;
+  }
+
+  70% {
+      opacity: 0.09;
+  }
+
+  100% {
+      transform: scale(3);
+      opacity: 0;
+  }
+}

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react"; 
+import axios from 'axios'
 
 export const SignupForm = () => {
+
     const showPwd = () => {
         let openPWd = document.getElementById("pwdOpen");
         let closePWD = document.getElementById("pwdClose");
@@ -16,6 +18,20 @@ export const SignupForm = () => {
             pwdInput.type = "password";
         }
     };
+
+    const [username, setUserName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const [cnic, setCnic] = useState()
+    const [phone, setPhone] = useState()
+    const [link, setLink] = useState()
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      axios.post('https://http://localhost:3001/register', {username, email, password, cnic, phone, link})
+        .then(result => console.log(result))
+        .catch(errr => console.error(errr)); 
+    };
     
   return (
     <>
@@ -24,7 +40,7 @@ export const SignupForm = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-8 py-5">
             <div className="auth-div mt-5">
-              <form className="form">
+              <form className="form" onSubmit={handleSubmit}>
                 <div className="flex-column">
                   <label>Username </label>
                 </div>
@@ -35,6 +51,7 @@ export const SignupForm = () => {
                     placeholder="Enter your Username"
                     className="input"
                     type="text"
+                    onChange={(e) =>setUserName(e.target.value)}
                   />
                 </div>
 
@@ -48,6 +65,7 @@ export const SignupForm = () => {
                     placeholder="Enter your Phone"
                     className="input"
                     type="text"
+                    onChange={(e) =>setPhone(e.target.value)}
                   />
                 </div>
 
@@ -61,6 +79,7 @@ export const SignupForm = () => {
                     placeholder="Enter your CNIC Number"
                     className="input"
                     type="number"
+                    onChange={(e) =>setCnic(e.target.value)}
                   />
                 </div>
 
@@ -76,6 +95,7 @@ export const SignupForm = () => {
                     placeholder="Enter your Store Link"
                     className="input"
                     type="text"
+                    onChange={(e) =>setLink(e.target.value)}
                   />
                 </div>
 
@@ -93,6 +113,7 @@ export const SignupForm = () => {
                     placeholder="Enter your Email"
                     className="input"
                     type="email"
+                    onChange={(e) =>setEmail(e.target.value)}
                   />
                 </div>
 
@@ -111,6 +132,7 @@ export const SignupForm = () => {
                     placeholder="Enter your Password"
                     className="input"
                     type="password"
+                    onChange={(e) =>setPassword(e.target.value)}
                   />
 
                   <div className="show-pwd-div " id="togglePWD" onClick={showPwd}>
