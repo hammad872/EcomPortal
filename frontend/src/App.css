@@ -1,38 +1,137 @@
-.App {
-  text-align: center;
+.auth-div {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.auth-div .form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+  padding: 30px;
+  width: 65%;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0 auto;
+}
+
+.auth-div ::placeholder {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.auth-div .form button {
+  align-self: flex-end;
+}
+
+.auth-div .flex-column > label {
+  color: #151717;
+  font-weight: 600;
+}
+
+.auth-div .inputForm {
+  border: 1.5px solid #ecedec;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.auth-div .input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+.auth-div .input:focus {
+  outline: none;
+}
+
+.auth-div .inputForm:focus-within {
+  border: 1.5px solid #2d79f3;
+}
+
+.auth-div .flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.auth-div .flex-row > div > label {
+  font-size: 14px;
+  color: black;
+  font-weight: 400;
+}
+
+.auth-div .span {
+  font-size: 14px;
+  margin-left: 5px;
+  color: #2d79f3;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-div .button-submit {
+  margin: 20px 0 10px 0;
+  background-color: #151717;
+  border: none;
   color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.auth-div .p {
+  text-align: center;
+  color: black;
+  font-size: 14px;
+  margin: 5px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.auth-div .btn {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  gap: 10px;
+  border: 1px solid #ededef;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
+
+.auth-div .btn:hover {
+  border: 1px solid #2d79f3;
+  ;
+}
+.auth-div .show-pwd-div:hover{
+  cursor: pointer;
+}
+.auth-div .show-pwd-div{
+  position: relative;
+}
+.auth-div .show-pwd-div i{
+  position: absolute;
+  bottom: -8px;
+  right: 15px;
+  font-size: 20px;
+}
+.auth-div .show-pwd-div i#pwdClose{
+  display: none;
+}
+
+    
