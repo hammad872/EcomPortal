@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import Navbar from "./Navbar";
 
 import React from "react";
@@ -38,3 +39,5 @@ const Dashboard = () => {
   );
 };
 export default Dashboard;
+=======
+>>>>>>> Stashed changes

@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 
 
 function App() {
+<<<<<<< Updated upstream
   // State to track user login status
   const [isLoggedIn, setLoggedIn] = useState(true);
 
@@ -16,12 +17,19 @@ function App() {
     setLoggedIn(true);
   };
 
+=======
+>>>>>>> Stashed changes
   return (
     <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginForm/>}/>
         <Route path="/signup" element={<SignupForm/>}/>
+<<<<<<< Updated upstream
+=======
+        <Route path="/home" element={<Home/>}/>
+        
+>>>>>>> Stashed changes
       </Routes>
     </BrowserRouter>
     {/* Conditionally render Dashboard if logged in */}
