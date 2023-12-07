@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
+import axios from 'axios'
 
 export const LoginForm = () => {
   const showPwd = () => {
@@ -16,6 +18,29 @@ export const LoginForm = () => {
         pwdInput.type = "password";
     }
 };
+
+const [password, setPassword] = useState('');
+const [email, setEmail] = useState('');
+const navigate = useNavigate();
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  axios.post('http://localhost:3001/login', { email, password })
+    .then(result => {
+      console.log(result);
+
+      if (result.data.message === "Login success") {
+        // Successful login, redirect to home
+        navigate('/home');
+      } else {
+        // Handle other cases, e.g., incorrect password, user not found
+        console.log("Login failed:", result.data.error);
+      }
+    })
+    .catch(err => console.log(err));
+};
+
   return (
     <>
       <div className="container">
@@ -23,7 +48,7 @@ export const LoginForm = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-8 py-5">
             <div className="auth-div mt-5">
-              <form className="form">
+            <form className="form" onSubmit={handleSubmit}>
                 <div className="flex-column">
                   <label>Email </label>
                 </div>
@@ -42,6 +67,7 @@ export const LoginForm = () => {
                     placeholder="Enter your Email"
                     className="input"
                     type="text"
+                    onChange={(e) =>setEmail(e.target.value)}
                   />
                 </div>
                 <div className="flex-column">
@@ -62,6 +88,7 @@ export const LoginForm = () => {
                     id="passwordInputLogin"
                     className="input"
                     type="password"
+                    onChange={(e) =>setPassword(e.target.value)}
                   />
 
 <div className="show-pwd-div " id="togglePWD" onClick={showPwd}>

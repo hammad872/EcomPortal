@@ -1,4 +1,5 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import axios from 'axios'
 
 export const SignupForm = () => {
@@ -25,13 +26,17 @@ export const SignupForm = () => {
     const [cnic, setCnic] = useState()
     const [phone, setPhone] = useState()
     const [link, setLink] = useState()
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      axios.post('https://http://localhost:3001/register', {username, email, password, cnic, phone, link})
-        .then(result => console.log(result))
-        .catch(errr => console.error(errr)); 
+      axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
+        .then(result => {console.log(result)
+          navigate('/')
+        })
+        .catch(error => console.error(error));
     };
+    
     
   return (
     <>
