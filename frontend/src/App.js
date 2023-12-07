@@ -1,23 +1,27 @@
-import { BrowserRouter, Routes , Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { LoginForm } from './components/LoginForm';
 import {SignupForm} from './components/SignupForm';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
 
 
 
 function App() {
+  // State to track user login status
+  const [isLoggedIn, setLoggedIn] = useState(true);
+
+  // Function to update login status
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
   return (
     <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginForm/>}/>
         <Route path="/signup" element={<SignupForm/>}/>
-        <Route path="/home" element={<Home/>}/>
-        
       </Routes>
-      <Navbar />
     </BrowserRouter>
     
 
