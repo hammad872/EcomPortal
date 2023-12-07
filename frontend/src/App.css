@@ -345,3 +345,51 @@ header.dashboard-header {
 .button:active {
   transform: scale(0.8);
 }
+.user_profile_icon{
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(44, 44, 44);
+  border-radius: 50%;
+  cursor: pointer;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.13);
+  border: none;
+  color: #fff;
+}
+.user_profile_icon:hover svg.user_icon{
+  animation: bellRing 0.9s both;
+}
+.user_profile_icon svg.user_icon{
+  width: 25px;
+}
+.user_profile_icon .svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.user_profile_icon .svg-icon path,
+.user_profile_icon .svg-icon polygon,
+.user_profile_icon .svg-icon rect {
+  fill: #4691f6;
+}
+
+.user_profile_icon .svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
+}
+.user_profile_icon path{
+  fill: #fff;
+  stroke: white;
+    stroke-width: 0.8;
+}
+header.dashboard-header .text-right.user_div {
+  position: relative;
+}
+header.dashboard-header div#profile_card {
+  position: absolute;
+  right: 0;
+}
