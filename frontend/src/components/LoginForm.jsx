@@ -32,7 +32,7 @@ const handleSubmit = (e) => {
 
       if (result.data.message === "Login success") {
         // Successful login, redirect to home
-        navigate('/home');
+        navigate('/dashboard');
       } else {
         // Handle other cases, e.g., incorrect password, user not found
         console.log("Login failed:", result.data.error);
