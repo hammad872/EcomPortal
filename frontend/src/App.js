@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { LoginForm } from './components/LoginForm';
 import {SignupForm} from './components/SignupForm';
+import Dashboard from './components/Dashboard';
 
 
 
@@ -23,6 +24,8 @@ function App() {
         <Route path="/signup" element={<SignupForm/>}/>
       </Routes>
     </BrowserRouter>
+    {/* Conditionally render Dashboard if logged in */}
+    {isLoggedIn && <Dashboard />}
     
 
     </>

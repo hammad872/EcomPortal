@@ -1,4 +1,4 @@
-import NavPanel from "../components/NavPanel";
+import Navbar from "./Navbar";
 
 import React from "react";
 
@@ -7,7 +7,7 @@ const Dashboard = () => {
     <>
       <div className="row">
         <div className="col-lg-2">
-          <NavPanel />
+          <Navbar />
         </div>
         <div className="col-lg-10">
           <header className="dashboard-header">
