@@ -148,48 +148,11 @@ h1 {
   margin: 0;
   color: #ddd;
   padding: 10px;
-  border-bottom: 1px solid #666;
 }
 button:focus {
   outline: none;
 }
-aside {
-  background: #1a1d23;
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  transition: 0.3s;
-  left: -250px;
-  top: 0;
-  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
-  display: block;
-}
-aside.close {
-  left: 0;
-  transition: 0.3s;
-  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
-  
-}
-nav a {
-  display: block;
-  color: #ddd;
-  text-decoration: none;
-  padding: 10px;
-}
-nav a:hover {
-  color: red;
-}
-aside button {
-  border: none;
-  background: none;
-  position: absolute;
-  right: -40px;
-  top: 7px;
-  font-size: 30px;
-  transform: rotate(90deg);
-  display: inline-block;
-  cursor: pointer;
-}
+
 
 /* Header
 ---------------*/
@@ -426,3 +389,58 @@ header.dashboard-header div#profile_card {
 ul {
   list-style-type: none;
 }
+
+aside {
+  background: #1a1d23;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  transition: 0.3s;
+  left: -250px;
+  top: 0;
+  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  display: block;
+
+
+}
+aside.close {
+  left: 0;
+  transition: 0.3s;
+  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  
+}
+nav a {
+  display: block;
+  color: #ddd;
+  text-decoration: none;
+  padding: 10px;
+}
+nav li:hover {
+  color: white;
+}
+aside button {
+  border: none;
+  background: none;
+  position: absolute;
+  right: -40px;
+  top: 7px;
+  font-size: 30px;
+  transform: rotate(90deg);
+  display: inline-block;
+  cursor: pointer;
+}
+
+nav {
+  ul {
+    transition: 0.3s;
+  }
+
+  ul:hover {
+    background-color: #DB5151;
+  }
+
+  a:hover {
+    color: white;
+  }
+}
+
