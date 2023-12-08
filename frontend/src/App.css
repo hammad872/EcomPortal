@@ -1,3 +1,7 @@
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
 .auth-div {
   height: 100%;
   display: flex;
@@ -158,11 +162,13 @@ aside {
   left: -250px;
   top: 0;
   transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  display: block;
 }
 aside.close {
   left: 0;
   transition: 0.3s;
   transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  
 }
 nav a {
   display: block;
@@ -191,29 +197,33 @@ aside button {
 header.dashboard-header {
   .card {
     --main-color: #000;
-    --submain-color: #78858F;
+    --submain-color: #78858f;
     --bg-color: #fff;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     position: relative;
-    width: 300px;
-    height: 384px;
+    width: 207px;
+    height: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 20px;
     background: var(--bg-color);
-  }
-  
+}
+
   .card__img {
     height: 192px;
     width: 100%;
   }
-  
+
   .card__img svg {
     height: 100%;
     border-radius: 20px 20px 0 0;
   }
-  
+
+  .card__wrapper {
+    display: grid;
+}
+
   .card__avatar {
     position: absolute;
     width: 114px;
@@ -225,26 +235,26 @@ header.dashboard-header {
     align-items: center;
     top: calc(50% - 57px);
   }
-  
+
   .card__avatar svg {
     width: 100px;
     height: 100px;
   }
-  
+
   .card__title {
     margin-top: 60px;
     font-weight: 500;
     font-size: 18px;
     color: var(--main-color);
   }
-  
+
   .card__subtitle {
     margin-top: 10px;
     font-weight: 400;
     font-size: 15px;
     color: var(--submain-color);
   }
-  
+
   .card__btn {
     margin-top: 15px;
     width: 76px;
@@ -258,17 +268,17 @@ header.dashboard-header {
     text-transform: uppercase;
     transition: all 0.3s;
   }
-  
+
   .card__btn-solid {
     background: var(--main-color);
     color: var(--bg-color);
   }
-  
+
   .card__btn:hover {
     background: var(--main-color);
     color: var(--bg-color);
   }
-  
+
   .card__btn-solid:hover {
     background: var(--bg-color);
     color: var(--main-color);
@@ -285,33 +295,32 @@ header.dashboard-header {
     background-color: rgb(44, 44, 44);
     border-radius: 50%;
     cursor: pointer;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.13);
     border: none;
   }
-  
+
   .bell {
     width: 18px;
   }
-  
+
   .bell path {
     fill: white;
   }
-  
+
   .button:hover {
     background-color: rgb(56, 56, 56);
   }
-  
+
   .button:hover .bell {
     animation: bellRing 0.9s both;
   }
-  
+
   /* bell ringing animation keyframes*/
- 
+
   .button:active {
     transform: scale(0.8);
   }
-  
 }
 
 /* bell ringing animation keyframes*/
@@ -345,7 +354,7 @@ header.dashboard-header {
 .button:active {
   transform: scale(0.8);
 }
-.user_profile_icon{
+.user_profile_icon {
   width: 50px;
   height: 50px;
   position: relative;
@@ -355,15 +364,15 @@ header.dashboard-header {
   background-color: rgb(44, 44, 44);
   border-radius: 50%;
   cursor: pointer;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.13);
   border: none;
   color: #fff;
 }
-.user_profile_icon:hover svg.user_icon{
+.user_profile_icon:hover svg.user_icon {
   animation: bellRing 0.9s both;
 }
-.user_profile_icon svg.user_icon{
+.user_profile_icon svg.user_icon {
   width: 25px;
 }
 .user_profile_icon .svg-icon {
@@ -381,10 +390,10 @@ header.dashboard-header {
   stroke: #4691f6;
   stroke-width: 1;
 }
-.user_profile_icon path{
+.user_profile_icon path {
   fill: #fff;
   stroke: white;
-    stroke-width: 0.8;
+  stroke-width: 0.8;
 }
 header.dashboard-header .text-right.user_div {
   position: relative;
@@ -393,3 +402,28 @@ header.dashboard-header div#profile_card {
   position: absolute;
   right: 0;
 }
+
+.ship_stat {
+  text-align: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+
+  h2 {
+    font-size: 25px ;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+
+  p {
+    font-size: 20px;
+    color: #DB5151;
+  }
+
+  img {
+    width: 50%;
+  }
+}
+
+ul {
+  list-style-type: none;
+}
+

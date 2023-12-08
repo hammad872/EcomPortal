@@ -27,8 +27,17 @@ function App() {
           element={<LoginForm handleLogin={handleLogin} />}
         />
         <Route path="/signup" element={<SignupForm />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        if(localStorage.getItem("loginToken")){
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          }else{
+            <Route
+            path="/"
+            element={<LoginForm handleLogin={handleLogin} />}
+          />
+          }
+       
       </Routes>
+
       {/* Conditionally render Dashboard if logged in */}
       {isLoggedIn && <Dashboard />}
     </BrowserRouter>

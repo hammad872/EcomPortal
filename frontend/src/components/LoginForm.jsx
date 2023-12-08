@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export const LoginForm = () => {
   const showPwd = () => {
@@ -20,26 +24,46 @@ export const LoginForm = () => {
 };
 
 const [password, setPassword] = useState('');
-const [email, setEmail] = useState('');
+const [inputValue, setInputValue] = useState(''); // Single input for email or username
 const navigate = useNavigate();
 
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  axios.post('http://localhost:3001/login', { email, password })
+  // Determine whether the input is an email or username
+  const isEmail = inputValue.includes('@');
+  const dataToSend = isEmail ? { email: inputValue, password } : { username: inputValue, password };
+
+  axios.post('http://localhost:3001/login', dataToSend)
     .then(result => {
       console.log(result);
 
       if (result.data.message === "Login success") {
         // Successful login, redirect to home
         navigate('/dashboard');
+        let data = isEmail ? { email: inputValue } : { username: inputValue };
+        localStorage.setItem("loginToken", JSON.stringify(data));
       } else {
         // Handle other cases, e.g., incorrect password, user not found
         console.log("Login failed:", result.data.error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: result.data.error,
+        });
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Username Or Password is incorrect',
+        text: 'Check Your Username Or Password!',
+        confirmButtonText: 'Try Again !'
+      });
+    });
 };
+
 
   return (
     <>
@@ -64,10 +88,11 @@ const handleSubmit = (e) => {
                     </g>
                   </svg>
                   <input
-                    placeholder="Enter your Email"
                     className="input"
                     type="text"
-                    onChange={(e) =>setEmail(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Email or Username"
                   />
                 </div>
                 <div className="flex-column">

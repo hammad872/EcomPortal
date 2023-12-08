@@ -12,18 +12,26 @@ mongoose.connect(
   "mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee"
 );
 
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: "Email and password are required" });
+app.post("/login", (req, res) => {
+  const { email, username, password } = req.body;
+
+  if ((!email && !username) || !password) {
+    return res.status(400).json({ error: "Email/Username and password are required" });
   }
 
-  EmployeeModel.findOne({ email: email })
+  let query;
+  if (email) {
+    query = { email: email };
+  } else {
+    query = { username: username };
+  }
+
+  EmployeeModel.findOne(query)
     .then(user => {
       if (user) {
         if (user.password === password) {
-          res.status(200).json({ message: "Login success" });
+          res.status(200).json({ message: "Login success", user: user });
         } else {
           res.status(401).json({ error: "Incorrect password" });
         }
