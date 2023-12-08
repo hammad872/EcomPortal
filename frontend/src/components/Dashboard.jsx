@@ -3,18 +3,27 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 
-const columns = [
+const columnsTab1 = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "firstName", headerName: "First name", width: 130 },
   { field: "lastName", headerName: "Last name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "age", headerName: "Age", type: "number", width: 90 },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
+    field: "fullName",
+    headerName: "Full name",
+    description: "This column has a value getter and is not sortable.",
+    sortable: false,
+    width: 160,
+    valueGetter: (params) =>
+      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
   },
+];
+
+const columnsTab2 = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "firstName", headerName: "First name", width: 130 },
+  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "age", headerName: "Age", type: "number", width: 90 },
   {
     field: "fullName",
     headerName: "Full name",
@@ -40,17 +49,18 @@ const rows = [
 
 const Dashboard = () => {
   const [divVisible, setDivVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState("tab1"); // Move the state here
 
   const handleAccountCard = () => {
     // Toggle the visibility state
     setDivVisible(!divVisible);
   };
+
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("loginToken");
-    // Get the navigate function
     navigate("/");
-    // Redirect to the login route
   };
 
   return (
@@ -121,19 +131,38 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div style={{ height: 400, width: "100%", marginTop:"100px", textAlign:"center"}}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5, 10]}
-              checkboxSelection
-            />
-          </div>
+            <div className="container">
+              {/* ... (Your existing code) ... */}
+
+              <div>
+                <button onClick={() => setActiveTab("tab1")}>Tab 1</button>
+                <button onClick={() => setActiveTab("tab2")}>Tab 2</button>
+
+                {activeTab === "tab1" && (
+                  <div id="tab1" style={{ height: 400, width: "100%" }}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columnsTab1}
+                      pageSize={5}
+                      rowsPerPageOptions={[5]}
+                      checkboxSelection
+                    />
+                  </div>
+                )}
+
+                {activeTab === "tab2" && (
+                  <div id="tab2" style={{ height: 400, width: "100%" }}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columnsTab2}
+                      pageSize={5}
+                      rowsPerPageOptions={[5]}
+                      checkboxSelection
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

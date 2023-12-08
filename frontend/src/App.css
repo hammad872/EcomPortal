@@ -391,7 +391,7 @@ ul {
 }
 
 aside {
-  background: #1a1d23;
+  background: #FF6262; /* Red theme */
   width: 250px;
   height: 100vh;
   position: fixed;
@@ -400,24 +400,44 @@ aside {
   top: 0;
   transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
   display: block;
-
-
 }
+
 aside.close {
   left: 0;
   transition: 0.3s;
   transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
-  
 }
+
+/* Animated Hover Effect */
+/* Sliding Text on Hover */
 nav a {
   display: block;
   color: #ddd;
   text-decoration: none;
   padding: 10px;
+  transition: transform 0.3s ease-in-out;
 }
-nav li:hover {
-  color: white;
+
+nav a:hover {
+  transform: translateX(30px);
 }
+
+
+/* Sliding Text */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+nav a {
+  animation: slideIn 0.5s forwards;
+}
+
+
 aside button {
   border: none;
   background: none;
@@ -437,10 +457,18 @@ nav {
 
   ul:hover {
     background-color: #DB5151;
+    
+  }
+
+  li{
+    transition: 0.3s;
+  }
+
+  li:hover {
+    transform: translateX(30px);
   }
 
   a:hover {
     color: white;
   }
 }
-
