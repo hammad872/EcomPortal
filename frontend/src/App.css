@@ -370,23 +370,24 @@ header.dashboard-header div#profile_card {
   text-align: center;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 
-  h2 {
-    font-size: 25px ;
-    font-weight: 700;
-    margin-top: 20px;
-  }
-
-  p {
-    font-size: 20px;
-    color: #DB5151;
-  }
-
-  img {
-    width: 50%;
-  }
 }
 
-ul {
+.ship_stat h2 {
+  font-size: 25px ;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.ship_stat p {
+  font-size: 20px;
+  color: #DB5151;
+}
+
+.ship_stat img {
+  width: 50%;
+}
+
+ ul {
   list-style-type: none;
 }
 
@@ -420,6 +421,7 @@ nav a {
 
 nav a:hover {
   transform: translateX(30px);
+  color: white;
 }
 
 
@@ -450,25 +452,71 @@ aside button {
   cursor: pointer;
 }
 
-nav {
-  ul {
-    transition: 0.3s;
-  }
 
-  ul:hover {
-    background-color: #DB5151;
-    
-  }
 
-  li{
-    transition: 0.3s;
-  }
+nav li{
+  transition: 0.3s;
+}
 
-  li:hover {
-    transform: translateX(30px);
-  }
+nav li:hover {
+  transform: translateX(30px);
+}
 
-  a:hover {
-    color: white;
-  }
+nav ul {
+  transition: 0.3s;
+}
+
+nav ul:hover {
+  background-color: #DB5151;
+  
+}
+
+
+.custom-button {
+  cursor: pointer;
+  position: relative;
+  padding: 6px 40px;
+  font-size: 18px;
+  color: #DB5151;
+  border: 2px solid #DB5151;
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+
+.custom-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: #F7AFAF;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.custom-button:hover::before {
+  scale: 3;
+}
+
+.custom-button:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px #F7AFAF;
+}
+
+.custom-button:active {
+  scale: 1;
+}
+
+.custom-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
