@@ -140,6 +140,7 @@ const Table = () => {
               columns={columnsTab2}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              checkboxSelection
             
             />
           </div>
