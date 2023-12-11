@@ -1,5 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
+import styled from "@mui/system"
 import React, { useState } from "react";
+
 
 const columnsTab1 = [
   { field: "id", headerName: "ID", width: 70 },
@@ -138,7 +140,7 @@ const Table = () => {
               columns={columnsTab2}
               pageSize={5}
               rowsPerPageOptions={[5]}
-              checkboxSelection
+            
             />
           </div>
         )}

@@ -520,3 +520,11 @@ nav ul:hover {
   justify-content: center;
   gap: 1rem;
 }
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: rgb(231, 85, 85) !important;
+}
+
+.MuiDataGrid-cell {
+  outline-color: rgb(231, 85, 85) !important;
+}
