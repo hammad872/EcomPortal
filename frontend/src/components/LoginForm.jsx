@@ -46,6 +46,10 @@ export const LoginForm = () => {
           navigate("/dashboard");
           let data = isEmail ? { email: inputValue } : { username: inputValue };
           localStorage.setItem("loginToken", JSON.stringify(data));
+          Swal.fire({
+            icon: "success",
+            title: "Login Success",
+          });
         } else {
           // Handle other cases, e.g., incorrect password, user not found
           console.log("Login failed:", result.data.error);

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import Header from './Header';
+import Swal from "sweetalert2";
+
 
 const AddnewShip = () => {
-  const initialFormData = {
+  const  initialFormData  = {
     reference: '',
     receiverName: '',
-    city: '', // Set a default value for the city
+    city: '', 
     customerEmail: '',
     customerAddress: '',
     contactNumber: '',
@@ -23,6 +25,12 @@ const AddnewShip = () => {
       await axios.post('http://localhost:3001/addshipment', formData);
       // Add any additional logic you need after successful submission
       console.log('Form data submitted:', formData);
+      console.log(initialFormData);
+      
+      Swal.fire({
+        icon: "success",
+        title: `Shipment  has been added  <div class=" mt-2 thm-clr">${formData.reference}</div>`,
+      });
     } catch (error) {
       console.error('Error submitting form data:', error);
     }
@@ -49,8 +57,8 @@ const AddnewShip = () => {
             <div
               style={{
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                borderRadius: '30px',
-                padding: 10,
+                borderRadius: '10px',
+                padding: '45px',
               }}
             >
               <form onSubmit={handleSubmit}>

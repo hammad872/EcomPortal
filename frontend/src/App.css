@@ -1,7 +1,9 @@
 *{
   font-family: 'Poppins', sans-serif;
 }
-
+.thm-clr{
+  color: #FF6262 !important;
+}
 .auth-div {
   height: 100%;
   display: flex;
