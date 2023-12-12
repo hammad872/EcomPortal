@@ -378,6 +378,7 @@ header.dashboard-header div#profile_card {
 
 .ship_stat img {
   width: 50%;
+  margin: 0 auto;
 }
 
  ul {

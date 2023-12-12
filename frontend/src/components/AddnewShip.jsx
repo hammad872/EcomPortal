@@ -4,15 +4,17 @@ import Navbar from './Navbar';
 import Header from './Header';
 
 const AddnewShip = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     reference: '',
     receiverName: '',
-    city: '',
+    city: '', // Set a default value for the city
     customerEmail: '',
     customerAddress: '',
     contactNumber: '',
     codAmount: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,9 +28,14 @@ const AddnewShip = () => {
     }
   };
 
+  const handleReset = () => {
+    setFormData(initialFormData);
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
   return (
     <>
@@ -184,10 +191,11 @@ const AddnewShip = () => {
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
-                    type="button"
+                    type="reset"
                     className="text-sm font-semibold leading-6 text-gray-900"
+                    onClick={handleReset}
                   >
-                    Cancel
+                    Reset
                   </button>
                   <button
                     type="submit"
