@@ -7,8 +7,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  flex-direction: column;
+  border-radius: 12px;
 }
+
+.auth-div img {
+  width: 40%;
+}
+
 .auth-div .form {
   display: flex;
   flex-direction: column;
@@ -79,7 +86,7 @@
 .auth-div .span {
   font-size: 14px;
   margin-left: 5px;
-  color: #2d79f3;
+  color: #E75555;
   font-weight: 500;
   cursor: pointer;
 }
@@ -584,3 +591,6 @@ form h3 {
   background-color:  #ee3131; 
 }
 
+.MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--sortable.MuiDataGrid-columnHeader--sorted.MuiDataGrid-withBorderColor {
+  outline-color: #FF6262 !important;
+}
