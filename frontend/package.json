@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@heroicons/react": "^2.0.18",
     "@mui/system": "^5.14.20",
     "@mui/x-data-grid": "^6.18.3",
     "@testing-library/jest-dom": "^5.17.0",
@@ -23,6 +24,7 @@
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.1",
     "sweetalert2-react-content": "^5.0.7",
+    "tailwindcss": "^3.3.6",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
@@ -49,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7"
   }
 }

@@ -4,6 +4,8 @@ import "./App.css";
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
 import Dashboard from "./components/Dashboard";
+import AddnewShip from "./components/AddnewShip";
+import ImportShip from "./components/ImportShip";
 
 function App() {
   // State to track user login status
@@ -16,29 +18,16 @@ function App() {
     setLoggedIn(true);
   };
 
-  
-
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<LoginForm handleLogin={handleLogin} />}
-        />
+        <Route path="/" element={<LoginForm handleLogin={handleLogin} />} />
         <Route path="/signup" element={<SignupForm />} />
-        if(localStorage.getItem("loginToken")){
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          }else{
-            <Route
-            path="/"
-            element={<LoginForm handleLogin={handleLogin} />}
-          />
-          }
-       
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<LoginForm handleLogin={handleLogin} />} />
+        <Route path="add-new" element={<AddnewShip />}/>
+        <Route path="/import" element={<ImportShip />}/>
       </Routes>
-
-      {/* Conditionally render Dashboard if logged in */}
       {isLoggedIn && <Dashboard />}
     </BrowserRouter>
   );
