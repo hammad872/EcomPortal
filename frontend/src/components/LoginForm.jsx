@@ -81,7 +81,7 @@ export const LoginForm = () => {
               <img src="\assets\logo-black.png" alt="" />
               <form className="form" onSubmit={handleSubmit}>
                 <div className="flex-column">
-                  <label>Email </label>
+                  <label>Email or Username </label>
                 </div>
                 <div className="inputForm">
                   <svg

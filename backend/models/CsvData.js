@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Define the schema for CSV data
 const csvDataSchema = new mongoose.Schema({
-  Name: {
+  refrence: {
     type: String,
     required: true,
   },
-  Email: {
+  cutomerEmail: {
     type: String,
     required: true,
   },
-  Subtotal: {
+  customerAddress: {
     type: Number,
     required: true,
   },
@@ -18,6 +18,6 @@ const csvDataSchema = new mongoose.Schema({
 });
 
 // Create a model for CSV data using the schema
-const CsvData = mongoose.model('CsvData', csvDataSchema);
+const CsvData = mongoose.model("CsvData", csvDataSchema);
 
 module.exports = CsvData;
