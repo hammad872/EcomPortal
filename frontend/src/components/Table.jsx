@@ -1,6 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Table = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -72,7 +73,7 @@ const Table = () => {
           <div id="tab1" style={{ height: 400, width: "100%" }} className="mt-4">
             {loading ? (
               // Show loader while data is being fetched
-              <div className="loader"></div>
+              <CircularProgress color="inherit" />
             ) : (
               // Render DataGrid once data is loaded
               <DataGrid
