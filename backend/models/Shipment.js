@@ -6,7 +6,7 @@ const shipmentSchema = new mongoose.Schema({
   city: String,
   customerEmail: String,
   customerAddress: String,
-  contactNumber: Number,
+  contactNumber: String,
   codAmount: Number,
 });
 

@@ -5,6 +5,7 @@ import axios from "axios";
 const Table = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch shipment data from the server
@@ -15,6 +16,9 @@ const Table = () => {
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false regardless of success or failure
       });
   }, []);
   
@@ -65,18 +69,20 @@ const Table = () => {
         </div>
 
         {activeTab === "tab1" && (
-          <div
-            id="tab1"
-            style={{ height: 400, width: "100%" }}
-            className="mt-4"
-          >
-            <DataGrid
-              rows={tableData}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-            />
+          <div id="tab1" style={{ height: 400, width: "100%" }} className="mt-4">
+            {loading ? (
+              // Show loader while data is being fetched
+              <div className="loader"></div>
+            ) : (
+              // Render DataGrid once data is loaded
+              <DataGrid
+                rows={tableData}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+              />
+            )}
           </div>
         )}
 
