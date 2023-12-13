@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 // const MySwal = withReactContent(Swal);
 
-export const LoginForm = () => {
+export const LoginForm = ({ setLoggedIn }) => {
   const showPwd = () => {
     let openPWd = document.getElementById("pwdOpen");
     let closePWD = document.getElementById("pwdClose");
@@ -81,7 +81,7 @@ export const LoginForm = () => {
               <img src="\assets\logo-black.png" alt="" />
               <form className="form" onSubmit={handleSubmit}>
                 <div className="flex-column">
-                  <label>Email or Username </label>
+                  <label>Email or </label>
                 </div>
                 <div className="inputForm">
                   <svg
@@ -140,7 +140,7 @@ export const LoginForm = () => {
                 <p className="p">
                   Don't have an account?{" "}
                   <a href="/signup">
-                    <span className="span">Sign Up</span> 
+                    <span className="span">Sign Up</span>
                   </a>
                 </p>
               </form>
