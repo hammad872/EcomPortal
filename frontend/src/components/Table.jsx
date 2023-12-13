@@ -7,23 +7,17 @@ const Table = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    // Fetch both shipment and CSV data from the server
+    // Fetch shipment data from the server
     axios
-      .all([
-        axios.get("http://localhost:3001/getshipments"),
-        axios.get("http://localhost:3001/getcsvdata"),
-      ])
-      .then(
-        axios.spread((shipmentResponse, csvResponse) => {
-          const combinedData = [...shipmentResponse.data, ...csvResponse.data];
-          setTableData(combinedData);
-        })
-      )
+      .get("http://localhost:3001/getshipments")
+      .then((shipmentResponse) => {
+        setTableData(shipmentResponse.data);
+      })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching shipment data:", error);
       });
   }, []);
-
+  
   const columns = [
     // Define your columns based on your data model
     { field: "reference", headerName: "Reference", width: 130 },

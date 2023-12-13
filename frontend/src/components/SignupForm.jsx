@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {  useNavigate } from "react-router-dom"; 
 import axios from 'axios'
+import Swal from "sweetalert2";
+
 
 export const SignupForm = () => {
 
@@ -28,14 +30,57 @@ export const SignupForm = () => {
     const [link, setLink] = useState()
     const navigate = useNavigate()
 
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
+    //     .then(result => {console.log(result)
+    //       navigate('/')
+    //       window.location.reload();
+    //     })
+    //     .catch(error => console.error(error));
+    // };
+
     const handleSubmit = (e) => {
       e.preventDefault();
-      axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
-        .then(result => {console.log(result)
-          navigate('/')
+      
+      axios.post('http://localhost:3001/register', { username, email, password, cnic, phone, link })
+        .then(result => {
+          console.log(result);
+          window.location.reload();
+          navigate('/');
+          window.location.reload();
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+          if (  error.response.data.error === 'Username already exists') {
+            Swal.fire({
+              icon: "warning",
+              title: "Username already exists",
+              text: error.response.data.error,
+            });
+          }
+          else if(error.response){
+            Swal.fire({
+              icon: "warning",
+              title:error.response,
+              text: error.response.data.error,
+            });
+          }
+           else if(error.response.status === 400){
+            Swal.fire({
+              icon: "warning",
+              title:error.response.status,
+            });
+          }
+           else {
+            Swal.fire({
+              icon: "warning",
+              title:error,
+              text: error.response,
+            });
+          }
+        });
     };
+    
     
     
   return (

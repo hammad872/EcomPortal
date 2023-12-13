@@ -53,9 +53,21 @@ app.post('/login', (req, res) => {
 
 
 app.post('/register', async (req, res) => {
+  const { username } = req.body;
+
+  // Check if the username already exists
+  const existingEmployee = await EmployeeModel.findOne({ username });
+
+  if (existingEmployee) {
+    // If the username already exists, send an error response
+   return res.status(400).json({ error: 'Username already exists' });
+    
+  }
+
+  // If the username does not exist, create a new employee record
   EmployeeModel.create(req.body)
-    .then((employees) => res.json(employees))
-    .catch((err) => res.json(err));
+    .then((employee) => res.json(employee))
+    .catch((err) => res.status(500).json({ error: err.message }));
 });
 
 app.post('/addshipment', (req, res) => {

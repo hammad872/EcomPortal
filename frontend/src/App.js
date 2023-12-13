@@ -15,16 +15,18 @@ function App() {
     // Check if the user is already logged in
     const loginToken = localStorage.getItem("loginToken");
     if (loginToken) {
-      setLoggedIn(true);  
+      setLoggedIn(true);
     }
   }, []);
 
   // PrivateRoute component to handle private routes
-  const PrivateRoute = ({ element, path }) => {
+  const PrivateRoute = ({ element }) => {
+    const isLoggedIn = localStorage.getItem("loginToken");
+
     return isLoggedIn ? (
       element
     ) : (
-      <Navigate to="/" state={{ from: path }} replace />
+      <Navigate to="/" replace />
     );
   };
 
@@ -39,15 +41,15 @@ function App() {
         {/* Private routes */}
         <Route
           path="/dashboard"
-          element={<PrivateRoute element={<Dashboard />} path="/dashboard" />}
+          element={<PrivateRoute element={<Dashboard />} />}
         />
         <Route
           path="/add-new"
-          element={<PrivateRoute element={<AddnewShip />} path="/add-new" />}
+          element={<PrivateRoute element={<AddnewShip />} />}
         />
         <Route
           path="/import"
-          element={<PrivateRoute element={<ImportShip />} path="/import" />}
+          element={<PrivateRoute element={<ImportShip />} />}
         />
       </Routes>
     </BrowserRouter>

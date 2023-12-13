@@ -25,7 +25,7 @@ const AddnewShip = () => {
       await axios.post('http://localhost:3001/addshipment', formData);
       // Add any additional logic you need after successful submission
       console.log('Form data submitted:', formData);
-      console.log(initialFormData);
+
       
       Swal.fire({
         icon: "success",
