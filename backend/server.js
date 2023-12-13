@@ -7,6 +7,7 @@ const Papa = require('papaparse');
 const CsvData = require('./models/CsvData');
 const EmployeeModel = require('./models/Employee');
 const ShipmentModel = require('./models/Shipment');
+const { ObjectID } = require('mongodb'); // Import ObjectID from MongoDB
 
 const app = express();
 app.use(cors());
@@ -19,7 +20,8 @@ mongoose.connect(
   'mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee',
 );
 
-app.post('/login', (req, res) => {
+
+app.post('/login', async (req, res) => {
   const { email, username, password } = req.body;
 
   if ((!email && !username) || !password) {
@@ -37,7 +39,9 @@ app.post('/login', (req, res) => {
     .then((user) => {
       if (user) {
         if (user.password === password) {
-          res.status(200).json({ message: 'Login success', user: user });
+          // Return the objectId along with other user information
+          const { _id, ...userInfo } = user._doc;
+          res.status(200).json({ message: 'Login success', user: { _id, ...userInfo } });
         } else {
           res.status(401).json({ error: 'Incorrect password' });
         }
@@ -50,6 +54,7 @@ app.post('/login', (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
+
 
 
 app.post('/register', async (req, res) => {

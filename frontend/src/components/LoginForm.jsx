@@ -44,8 +44,10 @@ export const LoginForm = ({ setLoggedIn }) => {
         if (result.data.message === "Login success") {
           // Successful login, redirect to home
           navigate("/dashboard");
+          
           let data = isEmail ? { email: inputValue } : { username: inputValue };
-          localStorage.setItem("loginToken", JSON.stringify(data));
+          localStorage.setItem("loginToken", JSON.stringify(result.data.user));
+          // console.log(localStorage.getItem("loginToken"));
           Swal.fire({
             icon: "success",
             title: "Login Success",
@@ -128,9 +130,9 @@ export const LoginForm = ({ setLoggedIn }) => {
                     id="togglePWD"
                     onClick={showPwd}
                   >
-                    <i class="fa fa-eye" aria-hidden="true" id="pwdOpen"></i>
+                    <i className="fa fa-eye" aria-hidden="true" id="pwdOpen"></i>
                     <i
-                      class="fa fa-eye-slash"
+                      className="fa fa-eye-slash"
                       aria-hidden="true"
                       id="pwdClose"
                     ></i>

@@ -9,7 +9,6 @@ const Table = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch shipment data from the server
     axios
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
@@ -19,12 +18,11 @@ const Table = () => {
         console.error("Error fetching shipment data:", error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false); 
       });
   }, []);
   
   const columns = [
-    // Define your columns based on your data model
     { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
@@ -42,7 +40,6 @@ const Table = () => {
       type: "number",
       width: 150,
     },
-    // Add more fields as needed
   ];
 
   return (
@@ -72,10 +69,8 @@ const Table = () => {
         {activeTab === "tab1" && (
           <div id="tab1" style={{ height: 400, width: "100%" }} className="mt-4">
             {loading ? (
-              // Show loader while data is being fetched
-              <CircularProgress color="inherit" />
+              <CircularProgress  style={{ left:"50%", position:"absolute", bottom:"10%", color:"#FF6262"}} />
             ) : (
-              // Render DataGrid once data is loaded
               <DataGrid
                 rows={tableData}
                 columns={columns}
