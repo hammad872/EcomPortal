@@ -1,88 +1,91 @@
 import React, { useState } from "react";
-import {  useNavigate } from "react-router-dom"; 
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2";
 
-
 export const SignupForm = () => {
+  const showPwd = () => {
+    let openPWd = document.getElementById("pwdOpen");
+    let closePWD = document.getElementById("pwdClose");
+    let pwdInput = document.getElementById("passwordInputSignup");
 
-    const showPwd = () => {
-        let openPWd = document.getElementById("pwdOpen");
-        let closePWD = document.getElementById("pwdClose");
-        let pwdInput = document.getElementById("passwordInputSignup");
-    
-        if (pwdInput.type === "password") {
-            openPWd.style.display = "none";
-            closePWD.style.display = "block";
-            pwdInput.type = "text";
+    if (pwdInput.type === "password") {
+      openPWd.style.display = "none";
+      closePWD.style.display = "block";
+      pwdInput.type = "text";
+    } else {
+      closePWD.style.display = "none";
+      openPWd.style.display = "block";
+      pwdInput.type = "password";
+    }
+  };
+
+  const [username, setUserName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [cnic, setCnic] = useState();
+  const [phone, setPhone] = useState();
+  const [link, setLink] = useState();
+  const [role, setRole] = useState();
+  const navigate = useNavigate();
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
+  //     .then(result => {console.log(result)
+  //       navigate('/')
+  //       window.location.reload();
+  //     })
+  //     .catch(error => console.error(error));
+  // };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost:3001/register", {
+        username,
+        email,
+        password,
+        cnic,
+        phone,
+        link,
+        role,
+      })
+      .then((result) => {
+        console.log(result);
+        window.location.reload();
+        navigate("/");
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response.data.error === "Username already exists") {
+          Swal.fire({
+            icon: "warning",
+            title: "Username already exists",
+            text: error.response.data.error,
+          });
+        } else if (error.response) {
+          Swal.fire({
+            icon: "warning",
+            title: error.response,
+            text: error.response.data.error,
+          });
+        } else if (error.response.status === 400) {
+          Swal.fire({
+            icon: "warning",
+            title: error.response.status,
+          });
         } else {
-            closePWD.style.display = "none";
-            openPWd.style.display = "block";
-            pwdInput.type = "password";
+          Swal.fire({
+            icon: "warning",
+            title: error,
+            text: error.response,
+          });
         }
-    };
+      });
+  };
 
-    const [username, setUserName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [cnic, setCnic] = useState()
-    const [phone, setPhone] = useState()
-    const [link, setLink] = useState()
-    const navigate = useNavigate()
-
-    // const handleSubmit = (e) => {
-    //   e.preventDefault();
-    //   axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
-    //     .then(result => {console.log(result)
-    //       navigate('/')
-    //       window.location.reload();
-    //     })
-    //     .catch(error => console.error(error));
-    // };
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      
-      axios.post('http://localhost:3001/register', { username, email, password, cnic, phone, link })
-        .then(result => {
-          console.log(result);
-          window.location.reload();
-          navigate('/');
-          window.location.reload();
-        })
-        .catch(error => {
-          if (  error.response.data.error === 'Username already exists') {
-            Swal.fire({
-              icon: "warning",
-              title: "Username already exists",
-              text: error.response.data.error,
-            });
-          }
-          else if(error.response){
-            Swal.fire({
-              icon: "warning",
-              title:error.response,
-              text: error.response.data.error,
-            });
-          }
-           else if(error.response.status === 400){
-            Swal.fire({
-              icon: "warning",
-              title:error.response.status,
-            });
-          }
-           else {
-            Swal.fire({
-              icon: "warning",
-              title:error,
-              text: error.response,
-            });
-          }
-        });
-    };
-    
-    
-    
   return (
     <>
       <div className="container">
@@ -96,13 +99,13 @@ export const SignupForm = () => {
                   <label>Username </label>
                 </div>
                 <div className="inputForm">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                  <i class="fa fa-user" aria-hidden="true"></i>
 
                   <input
                     placeholder="Enter your Username"
                     className="input"
                     type="text"
-                    onChange={(e) =>setUserName(e.target.value)}
+                    onChange={(e) => setUserName(e.target.value)}
                   />
                 </div>
 
@@ -110,13 +113,17 @@ export const SignupForm = () => {
                   <label>Phone </label>
                 </div>
                 <div className="inputForm">
-                <i style={{fontSize:'24px'}} class="fa fa-mobile" aria-hidden="true"></i>
+                  <i
+                    style={{ fontSize: "24px" }}
+                    class="fa fa-mobile"
+                    aria-hidden="true"
+                  ></i>
 
                   <input
                     placeholder="Enter your Phone"
                     className="input"
-                    type="text"
-                    onChange={(e) =>setPhone(e.target.value)}
+                    type="number"
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
 
@@ -124,79 +131,94 @@ export const SignupForm = () => {
                   <label>CNIC </label>
                 </div>
                 <div className="inputForm">
-                <i style={{fontSize:'20px'}} class="fa fa-id-card-o" aria-hidden="true"></i>
+                  <i
+                    style={{ fontSize: "20px" }}
+                    class="fa fa-id-card-o"
+                    aria-hidden="true"
+                  ></i>
 
                   <input
                     placeholder="Enter your CNIC Number"
                     className="input"
                     type="number"
-                    onChange={(e) =>setCnic(e.target.value)}
+                    onChange={(e) => setCnic(e.target.value)}
                   />
                 </div>
-
-
-
                 <div className="flex-column">
                   <label>Website Link </label>
                 </div>
                 <div className="inputForm">
-                <i class="fa fa-link" aria-hidden="true"></i>
+                  <i class="fa fa-link" aria-hidden="true"></i>
 
                   <input
                     placeholder="Enter your Store Link"
                     className="input"
                     type="text"
-                    onChange={(e) =>setLink(e.target.value)}
+                    onChange={(e) => setLink(e.target.value)}
                   />
                 </div>
-
-
-
-
-
 
                 <div className="flex-column">
                   <label>Email </label>
                 </div>
                 <div className="inputForm">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
                   <input
                     placeholder="Enter your Email"
                     className="input"
                     type="email"
-                    onChange={(e) =>setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-
-
-
-
 
                 <div className="flex-column">
                   <label>Password </label>
                 </div>
                 <div className="inputForm">
-                <i class="fa fa-lock" aria-hidden="true"></i>
+                  <i class="fa fa-lock" aria-hidden="true"></i>
 
                   <input
                     id="passwordInputSignup"
                     placeholder="Enter your Password"
                     className="input"
                     type="password"
-                    onChange={(e) =>setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
 
-                  <div className="show-pwd-div " id="togglePWD" onClick={showPwd}>
+                  <div
+                    className="show-pwd-div "
+                    id="togglePWD"
+                    onClick={showPwd}
+                  >
                     <i class="fa fa-eye" aria-hidden="true" id="pwdOpen"></i>
-                    <i class="fa fa-eye-slash" aria-hidden="true" id="pwdClose"></i>
+                    <i
+                      class="fa fa-eye-slash"
+                      aria-hidden="true"
+                      id="pwdClose"
+                    ></i>
                   </div>
                 </div>
 
-
+                <div className="flex-column">
+                  <select
+                    id="role"
+                    name="role"
+                    autoComplete="country-name"
+                    className="form-input2"
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option>Super Admin</option>
+                    <option>Client</option>
+                    <option>Employee</option>
+                  </select>
+                </div>
 
                 <button className="button-submit">Sign Up</button>
                 <p className="p">
-                  Already have an account? <a href="/"> <span className="span">Login</span></a>
+                  Already have an account?
+                  <a href="/">
+                    <span className="span">Login</span>
+                  </a>
                 </p>
               </form>
             </div>
