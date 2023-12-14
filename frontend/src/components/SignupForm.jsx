@@ -205,11 +205,11 @@ export const SignupForm = () => {
                     name="role"
                     autoComplete="country-name"
                     className="form-input2"
+                    required
                     onChange={(e) => setRole(e.target.value)}
                   >
-                    <option>Super Admin</option>
+                    <option>Admin</option>
                     <option>Client</option>
-                    <option>Employee</option> 
                   </select>
                 </div>
 

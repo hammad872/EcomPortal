@@ -83,7 +83,7 @@ export const LoginForm = ({ setLoggedIn }) => {
               <img src="\assets\logo-black.png" alt="" />
               <form className="form" onSubmit={handleSubmit}>
                 <div className="flex-column">
-                  <label>Email or </label>
+                  <label>Email or Username </label>
                 </div>
                 <div className="inputForm">
                   <svg
@@ -101,7 +101,7 @@ export const LoginForm = ({ setLoggedIn }) => {
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Email or Username"
+                    placeholder="Enter Your Email or Username"
                   />
                 </div>
                 <div className="flex-column">
