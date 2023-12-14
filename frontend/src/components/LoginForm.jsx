@@ -139,12 +139,6 @@ export const LoginForm = ({ setLoggedIn }) => {
                   </div>
                 </div>
                 <button className="button-submit">Login</button>
-                <p className="p">
-                  Don't have an account?{" "}
-                  <a href="/signup">
-                    <span className="span">Sign Up</span>
-                  </a>
-                </p>
               </form>
             </div>
           </div>
