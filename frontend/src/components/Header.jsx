@@ -28,7 +28,7 @@ const Header = () => {
     setUser_name(userData.username);
     setUser_website(userData.email);
     setUser_email(userData.link);
-  }, []); // The empty dependency array ensures this effect runs only once
+  }, [userData.username,userData.email,userData.link]); // The empty dependency array ensures this effect runs only once
 
 
   return (
@@ -41,9 +41,9 @@ const Header = () => {
             </svg>
           </div>
           {divVisible && (
-            <div className="card" id="profile_card">
+            <div className="card p-5" id="profile_card">
               <div
-                className="card__title "
+                className="card__title text-uppercase"
               > {innerUsername}</div>
               <div
                 className="card__title "
