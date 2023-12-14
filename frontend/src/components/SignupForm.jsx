@@ -209,7 +209,7 @@ export const SignupForm = () => {
                   >
                     <option>Super Admin</option>
                     <option>Client</option>
-                    <option>Employee</option>
+                    <option>Employee</option> 
                   </select>
                 </div>
 

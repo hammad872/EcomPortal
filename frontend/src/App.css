@@ -622,3 +622,7 @@ form h3 {
 .form-input2:focus {
   border-color: rgb(74, 74, 253)
 }
+
+.dropdown {
+  cursor: pointer;
+}
