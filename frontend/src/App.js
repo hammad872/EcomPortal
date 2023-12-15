@@ -9,8 +9,7 @@ import AddnewShip from "./components/AddnewShip";
 import ImportShip from "./components/ImportShip";
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
+  
   useEffect(() => {
     // Check if the user is already logged in
     const loginToken = localStorage.getItem("loginToken");
@@ -18,8 +17,9 @@ function App() {
       setLoggedIn(true);
     }
   }, []);
-
+  
   // PrivateRoute component to handle private routes
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const PrivateRoute = ({ element }) => {
     const isLoggedIn = localStorage.getItem("loginToken");
 
