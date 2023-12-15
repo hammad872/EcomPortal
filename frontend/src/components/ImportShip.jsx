@@ -4,6 +4,8 @@ import axios from 'axios';
 import Header from './Header';
 import Navbar from './Navbar';
 
+
+
 const ImportShip = ({ onDataUpload }) => {
   const [csvData, setCsvData] = useState([]);
 
@@ -16,6 +18,8 @@ const ImportShip = ({ onDataUpload }) => {
       },
     });
   };
+
+
 
   const sendDataToMongoDB = () => {
     axios.post('http://localhost:3001/upload-csv', { data: csvData })

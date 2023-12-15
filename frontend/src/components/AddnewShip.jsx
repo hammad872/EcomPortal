@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Navbar from './Navbar';
-import Header from './Header';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "./Navbar";
+import Header from "./Header";
 import Swal from "sweetalert2";
 
-
 const AddnewShip = () => {
-  const  initialFormData  = {
-    reference: '',
-    receiverName: '',
-    city: '', 
-    customerEmail: '',
-    customerAddress: '',
-    contactNumber: '',
-    codAmount: '',
+  const initialFormData = {
+    reference: "",
+    receiverName: "",
+    city: "",
+    customerEmail: "",
+    customerAddress: "",
+    contactNumber: "",
+    codAmount: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [employeeName, setemployeeName] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3001/addshipment', formData);
+      await axios.post("http://localhost:3001/addshipment", formData);
       // Add any additional logic you need after successful submission
-      console.log('Form data submitted:', formData);
+      console.log("Form data submitted:", formData);
 
-      
       Swal.fire({
         icon: "success",
         title: `Shipment  has been added  <div class=" mt-2 thm-clr">${formData.reference}</div>`,
       });
     } catch (error) {
-      console.error('Error submitting form data:', error);
+      console.error("Error submitting form data:", error);
     }
   };
 
@@ -44,6 +43,16 @@ const AddnewShip = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/getregister")
+      .then((employeeNameResponse) => {
+        setemployeeName(employeeNameResponse.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching shipment data:", error);
+      });
+  }, []);
 
   return (
     <>
@@ -56,15 +65,38 @@ const AddnewShip = () => {
           <div className="col-lg-10 p-5" style={{}}>
             <div
               style={{
-                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                borderRadius: '10px',
-                padding: '45px',
+                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                borderRadius: "10px",
+                padding: "45px",
               }}
             >
               <form onSubmit={handleSubmit}>
                 <div className="space-y-12">
                   <h3>Shipment Entry</h3>
                   <div className="border-b border-gray-900/10 pb-12">
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Client
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="city"
+                          name="city"
+                          autoComplete="country-name"
+                          className="form-input"
+                          onChange={handleChange}
+                        >
+                          {employeeName.map((name, index) => (
+                            <option key={index} value={name.username}>
+                              {name.username}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                       <div className="sm:col-span-3">
                         <label
@@ -205,12 +237,9 @@ const AddnewShip = () => {
                   >
                     Reset
                   </button>
-                  <button
-                    type="submit"
-                    className="submit-button"
-                  >
+                  <button type="submit" className="submit-button">
                     Add Shipment
-                 </button>
+                  </button>
                 </div>
               </form>
             </div>

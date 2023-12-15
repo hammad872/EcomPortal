@@ -96,6 +96,17 @@ app.get('/getshipments', (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 }); 
 
+app.get('/getregister' , (req, res) => {
+  EmployeeModel.find()
+  .then((employee) => {
+    const employeeName = employee.map(employee => ({
+      username: employee.username
+    }))
+    res.json(employeeName)
+  })
+  .catch((err) => res.status(500).json({ error: err.message }))
+})
+
 
 app.listen(3001, () => {
   console.log('Server is running on port 3001');
