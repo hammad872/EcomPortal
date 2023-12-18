@@ -15,6 +15,10 @@ const AddnewShip = () => {
     codAmount: "",
   };
 
+
+  let  userDataLocal = localStorage.getItem("loginToken");
+  let userDataLocalParsed =JSON.parse(userDataLocal);
+  let objectId = userDataLocalParsed.userInfo._id;
   const [formData, setFormData] = useState(initialFormData);
   const [employeeName, setemployeeName] = useState([]);
 
@@ -222,6 +226,14 @@ const AddnewShip = () => {
                             id="codAmount"
                             autoComplete="cod-amount"
                             className="form-input"
+                            onChange={handleChange}
+                          />
+                          <input
+                            type="text"
+                            name="objectIdUser"
+                            id="objectIdUser"
+                            className="form-input"
+                            value={objectId}
                             onChange={handleChange}
                           />
                         </div>

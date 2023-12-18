@@ -25,10 +25,10 @@ const Header = () => {
 
   useEffect(() => {
     // This code will run when the component mounts
-    setUser_name(userData.username);
-    setUser_website(userData.email);
-    setUser_email(userData.link);
-  }, [userData.username,userData.email,userData.link]); // The empty dependency array ensures this effect runs only once
+    setUser_name(userData.userInfo.username);
+    setUser_website(userData.userInfo.email);
+    setUser_email(userData.userInfo.link);
+  }, [userData.userInfo.username,userData.userInfo.email,userData.userInfo.link]); // The empty dependency array ensures this effect runs only once
 
 
   return (

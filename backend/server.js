@@ -37,8 +37,8 @@ app.post('/login', async (req, res) => {
       if (user) {
         if (user.password === password) {
           // Return the objectId along with other user information
-          const { _id, ...userInfo } = user._doc;
-          res.status(200).json({ message: 'Login success', user: { _id, ...userInfo } });
+          const { password, ...userInfo } = user._doc;
+          res.status(200).json({ message: 'Login success', user: {userInfo } });
         } else {
           res.status(401).json({ error: 'Incorrect password' });
         }

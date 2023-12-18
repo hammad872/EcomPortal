@@ -22,14 +22,25 @@ const shipmentSchema = new mongoose.Schema({
     required: true,
   },
   contactNumber: {
-    type: String,
+    type: Number,
     required: true,
   },
   codAmount: {
     type: Number,
     required: true,
   },
-});
+  objectIdUser: {
+    type: Number,
+  },
+  user: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "employee",
+    },
+  ],
+},
+{timestamps:true}
+);
 
 const Shipment = mongoose.model('shipment', shipmentSchema);
 
