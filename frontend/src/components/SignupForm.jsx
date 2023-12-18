@@ -208,6 +208,7 @@ export const SignupForm = () => {
                     required
                     onChange={(e) => setRole(e.target.value)}
                   >
+                    <option>Please Enter Role</option>
                     <option>Admin</option>
                     <option>Client</option>
                   </select>

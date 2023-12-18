@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const shipmentSchema = new mongoose.Schema({
+  client: {
+    type: String,
+  },
   reference: {
     type: String,
     required: true,
@@ -29,19 +32,15 @@ const shipmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  objectIdUser: {
-    type: Number,
-  },
   user: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "employee",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Employee',
+      required: true,
     },
   ],
-},
-{timestamps:true}
-);
+}, { timestamps: true });
 
-const Shipment = mongoose.model('shipment', shipmentSchema);
+const Shipment = mongoose.model('Shipment', shipmentSchema);
 
 module.exports = Shipment;

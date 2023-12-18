@@ -27,12 +27,11 @@ const EmployeesSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
   },
-  shipment: [
+  shipments: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "shipment",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Shipment',  // Make sure this matches the model name for shipments
     },
   ],
 });

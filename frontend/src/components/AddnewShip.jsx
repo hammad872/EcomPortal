@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const AddnewShip = () => {
   const initialFormData = {
+    client: "",
     reference: "",
     receiverName: "",
     city: "",
@@ -15,10 +16,6 @@ const AddnewShip = () => {
     codAmount: "",
   };
 
-
-  let  userDataLocal = localStorage.getItem("loginToken");
-  let userDataLocalParsed =JSON.parse(userDataLocal);
-  let objectId = userDataLocalParsed.userInfo._id;
   const [formData, setFormData] = useState(initialFormData);
   const [employeeName, setemployeeName] = useState([]);
 
@@ -26,19 +23,33 @@ const AddnewShip = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/addshipment", formData);
-      // Add any additional logic you need after successful submission
-      console.log("Form data submitted:", formData);
+      let userDataLocal = localStorage.getItem("loginToken");
+      let userDataLocalParsed = JSON.parse(userDataLocal);
+      let userId = userDataLocalParsed.userInfo._id;
+
+      console.log("User ID:", userId);
+      console.log("Form Data:", formData);
+
+      const response = await axios.post("http://localhost:3001/addshipment", {
+        ...formData,
+        userId: userId,
+      });
+
+      console.log("Form data submitted:", response.data);
 
       Swal.fire({
         icon: "success",
-        title: `Shipment  has been added  <div class=" mt-2 thm-clr">${formData.reference}</div>`,
+        title: `Shipment has been added ${formData.reference}`,
       });
     } catch (error) {
       console.error("Error submitting form data:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while adding the shipment.",
+      });
     }
   };
-
   const handleReset = () => {
     setFormData(initialFormData);
   };
@@ -46,7 +57,6 @@ const AddnewShip = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   useEffect(() => {
     axios
       .get("http://localhost:3001/getregister")
@@ -87,15 +97,14 @@ const AddnewShip = () => {
                       </label>
                       <div className="mt-2">
                         <select
-                          id="city"
-                          name="city"
-                          autoComplete="country-name"
+                          id="client"
+                          name="client"
                           className="form-input"
                           onChange={handleChange}
                         >
-                          {employeeName.map((name, index) => (
-                            <option key={index} value={name.username}>
-                              {name.username}
+                          {employeeName.map((employee, index) => (
+                            <option key={index} value={employee._id}>
+                              {employee.username}
                             </option>
                           ))}
                         </select>
@@ -226,14 +235,6 @@ const AddnewShip = () => {
                             id="codAmount"
                             autoComplete="cod-amount"
                             className="form-input"
-                            onChange={handleChange}
-                          />
-                          <input
-                            type="text"
-                            name="objectIdUser"
-                            id="objectIdUser"
-                            className="form-input"
-                            value={objectId}
                             onChange={handleChange}
                           />
                         </div>

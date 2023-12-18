@@ -4,19 +4,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const EmployeeModel = require('./models/Employee');
 const ShipmentModel = require('./models/Shipment');
-const { ObjectID } = require('mongodb'); // Import ObjectID from MongoDB
 
 const app = express();
 app.use(cors());
 
-
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-mongoose.connect(
-  'mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee',
-);
-
+mongoose.connect('mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee');
 
 app.post('/login', async (req, res) => {
   const { email, username, password } = req.body;
@@ -32,57 +27,106 @@ app.post('/login', async (req, res) => {
     query = { username: username };
   }
 
-  EmployeeModel.findOne(query)
-    .then((user) => {
-      if (user) {
-        if (user.password === password) {
-          // Return the objectId along with other user information
-          const { password, ...userInfo } = user._doc;
-          res.status(200).json({ message: 'Login success', user: {userInfo } });
-        } else {
-          res.status(401).json({ error: 'Incorrect password' });
-        }
+  try {
+    const user = await EmployeeModel.findOne(query);
+
+    if (user) {
+      if (user.password === password) {
+        // Return the objectId along with other user information
+        const { password, ...userInfo } = user._doc;
+        res.status(200).json({ message: 'Login success', user: { userInfo } });
       } else {
-        res.status(404).json({ error: 'No record exists' });
+        res.status(401).json({ error: 'Incorrect password' });
       }
-    })
-    .catch((err) => {
-      console.error('Error during login:', err);
-      res.status(500).json({ error: 'Internal server error' });
-    });
+    } else {
+      res.status(404).json({ error: 'No record exists' });
+    }
+  } catch (err) {
+    console.error('Error during login:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
-
-
 
 app.post('/register', async (req, res) => {
   const { username } = req.body;
 
-  // Check if the username already exists
-  const existingEmployee = await EmployeeModel.findOne({ username });
+  try {
+    const existingEmployee = await EmployeeModel.findOne({ username });
 
-  if (existingEmployee) {
-    // If the username already exists, send an error response
-   return res.status(400).json({ error: 'Username already exists' });
-    
+    if (existingEmployee) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    const employee = await EmployeeModel.create(req.body);
+    res.json(employee);
+  } catch (err) {
+    console.error('Error during registration:', err);
+    res.status(500).json({ error: err.message });
   }
-
-  // If the username does not exist, create a new employee record
-  EmployeeModel.create(req.body)
-    .then((employee) => res.json(employee))
-    .catch((err) => res.status(500).json({ error: err.message }));
 });
 
-app.post('/addshipment', (req, res) => {
-  ShipmentModel.create(req.body)
-    .then((shipment) => res.json(shipment))
-    .catch((err) => res.status(500).json({ error: err.message }));
+app.post('/addshipment', async (req, res) => {
+  const { reference, receiverName, city, customerEmail, customerAddress, contactNumber, codAmount, userId } = req.body;
+
+  try {
+    const user = await EmployeeModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const shipment = await ShipmentModel.create({
+      reference,
+      receiverName,
+      city,
+      customerEmail,
+      customerAddress,
+      contactNumber,
+      codAmount,
+      user: {
+        _id: user._id,
+      },
+    });
+
+    // Update the user's shipments array
+    user.shipments.push(shipment._id);
+    await user.save();
+
+    res.json(shipment);
+  } catch (err) {
+    console.error('Error during shipment creation:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
-app.get('/getshipments', (req, res) => {
-  ShipmentModel.find()
-    .then((shipments) => {
-      // Map documents to include an 'id' property
-      const formattedShipments = shipments.map(shipment => ({
-        id: shipment._id, // You can use the _id field as the id
+
+
+app.get('/getshipments', async (req, res) => {
+  try {
+    const shipments = await ShipmentModel.find();
+    const formattedShipments = shipments.map(shipment => ({
+      id: shipment._id,
+      reference: shipment.reference,
+      receiverName: shipment.receiverName,
+      city: shipment.city,
+      customerEmail: shipment.customerEmail,
+      customerAddress: shipment.customerAddress,
+      contactNumber: shipment.contactNumber,
+      codAmount: shipment.codAmount,
+    }));
+    res.json(formattedShipments);
+  } catch (err) {
+    console.error('Error fetching shipments:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/getregister', async (req, res) => {
+  try {
+    const employeesWithShipments = await EmployeeModel.find().populate('shipments');
+    const formattedEmployees = employeesWithShipments.map(employee => ({
+      username: employee.username,
+      shipments: employee.shipments.map(shipment => ({
+        id: shipment._id,
         reference: shipment.reference,
         receiverName: shipment.receiverName,
         city: shipment.city,
@@ -90,23 +134,14 @@ app.get('/getshipments', (req, res) => {
         customerAddress: shipment.customerAddress,
         contactNumber: shipment.contactNumber,
         codAmount: shipment.codAmount,
-      }));
-      res.json(formattedShipments);
-    })
-    .catch((err) => res.status(500).json({ error: err.message }));
-}); 
-
-app.get('/getregister' , (req, res) => {
-  EmployeeModel.find()
-  .then((employee) => {
-    const employeeName = employee.map(employee => ({
-      username: employee.username
-    }))
-    res.json(employeeName)
-  })
-  .catch((err) => res.status(500).json({ error: err.message }))
-})
-
+      })),
+    }));
+    res.json(formattedEmployees);
+  } catch (err) {
+    console.error('Error fetching employees with shipments:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.listen(3001, () => {
   console.log('Server is running on port 3001');
