@@ -5,18 +5,20 @@ import Header from "./Header";
 import Swal from "sweetalert2";
 
 const AddnewShip = () => {
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     reference: "",
     receiverName: "",
+    client: "", // Updated to include the client field
+    city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
     codAmount: "",
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [employeeName, setemployeeName] = useState([]);
 
+  const [employeeName, setEmployeeName] = useState([]); 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,15 +32,24 @@ const AddnewShip = () => {
 
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
-        userId: formData.client, 
+        userIds: [userId], // Updated to use userId directly
       });
 
       console.log("Form data submitted:", response.data);
 
-      Swal.fire({
-        icon: "success",
-        title: `Shipment has been added ${formData.reference}`,
-      });
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: `Shipment has been added ${formData.reference}`,
+        });
+      } else {
+        console.error("Error submitting form data:", response.data);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while adding the shipment.",
+        });
+      }
     } catch (error) {
       console.error("Error submitting form data:", error);
       Swal.fire({
@@ -49,25 +60,36 @@ const AddnewShip = () => {
     }
   };
 
-  const handleReset = () => {
-    setFormData(initialFormData);
+  const handleReset = (e) => {
+    e.preventDefault();
+    setFormData({
+      reference: "",
+      receiverName: "",
+      client: "", // Include the client field
+      city: "United States", // Set a default value
+      customerEmail: "",
+      customerAddress: "",
+      contactNumber: "",
+      codAmount: "",
+    });
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
-
   useEffect(() => {
     axios
       .get("http://localhost:3001/getregister")
       .then((employeeNameResponse) => {
-        setemployeeName(employeeNameResponse.data);
+        setEmployeeName(employeeNameResponse.data); // Update this line
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
       });
   }, []);
-
   return (
     <>
       <div className="container">
@@ -101,7 +123,11 @@ const AddnewShip = () => {
                           name="client"
                           className="form-input"
                           onChange={handleChange}
+                          value={formData.client} // Make sure to include this line
                         >
+                          <option value="" disabled>
+                            Select a client
+                          </option>
                           {employeeName.map((employee) => (
                             <option key={employee._id} value={employee._id}>
                               {employee.username}
@@ -161,9 +187,9 @@ const AddnewShip = () => {
                             className="form-input"
                             onChange={handleChange}
                           >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>Mexico</option>
+                            <option value="United States">United States</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Mexico">Mexico</option>
                           </select>
                         </div>
                       </div>
@@ -244,7 +270,7 @@ const AddnewShip = () => {
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
-                    type="reset"
+                    type="button"
                     className="text-sm font-semibold leading-6 text-gray-900"
                     onClick={handleReset}
                   >

@@ -70,6 +70,8 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/addshipment", async (req, res) => {
+  console.log("Received Request Body:", req.body);
+
   const {
     reference,
     receiverName,
@@ -84,10 +86,6 @@ app.post("/addshipment", async (req, res) => {
 
   try {
     const users = await EmployeeModel.find({ _id: { $in: userIds } });
-
-    if (!users || !Array.isArray(users) || users.length !== userIds.length) {
-      return res.status(404).json({ error: "One or more users not found" });
-    }
 
     const shipment = await ShipmentModel.create({
       reference,
