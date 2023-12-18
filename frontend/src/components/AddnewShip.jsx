@@ -6,10 +6,8 @@ import Swal from "sweetalert2";
 
 const AddnewShip = () => {
   const initialFormData = {
-    client: "",
     reference: "",
     receiverName: "",
-    city: "",
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
@@ -32,7 +30,7 @@ const AddnewShip = () => {
 
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
-        userId: userId,
+        userId: formData.client, 
       });
 
       console.log("Form data submitted:", response.data);
@@ -50,13 +48,15 @@ const AddnewShip = () => {
       });
     }
   };
+
   const handleReset = () => {
     setFormData(initialFormData);
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData });
   };
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/getregister")
@@ -102,8 +102,8 @@ const AddnewShip = () => {
                           className="form-input"
                           onChange={handleChange}
                         >
-                          {employeeName.map((employee, index) => (
-                            <option key={index} value={employee._id}>
+                          {employeeName.map((employee) => (
+                            <option key={employee._id} value={employee._id}>
                               {employee.username}
                             </option>
                           ))}

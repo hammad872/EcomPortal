@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const shipmentSchema = new mongoose.Schema({
   client: {
-    type: String,
+    type: String, 
+    required: true,
   },
   reference: {
     type: String,
