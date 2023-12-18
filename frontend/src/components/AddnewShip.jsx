@@ -17,8 +17,8 @@ const AddnewShip = () => {
   });
 
 
-  const [employeeName, setEmployeeName] = useState([]); 
-  
+    const [employeeName, setEmployeeName] = useState([]); 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -125,12 +125,13 @@ const AddnewShip = () => {
                           onChange={handleChange}
                           value={formData.client} // Make sure to include this line
                         >
-                          <option value="" disabled>
+                          <option>
                             Select a client
                           </option>
                           {employeeName.map((employee) => (
                             <option key={employee._id} value={employee._id}>
                               {employee.username}
+                              {console.log(employee)}
                             </option>
                           ))}
                         </select>

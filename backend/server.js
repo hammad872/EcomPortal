@@ -141,6 +141,7 @@ app.get("/getregister", async (req, res) => {
     );
     const formattedEmployees = employeesWithShipments.map((employee) => ({
       username: employee.username,
+      id: employee._id,
       shipments: employee.shipments.map((shipment) => ({
         id: shipment._id,
         reference: shipment.reference,
