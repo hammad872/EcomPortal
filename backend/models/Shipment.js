@@ -17,7 +17,7 @@ const shipmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  customerEmail: {
+  customerEmail: {      
     type: String,
     required: true,
   },
@@ -26,7 +26,7 @@ const shipmentSchema = new mongoose.Schema({
     required: true,
   },
   contactNumber: {
-    type: Number,
+    type: String ,
     required: true,
   },
   codAmount: {

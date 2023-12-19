@@ -129,7 +129,7 @@ const AddnewShip = () => {
                             Select a client
                           </option>
                           {employeeName.map((employee) => (
-                            <option key={employee._id} value={employee._id}>
+                            <option key={employee.id}value={employee.id}>
                               {employee.username}
                               {console.log(employee)}
                             </option>
@@ -137,6 +137,27 @@ const AddnewShip = () => {
                         </select>
                       </div>
                     </div>
+                    <div className="sm:col-span-3">
+                        <label
+                          htmlFor="country"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                         Parcel 
+                        </label>
+                        <div className="mt-2">
+                          <select
+                            id="parcel"
+                            name="parcel"
+                            autoComplete="country-name"
+                            className="form-input"
+                            onChange={handleChange}
+                          >
+                            <option value="United States">Delivered</option>
+                            <option value="In Transit">In Transit</option>
+                            <option value="Returned">Returned</option>
+                          </select>
+                        </div>
+                      </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                       <div className="sm:col-span-3">
                         <label
@@ -188,8 +209,8 @@ const AddnewShip = () => {
                             className="form-input"
                             onChange={handleChange}
                           >
-                            <option value="United States">United States</option>
-                            <option value="Canada">Canada</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Canada">In Transit</option>
                             <option value="Mexico">Mexico</option>
                           </select>
                         </div>
