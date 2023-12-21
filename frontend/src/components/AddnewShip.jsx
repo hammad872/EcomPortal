@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const AddnewShip = () => {
   const [formData, setFormData] = useState({
+    parcel:"",
     reference: "",
     receiverName: "",
     client: "", // Updated to include the client field
@@ -63,6 +64,7 @@ const AddnewShip = () => {
   const handleReset = (e) => {
     e.preventDefault();
     setFormData({
+      pacel: "",
       reference: "",
       receiverName: "",
       client: "", // Include the client field
@@ -152,7 +154,7 @@ const AddnewShip = () => {
                             className="form-input"
                             onChange={handleChange}
                           >
-                            <option value="United States">Delivered</option>
+                            <option value="Delivered">Delivered</option>
                             <option value="In Transit">In Transit</option>
                             <option value="Returned">Returned</option>
                           </select>
@@ -209,8 +211,8 @@ const AddnewShip = () => {
                             className="form-input"
                             onChange={handleChange}
                           >
-                            <option value="Delivered">Delivered</option>
-                            <option value="Canada">In Transit</option>
+                            <option value="Delivered">United State</option>
+                          <option value="Canada">Canada</option>
                             <option value="Mexico">Mexico</option>
                           </select>
                         </div>

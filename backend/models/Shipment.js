@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const shipmentSchema = new mongoose.Schema({
-  client: {
-    type: String, 
+  parcel: {
+    type: String,
     required: true,
   },
+
   reference: {
     type: String,
     required: true,
@@ -33,10 +34,9 @@ const shipmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  user: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Employee',
+  client: [
+     {
+      type:  mongoose.Schema.Types.ObjectId, 
       required: true,
     },
   ],

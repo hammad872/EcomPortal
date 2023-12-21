@@ -144,6 +144,7 @@ app.get("/getregister", async (req, res) => {
       id: employee._id,
       shipments: employee.shipments.map((shipment) => ({
         id: shipment._id,
+        parcel: shipment.parcel,
         reference: shipment.reference,
         receiverName: shipment.receiverName,
         city: shipment.city,
