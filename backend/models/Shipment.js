@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const shipmentSchema = new mongoose.Schema({
+   client:{
+      type: String,
+      required: true,
+   },
   parcel: {
     type: String,
     required: true,
@@ -34,12 +38,7 @@ const shipmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  client: [
-     {
-      type:  mongoose.Schema.Types.ObjectId, 
-      required: true,
-    },
-  ],
+ 
 }, { timestamps: true });
 
 const Shipment = mongoose.model('Shipment', shipmentSchema);

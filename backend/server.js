@@ -121,6 +121,7 @@ app.get("/getshipments", async (req, res) => {
     const shipments = await ShipmentModel.find();
     const formattedShipments = shipments.map((shipment) => ({
       id: shipment._id,
+      client: shipment.client,
       parcel: shipment.parcel,
       reference: shipment.reference,
       receiverName: shipment.receiverName,
