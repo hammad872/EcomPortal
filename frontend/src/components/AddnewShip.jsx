@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const AddnewShip = () => {
   const [formData, setFormData] = useState({
-    parcel:"",
+    parcel: "",
     reference: "",
     receiverName: "",
     client: "", // Updated to include the client field
@@ -17,8 +17,7 @@ const AddnewShip = () => {
     codAmount: "",
   });
 
-
-    const [employeeName, setEmployeeName] = useState([]); 
+  const [employeeName, setEmployeeName] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -127,11 +126,9 @@ const AddnewShip = () => {
                           onChange={handleChange}
                           value={formData.client} // Make sure to include this line
                         >
-                          <option>
-                            Select a client
-                          </option>
+                          <option>Select a client</option>
                           {employeeName.map((employee) => (
-                            <option key={employee.id}value={employee.id}>
+                            <option key={employee.id} value={employee.id}>
                               {employee.username}
                               {console.log(employee)}
                             </option>
@@ -140,26 +137,27 @@ const AddnewShip = () => {
                       </div>
                     </div>
                     <div className="sm:col-span-3">
-                        <label
-                          htmlFor="country"
-                          className="block text-sm font-medium leading-6 text-gray-900"
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Parcel
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="parcel"
+                          name="parcel"
+                          autoComplete="country-name"
+                          className="form-input"
+                          onChange={handleChange}
                         >
-                         Parcel 
-                        </label>
-                        <div className="mt-2">
-                          <select
-                            id="parcel"
-                            name="parcel"
-                            autoComplete="country-name"
-                            className="form-input"
-                            onChange={handleChange}
-                          >
-                            <option value="Delivered">Delivered</option>
-                            <option value="In Transit">In Transit</option>
-                            <option value="Returned">Returned</option>
-                          </select>
-                        </div>
+                          <option>Select a client</option>
+                          <option value="Delivered">Delivered</option>
+                          <option value="In Transit">In Transit</option>
+                          <option value="Returned">Returned</option>
+                        </select>
                       </div>
+                    </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                       <div className="sm:col-span-3">
                         <label
@@ -212,7 +210,7 @@ const AddnewShip = () => {
                             onChange={handleChange}
                           >
                             <option value="Delivered">United State</option>
-                          <option value="Canada">Canada</option>
+                            <option value="Canada">Canada</option>
                             <option value="Mexico">Mexico</option>
                           </select>
                         </div>
