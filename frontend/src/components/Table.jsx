@@ -12,7 +12,7 @@ const Table = () => {
     tab4: [],
   });
   const [loading, setLoading] = useState(true);
-  const [selectedUserData, setSelectedUserData] = useState([]);
+  // const [selectedUserData, setSelectedUserData] = useState([]);
 
   useEffect(() => {
     axios
@@ -20,10 +20,10 @@ const Table = () => {
       .then((shipmentResponse) => {
         const data = shipmentResponse.data;
 
-        console.log(selectedUserData.client);
+        // console.log(selectedUserData.client);
         let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
-        console.log(userIDForData);
+        // console.log(userIDForData);
         setTableData({
           tab1: data.filter((item) => item.client == userIDForData),
           tab2: data.filter(
