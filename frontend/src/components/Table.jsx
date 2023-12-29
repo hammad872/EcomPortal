@@ -2,7 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { json } from "react-router-dom";
 const Table = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [tableData, setTableData] = useState({
@@ -12,15 +12,27 @@ const Table = () => {
     tab4: [],
   });
   const [loading, setLoading] = useState(true);
+  const [selectedUserData, setSelectedUserData] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
-        // Assuming your shipment data has a field named "status" indicating the status of the shipment
+        // console.log(selectedUserData)
         const data = shipmentResponse.data;
+        // console.log(JSON.stringify(...data))
+        // console.log(selectedUserData)
+        selectedUserData.filter((item) =>{
+          // item.id === 
+          // console.log(item.client)
+        })
+        data.filter((item) => {
+          // item.id  === currentUserID
+        })
+        console.log(selectedUserData.id)
+
         setTableData({
-          tab1: data,
+          tab1: data.filter((item) => item.id === selectedUserData.id),
           tab2: data.filter((item) => item.parcel === "Delivered"),
           tab3: data.filter((item) => item.parcel === "In Transit"),
           tab4: data.filter((item) => item.parcel === "Returned"),
@@ -32,7 +44,29 @@ const Table = () => {
       .finally(() => {
         setLoading(false);
       });
+  }, [selectedUserData]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/getUserId")
+      .then((dataFromBackend) => {
+        let myData = dataFromBackend.data;
+        let userData = JSON.parse(localStorage.getItem("loginToken"));
+        const userIDForData = userData.userInfo._id;
+        let hanbhaiarhaHaiNa = myData.filter((item) => item.client === userIDForData);
+        
+        // Store all matched items in the state
+        setSelectedUserData(hanbhaiarhaHaiNa);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+  
+
 
   const columns = [
     { field: "reference", headerName: "Reference", width: 130 },

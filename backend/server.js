@@ -138,6 +138,23 @@ app.get("/getshipments", async (req, res) => {
   }
 });
 
+app.get("/getUserId", async (req, res) => {
+  try {
+    const getUserID = await ShipmentModel.find();
+    const formattedgetUserID = getUserID.map((shipment) => ({
+      id: shipment._id,
+      client: shipment.client,
+     
+    }));
+    res.json(formattedgetUserID);
+  } catch (err) {
+    console.error("Error fetching shipments:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 app.get("/getregister", async (req, res) => {
   try {
     const employeesWithShipments = await EmployeeModel.find().populate(
