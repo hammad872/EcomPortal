@@ -33,7 +33,6 @@ const Table = () => {
         console.log(userIDForData)
         setTableData({
           tab1: data.filter((item) => item.client == userIDForData ),
-          // tab1: data.filter((item) => console.log(item , selectedUserData.client) ),
           tab2: data.filter((item) => item.parcel === "Delivered" && item.client == userIDForData ),
           tab3: data.filter((item) => item.parcel === "In Transit" && item.client == userIDForData ),
           tab4: data.filter((item) => item.parcel === "Returned" && item.client == userIDForData ),
@@ -46,26 +45,6 @@ const Table = () => {
         setLoading(false);
       });
   }, [selectedUserData]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3001/getUserId")
-  //     .then((dataFromBackend) => {
-  //       let myData = dataFromBackend.data;
-  //       let userData = JSON.parse(localStorage.getItem("loginToken"));
-  //       const userIDForData = userData.userInfo._id;
-  //       let hanbhaiarhaHaiNa = myData.filter((item) => item.client === userIDForData);
-        
-  //       // Store all matched items in the state
-  //       setSelectedUserData(hanbhaiarhaHaiNa);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching user data:", error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
   
 
 
