@@ -173,7 +173,7 @@ header.dashboard-header {
     --submain-color: #78858f;
     --bg-color: #fff;
     position: relative;
-    width: 300px;
+    width: auto;
     height: 266px;
     border-radius: 20px;
     background: var(--bg-color);

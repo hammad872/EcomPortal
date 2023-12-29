@@ -26,7 +26,7 @@ const Navbar = () => {
               <li onClick={toggleDropdown}>
                 <a className="dropdown">
                   Shipment Entry{" "}
-                  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  <i className="fa fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 {isDropdownOpen && (
                   <ul className="dropdown">

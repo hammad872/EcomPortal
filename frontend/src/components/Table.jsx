@@ -23,16 +23,17 @@ const Table = () => {
         // console.log(JSON.stringify(...data))
         // console.log(selectedUserData)
         selectedUserData.filter((item) =>{
-          // item.id === 
           // console.log(item.client)
         })
-        data.filter((item) => {
-          // item.id  === currentUserID
-        })
-        console.log(selectedUserData.id)
+        
 
+        console.log(selectedUserData.client)
+        let userData = JSON.parse(localStorage.getItem("loginToken"));
+        const userIDForData = userData.userInfo._id;
+        console.log(userIDForData)
         setTableData({
-          tab1: data.filter((item) => item.id === selectedUserData.id),
+          tab1: data.filter((item) => item.client == userIDForData ),
+          // tab1: data.filter((item) => console.log(item , selectedUserData.client) ),
           tab2: data.filter((item) => item.parcel === "Delivered"),
           tab3: data.filter((item) => item.parcel === "In Transit"),
           tab4: data.filter((item) => item.parcel === "Returned"),
@@ -46,25 +47,25 @@ const Table = () => {
       });
   }, [selectedUserData]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/getUserId")
-      .then((dataFromBackend) => {
-        let myData = dataFromBackend.data;
-        let userData = JSON.parse(localStorage.getItem("loginToken"));
-        const userIDForData = userData.userInfo._id;
-        let hanbhaiarhaHaiNa = myData.filter((item) => item.client === userIDForData);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3001/getUserId")
+  //     .then((dataFromBackend) => {
+  //       let myData = dataFromBackend.data;
+  //       let userData = JSON.parse(localStorage.getItem("loginToken"));
+  //       const userIDForData = userData.userInfo._id;
+  //       let hanbhaiarhaHaiNa = myData.filter((item) => item.client === userIDForData);
         
-        // Store all matched items in the state
-        setSelectedUserData(hanbhaiarhaHaiNa);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  //       // Store all matched items in the state
+  //       setSelectedUserData(hanbhaiarhaHaiNa);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching user data:", error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
   
 
 
