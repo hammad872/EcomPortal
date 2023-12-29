@@ -34,9 +34,9 @@ const Table = () => {
         setTableData({
           tab1: data.filter((item) => item.client == userIDForData ),
           // tab1: data.filter((item) => console.log(item , selectedUserData.client) ),
-          tab2: data.filter((item) => item.parcel === "Delivered"),
-          tab3: data.filter((item) => item.parcel === "In Transit"),
-          tab4: data.filter((item) => item.parcel === "Returned"),
+          tab2: data.filter((item) => item.parcel === "Delivered" && item.client == userIDForData ),
+          tab3: data.filter((item) => item.parcel === "In Transit" && item.client == userIDForData ),
+          tab4: data.filter((item) => item.parcel === "Returned" && item.client == userIDForData ),
         });
       })
       .catch((error) => {
