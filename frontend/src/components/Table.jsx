@@ -18,24 +18,25 @@ const Table = () => {
     axios
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
-        // console.log(selectedUserData)
         const data = shipmentResponse.data;
-        // console.log(JSON.stringify(...data))
-        // console.log(selectedUserData)
-        selectedUserData.filter((item) =>{
-          // console.log(item.client)
-        })
-        
 
-        console.log(selectedUserData.client)
+        console.log(selectedUserData.client);
         let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
-        console.log(userIDForData)
+        console.log(userIDForData);
         setTableData({
-          tab1: data.filter((item) => item.client == userIDForData ),
-          tab2: data.filter((item) => item.parcel === "Delivered" && item.client == userIDForData ),
-          tab3: data.filter((item) => item.parcel === "In Transit" && item.client == userIDForData ),
-          tab4: data.filter((item) => item.parcel === "Returned" && item.client == userIDForData ),
+          tab1: data.filter((item) => item.client == userIDForData),
+          tab2: data.filter(
+            (item) =>
+              item.parcel === "Delivered" && item.client == userIDForData
+          ),
+          tab3: data.filter(
+            (item) =>
+              item.parcel === "In Transit" && item.client == userIDForData
+          ),
+          tab4: data.filter(
+            (item) => item.parcel === "Returned" && item.client == userIDForData
+          ),
         });
       })
       .catch((error) => {
@@ -45,8 +46,6 @@ const Table = () => {
         setLoading(false);
       });
   }, [selectedUserData]);
-  
-
 
   const columns = [
     { field: "reference", headerName: "Reference", width: 130 },
@@ -54,7 +53,7 @@ const Table = () => {
     { field: "city", headerName: "City", width: 130 },
     { field: "customerEmail", headerName: "Customer Email", width: 200 },
     { field: "customerAddress", headerName: "Customer Address", width: 250 },
-    { field: "parcel", headerName: "Parcel Status", width: 130},
+    { field: "parcel", headerName: "Parcel Status", width: 130 },
     {
       field: "contactNumber",
       headerName: "Contact Number",
