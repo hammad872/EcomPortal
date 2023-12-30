@@ -12,20 +12,20 @@ const Table = () => {
     tab4: [],
   });
   const [loading, setLoading] = useState(true);
-  // const [selectedUserData, setSelectedUserData] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
         const data = shipmentResponse.data;
+        // console.log(data.filter((item) => item.timestamps))
 
         // console.log(selectedUserData.client);
         let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
         // console.log(userIDForData);
         setTableData({
-          tab1: data.filter((item) => item.client == userIDForData),
+          tab1:  data.filter((item) => item.client == userIDForData),
           tab2: data.filter(
             (item) =>
               item.parcel === "Delivered" && item.client == userIDForData
@@ -45,7 +45,7 @@ const Table = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedUserData]);
+  }, []);
 
   const columns = [
     { field: "reference", headerName: "Reference", width: 130 },
@@ -65,6 +65,11 @@ const Table = () => {
       headerName: "COD Amount",
       type: "number",
       width: 150,
+    },
+    {
+      field: "timestamps",
+      headerName: "Created At",
+      width: 200,
     },
   ];
 
@@ -109,7 +114,7 @@ const Table = () => {
                 style={{
                   left: "50%",
                   position: "absolute",
-                  bottom: "10%",
+                  bottom: "30%",
                   color: "#FF6262",
                 }}
               />

@@ -130,6 +130,7 @@ app.get("/getshipments", async (req, res) => {
       customerAddress: shipment.customerAddress,
       contactNumber: shipment.contactNumber,
       codAmount: shipment.codAmount,
+      timestamps: shipment.createdAt,
     }));
     res.json(formattedShipments);
   } catch (err) {
@@ -148,16 +149,9 @@ app.get("/getregister", async (req, res) => {
     const formattedEmployees = employeesWithShipments.map((employee) => ({
       username: employee.username,
       id: employee._id,
+      role: employee.role,
       shipments: employee.shipments.map((shipment) => ({
         id: shipment._id,
-        parcel: shipment.parcel,
-        reference: shipment.reference,
-        receiverName: shipment.receiverName,
-        city: shipment.city,
-        customerEmail: shipment.customerEmail,
-        customerAddress: shipment.customerAddress,
-        contactNumber: shipment.contactNumber,
-        codAmount: shipment.codAmount,
       })),
     }));
     res.json(formattedEmployees);

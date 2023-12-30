@@ -54,7 +54,7 @@ const AddnewShip = () => {
       console.error("Error submitting form data:", error);
       Swal.fire({
         icon: "error",
-        title: "Error",
+        title: error,
         text: "An error occurred while adding the shipment.",
       });
     }
@@ -67,7 +67,7 @@ const AddnewShip = () => {
       reference: "",
       receiverName: "",
       client: "", // Include the client field
-      city: "United States", // Set a default value
+      city: "", // Set a default value
       customerEmail: "",
       customerAddress: "",
       contactNumber: "",
@@ -91,6 +91,16 @@ const AddnewShip = () => {
         console.error("Error fetching shipment data:", error);
       });
   }, []);
+
+  // const isAdminPresent = employeeName.filter(
+  //   (employee) => employee.role === "Admin"
+  // );
+  // console.log(isAdminPresent);
+  // console.log("ok");
+
+  const userData = JSON.parse(localStorage.getItem("loginToken"));
+  const isAdminLoggedIn = userData.userInfo.role
+  console.log(isAdminLoggedIn)
   return (
     <>
       <div className="container">
@@ -113,32 +123,45 @@ const AddnewShip = () => {
                   <div className="border-b border-gray-900/10 pb-12">
                     <div className="sm:col-span-3">
                       <label
-                        htmlFor="country"
+                        htmlFor="client"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Client
                       </label>
                       <div className="mt-2">
+                        
+                      {isAdminLoggedIn === "Admin" ? (
                         <select
                           id="client"
                           name="client"
                           className="form-input"
                           onChange={handleChange}
-                          value={formData.client} // Make sure to include this line
+                          value={formData.client}
                         >
                           <option>Select a client</option>
                           {employeeName.map((employee) => (
                             <option key={employee.id} value={employee.id}>
                               {employee.username}
-                              {console.log(employee)}
                             </option>
                           ))}
                         </select>
+                      ) : (
+                        <input 
+                        type="hidden" 
+                        id="client"
+                        name="client"
+                        className="form-input"
+                        onChange={handleChange}  
+                        value={userData.userInfo._id} />
+                      )}
+
+
                       </div>
                     </div>
+
                     <div className="sm:col-span-3">
                       <label
-                        htmlFor="country"
+                        htmlFor="parcel"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Parcel
