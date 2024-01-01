@@ -4,12 +4,16 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
 
+const userData = JSON.parse(localStorage.getItem("loginToken"));
+const isAdminLoggedIn = userData.userInfo.role
+
+
 const AddnewShip = () => {
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
     receiverName: "",
-    client: "", // Updated to include the client field
+    client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
     city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
@@ -97,9 +101,6 @@ const AddnewShip = () => {
   // console.log(isAdminPresent);
   // console.log("ok");
 
-  const userData = JSON.parse(localStorage.getItem("loginToken"));
-  const isAdminLoggedIn = userData.userInfo.role
-  console.log(isAdminLoggedIn)
   return (
     <>
       <div className="container">
@@ -146,12 +147,12 @@ const AddnewShip = () => {
                         </select>
                       ) : (
                         <input 
-                        type="hidden" 
                         id="client"
                         name="client"
                         defaultValue={userData.userInfo._id}
                         className="form-control"
-                        // onBlur={handleChange}
+                        onChange={handleChange}
+                        style={{display:"none"}}
                         />
                       )}
 
