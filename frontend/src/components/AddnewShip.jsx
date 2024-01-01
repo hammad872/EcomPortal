@@ -131,29 +131,30 @@ const AddnewShip = () => {
                       <div className="mt-2">
                         
                       {isAdminLoggedIn === "Admin" ? (
-                        <select
-                          id="client"
-                          name="client"
-                          className="form-input"
-                          onChange={handleChange}
-                          value={formData.client}
-                        >
-                          <option>Select a client</option>
-                          {employeeName.map((employee) => (
-                            <option key={employee.id} value={employee.id}>
-                              {employee.username}
-                            </option>
-                          ))}
-                        </select>
+                        // <select
+                        //   id="client"
+                        //   name="client"
+                        //   className="form-input"
+                        //   onChange={handleChange}
+                        //   value={formData.client}
+                        // >
+                        //   <option>Select a client</option>
+                        //   {employeeName.map((employee) => (
+                        //     <option key={employee.id} value={employee.id}>
+                        //       {employee.username}
+                        //     </option>
+                        //   ))}
+                        // </select>
+                        []
                       ) : (
                         <input 
-                        type="hidden" 
-                        id="client"
-                        name="client"
-                        className="form-input"
-                        onChange={handleChange}  
-                        value={userData.userInfo._id} />
+                          type="hidden" 
+                          id="client"
+                          name="client"
+                          value={userData.userInfo._id}
+                        />
                       )}
+
 
 
                       </div>

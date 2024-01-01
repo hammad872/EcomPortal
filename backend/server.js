@@ -90,10 +90,10 @@ app.post("/addshipment", async (req, res) => {
 
     const shipment = await ShipmentModel.create({
       reference,
+      client,
       parcel,
       receiverName,
       city,
-      client,
       customerEmail,
       customerAddress,
       contactNumber,
