@@ -32,7 +32,8 @@ const AddnewShip = () => {
 
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
-        userIds: [userId], // Updated to use userId directly
+        userIds: [userId],
+         // Updated to use userId directly
       });
 
       console.log("Form data submitted:", response.data);
@@ -63,11 +64,8 @@ const AddnewShip = () => {
   const handleReset = (e) => {
     e.preventDefault();
     setFormData({
-      pacel: "",
       reference: "",
       receiverName: "",
-      client: "", // Include the client field
-      city: "", // Set a default value
       customerEmail: "",
       customerAddress: "",
       contactNumber: "",
@@ -79,6 +77,7 @@ const AddnewShip = () => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+
     });
   };
   useEffect(() => {
@@ -131,27 +130,28 @@ const AddnewShip = () => {
                       <div className="mt-2">
                         
                       {isAdminLoggedIn === "Admin" ? (
-                        // <select
-                        //   id="client"
-                        //   name="client"
-                        //   className="form-input"
-                        //   onChange={handleChange}
-                        //   value={formData.client}
-                        // >
-                        //   <option>Select a client</option>
-                        //   {employeeName.map((employee) => (
-                        //     <option key={employee.id} value={employee.id}>
-                        //       {employee.username}
-                        //     </option>
-                        //   ))}
-                        // </select>
-                        []
-                      ) : (
-                        <input 
-                          type="hidden" 
+                        <select
                           id="client"
                           name="client"
-                          value={userData.userInfo._id}
+                          className="form-input"
+                          onChange={handleChange}
+                          value={formData.client}
+                        >
+                          <option>Select a client</option>
+                          {employeeName.map((employee) => (
+                            <option key={employee.id} value={employee.id}>
+                              {employee.username}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input 
+                        type="hidden" 
+                        id="client"
+                        name="client"
+                        defaultValue={userData.userInfo._id}
+                        className="form-control"
+                        // onBlur={handleChange}
                         />
                       )}
 

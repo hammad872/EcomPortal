@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const shipmentSchema = new mongoose.Schema({
    client:{
       type: String,
-      required: true,
+      required:false,
    },
   parcel: {
     type: String,
