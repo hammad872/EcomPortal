@@ -20,8 +20,9 @@ const AddnewShip = () => {
     parcel: "",
     reference: "",
     receiverName: "",
+    product: "" , // Updated to include the client field
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
-    clientName: isAdminLoggedIn === "Admin" ? "" : userData.userInfo.username, // Updated to include the client field
+    clientName:  userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
@@ -33,7 +34,7 @@ const AddnewShip = () => {
   const [employeeName, setEmployeeName] = useState([]);
   const [getProductList, setProductList] = useState([]);
 
-  console.log(getProductList)
+  // console.log(getProductList)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,6 +75,7 @@ const AddnewShip = () => {
         title: "Please Fill all the Fields",
         text: "An error occurred while adding the shipment.",
       });
+      return
     }
   };
 
@@ -153,7 +155,17 @@ const AddnewShip = () => {
                         Client
                       </label>
                       <div className="mt-2">
+
                         {isAdminLoggedIn === "Admin" ? (
+                          <>
+                           <input
+                              id="clientName"
+                              name="clientName"
+                              defaultValue={userData.userInfo.username}
+                              className="form-control"
+                              onChange={handleChange}
+                              style={{ display: "none" }}
+                            />
                           <select
                             id="client"
                             name="client"
@@ -168,6 +180,8 @@ const AddnewShip = () => {
                               </option>
                             ))}
                           </select>
+                          </>
+
                         ) : (
                           <>
                             <input
@@ -207,7 +221,7 @@ const AddnewShip = () => {
                           className="form-input"
                           onChange={handleChange}
                         >
-                          <option>Select a client</option>
+                          <option>Parcel Status</option>
                           <option value="Delivered">Delivered</option>
                           <option value="In Transit">In Transit</option>
                           <option value="Returned">Returned</option>

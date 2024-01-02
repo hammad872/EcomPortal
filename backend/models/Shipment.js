@@ -13,6 +13,10 @@ const shipmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  product: {
+    type: String,
+    required: true,
+  },
   reference: {
     type: String,
     required: true,
