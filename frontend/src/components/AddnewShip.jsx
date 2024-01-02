@@ -4,11 +4,11 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
 
-const userData = JSON.parse(localStorage.getItem("loginToken"));
-const isAdminLoggedIn = userData.userInfo.role
 
 
 const AddnewShip = () => {
+  const userData = JSON.parse(localStorage.getItem("loginToken"));
+  const isAdminLoggedIn = userData.userInfo.role
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
