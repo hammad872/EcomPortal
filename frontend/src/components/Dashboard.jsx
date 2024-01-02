@@ -18,23 +18,33 @@ const Dashboard = () => {
         let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
         const data = shipmentResponse.data;
+        const isAdmin = userData.userInfo.role;
 
         // Update state variables with filtered data
-        setTotalParcels(data.filter((item) => item.client == userIDForData));
+        setTotalParcels(isAdmin === "Client" ?  data.filter((item) => item.client == userIDForData) : data.filter((item) => item ));
         setDeliveredParcels(
+          isAdmin === "Client" ? 
           data.filter(
             (item) => item.parcel === "Delivered" && item.client == userIDForData
-          )
+          ) :
+          data.filter(
+            (item) => item.parcel === "Delivered" )
         );
         setInTransitParcels(
+          isAdmin === "Client" ? 
           data.filter(
             (item) => item.parcel === "In Transit" && item.client == userIDForData
-          )
+          ):
+          data.filter(
+            (item) => item.parcel === "In Transit" )
         );
         setReturnedParcels(
+          isAdmin === "Client" ?
           data.filter(
             (item) => item.parcel === "Returned" && item.client == userIDForData
-          )
+          ):
+          data.filter(
+            (item) => item.parcel === "Returned" )
         );
       })
       .catch((error) => {
