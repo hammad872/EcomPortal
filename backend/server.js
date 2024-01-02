@@ -83,6 +83,7 @@ app.post("/addshipment", async (req, res) => {
     customerAddress,
     contactNumber,
     codAmount,
+    slug,
     userIds,
   } = req.body;
 

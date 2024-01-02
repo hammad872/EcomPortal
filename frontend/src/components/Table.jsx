@@ -43,7 +43,7 @@ const Table = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, );
 
   const columns = [
     { field: "reference", headerName: "Reference", width: 130 },

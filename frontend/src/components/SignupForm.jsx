@@ -27,6 +27,7 @@ export const SignupForm = () => {
   const [phone, setPhone] = useState();
   const [link, setLink] = useState();
   const [role, setRole] = useState();
+  const [slug, setSlug] = useState();
   const navigate = useNavigate();
 
   // const handleSubmit = (e) => {
@@ -50,6 +51,7 @@ export const SignupForm = () => {
         cnic,
         phone,
         link,
+        slug,
         role,
       })
       .then((result) => {
@@ -108,6 +110,20 @@ export const SignupForm = () => {
                     onChange={(e) => setUserName(e.target.value)}
                   />
                 </div>
+                <div className="flex-column">
+                  <label>Slug </label>
+                </div>
+                <div className="inputForm">
+                  <i class="fa fa-slack" aria-hidden="true"></i>
+
+                  <input
+                    placeholder="Enter the SLUG"
+                    className="input"
+                    type="text"
+                    onChange={(e) => setSlug(e.target.value)}
+                  />
+                </div>
+                  <small>eg. SH, GH ,AB</small>
 
                 <div className="flex-column">
                   <label>Phone </label>

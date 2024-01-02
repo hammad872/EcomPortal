@@ -3,12 +3,19 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
+const animatedComponents = makeAnimated();
+const colourOptions = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+];
 
 
 const AddnewShip = () => {
   const userData = JSON.parse(localStorage.getItem("loginToken"));
-  const isAdminLoggedIn = userData.userInfo.role
+  const isAdminLoggedIn = userData.userInfo.role;
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
@@ -39,7 +46,7 @@ const AddnewShip = () => {
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
-         // Updated to use userId directly
+        // Updated to use userId directly
       });
 
       console.log("Form data submitted:", response.data);
@@ -83,7 +90,6 @@ const AddnewShip = () => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-
     });
   };
   useEffect(() => {
@@ -102,7 +108,7 @@ const AddnewShip = () => {
   // );
   // console.log(isAdminPresent);
   // console.log("ok");
-  const FilteredAdmin =  employeeName.filter( (item) => item.role === "Client" ) ;
+  const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
   // console.log(FilteredAdmin)
   // console.log(employeeName)
   return (
@@ -133,46 +139,42 @@ const AddnewShip = () => {
                         Client
                       </label>
                       <div className="mt-2">
-                        
-                      {isAdminLoggedIn === "Admin" ? (
-                        <select
-                          id="client"
-                          name="client"
-                          className="form-input"
-                          onChange={handleChange}
-                          value={formData.client}
-                        >
-                          <option>Select a client</option>
-                           { FilteredAdmin.map((employee ) => (
-                            <option key={employee.id} value={employee.id}>
-                              {employee.username}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <>
-                          <input 
-                          id="client"
-                          name="client"
-                          defaultValue={userData.userInfo._id}
-                          className="form-control"
-                          onChange={handleChange}
-                          style={{display:"none"}}
-                          />
-                          
-                          <input 
-                          id="clientName"
-                          name="clientName"
-                          defaultValue={userData.userInfo.username}
-                          className="form-control"
-                          onChange={handleChange}
-                          style={{display:"none"}}
-                          /> 
-                        </>
-                      )}
+                        {isAdminLoggedIn === "Admin" ? (
+                          <select
+                            id="client"
+                            name="client"
+                            className="form-input"
+                            onChange={handleChange}
+                            value={formData.client}
+                          >
+                            <option>Select a client</option>
+                            {FilteredAdmin.map((employee) => (
+                              <option key={employee.id} value={employee.id}>
+                                {employee.username}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <>
+                            <input
+                              id="client"
+                              name="client"
+                              defaultValue={userData.userInfo._id}
+                              className="form-control"
+                              onChange={handleChange}
+                              style={{ display: "none" }}
+                            />
 
-
-
+                            <input
+                              id="clientName"
+                              name="clientName"
+                              defaultValue={userData.userInfo.username}
+                              className="form-control"
+                              onChange={handleChange}
+                              style={{ display: "none" }}
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
 
@@ -197,6 +199,23 @@ const AddnewShip = () => {
                           <option value="Returned">Returned</option>
                           <option value="Cancelled">Cancelled</option>
                         </select>
+                      </div>
+                    </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="parcel"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Parcel
+                      </label>
+                      <div className="mt-2">
+                        <Select
+                          closeMenuOnSelect={false}
+                          components={animatedComponents}
+                          defaultValue={[colourOptions[4], colourOptions[5]]}
+                          isMulti
+                          options={colourOptions}
+                        />
                       </div>
                     </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
