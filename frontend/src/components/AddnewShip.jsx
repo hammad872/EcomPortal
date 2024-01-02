@@ -60,8 +60,8 @@ const AddnewShip = () => {
     } catch (error) {
       console.error("Error submitting form data:", error);
       Swal.fire({
-        icon: "error",
-        title: error,
+        icon: "warning",
+        title: "Please Fill all the Fields",
         text: "An error occurred while adding the shipment.",
       });
     }

@@ -10,6 +10,8 @@ const Dashboard = () => {
   const [deliveredParcels, setDeliveredParcels] = useState([]);
   const [inTransitParcels, setInTransitParcels] = useState([]);
   const [returnedParcels, setReturnedParcels] = useState([]);
+  const [cancelledParcels, setCancelledParcels] = useState([]);
+
 
   useEffect(() => {
     axios
@@ -46,11 +48,19 @@ const Dashboard = () => {
           data.filter(
             (item) => item.parcel === "Returned" )
         );
+        setCancelledParcels(
+          isAdmin === "Client" ?
+          data.filter(
+            (item) => item.parcel === "Cancelled" && item.client == userIDForData
+          ):
+          data.filter(
+            (item) => item.parcel === "Cancelled" )
+        );
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
       });
-  }, [totalParcels, deliveredParcels, inTransitParcels, returnedParcels]); // Empty dependency array means this effect runs once when the component mounts
+  }, [totalParcels, deliveredParcels, inTransitParcels, returnedParcels, cancelledParcels]); // Empty dependency array means this effect runs once when the component mounts
 
   
   return (
@@ -95,7 +105,7 @@ const Dashboard = () => {
               <div className="col-lg-2  ">
                 <div className="ship_stat p-3 mx-1">
                   <img src="\assets\restart.png" alt="" />
-                  <h2>{returnedParcels.length}</h2>
+                  <h2>{cancelledParcels.length}</h2>
                   <p>Cancelled</p>
                 </div>
               </div>
