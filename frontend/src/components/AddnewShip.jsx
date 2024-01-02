@@ -4,50 +4,42 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
 
-const AddnewShip = () => {
-  const [userData, setUserData] = useState(null);  // Declare userData state
+const userData = JSON.parse(localStorage.getItem("loginToken"));
+const isAdminLoggedIn = userData.userInfo.role
 
+
+const AddnewShip = () => {
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
     receiverName: "",
-    client: "",
-    clientName: "",
-    city: "United States",
+    client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
+    clientName: isAdminLoggedIn === "Admin" ? "" : userData.userInfo.username, // Updated to include the client field
+    city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
     codAmount: "",
+    // codAmount: "",
   });
 
   const [employeeName, setEmployeeName] = useState([]);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const storedUserData = JSON.parse(localStorage.getItem("loginToken"));
-    setUserData(storedUserData);  // Set userData state
-
-    setIsAdminLoggedIn(storedUserData && storedUserData.userInfo && storedUserData.userInfo.role === "Admin");
-    
-    axios
-      .get("http://localhost:3001/getregister")
-      .then((employeeNameResponse) => {
-        setEmployeeName(employeeNameResponse.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching shipment data:", error);
-      });
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userId = isAdminLoggedIn ? formData.client : userData.userInfo._id;
+      let userDataLocal = localStorage.getItem("loginToken");
+      let userDataLocalParsed = JSON.parse(userDataLocal);
+      let userId = userDataLocalParsed.userInfo._id;
+
+      console.log("User ID:", userId);
+      console.log("Form Data:", formData);
 
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
+         // Updated to use userId directly
       });
 
       console.log("Form data submitted:", response.data);
@@ -73,7 +65,8 @@ const AddnewShip = () => {
         text: "An error occurred while adding the shipment.",
       });
     }
-  };  
+  };
+
   const handleReset = (e) => {
     e.preventDefault();
     setFormData({
