@@ -3,19 +3,10 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
-
-const animatedComponents = makeAnimated();
-const colourOptions = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-];
 
 
 const AddnewShip = () => {
-  const userData = JSON.parse(localStorage.getItem("loginToken"));
-  const isAdminLoggedIn = userData.userInfo.role;
+  
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
@@ -74,17 +65,6 @@ const AddnewShip = () => {
     }
   };
 
-  const handleReset = (e) => {
-    e.preventDefault();
-    setFormData({
-      reference: "",
-      receiverName: "",
-      customerEmail: "",
-      customerAddress: "",
-      contactNumber: "",
-      codAmount: "",
-    });
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -103,14 +83,6 @@ const AddnewShip = () => {
       });
   }, []);
 
-  // const isAdminPresent = employeeName.filter(
-  //   (employee) => employee.role === "Admin"
-  // );
-  // console.log(isAdminPresent);
-  // console.log("ok");
-  const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
-  // console.log(FilteredAdmin)
-  // console.log(employeeName)
   return (
     <>
       <div className="container">
@@ -129,7 +101,7 @@ const AddnewShip = () => {
             >
               <form onSubmit={handleSubmit}>
                 <div className="space-y-12">
-                  <h3>Shipment Entry</h3>
+                  <h3>Product Entry</h3>
                   <div className="border-b border-gray-900/10 pb-12">
                     <div className="sm:col-span-3">
                       <label

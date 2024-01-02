@@ -529,7 +529,11 @@ nav li:hover {
 .MuiDataGrid-cell {
   outline-color: rgb(231, 85, 85) !important;
 }
-
+.css-t3ipsp-control:focus  , .css-t3ipsp-control:hover , .css-13cymwt-control:focus , .css-13cymwt-control:hover{
+  border-color: rgb(231, 85, 85) !important;
+  box-shadow:  0 0 0 1px  rgb(231, 85, 85) !important;
+  outline-color:   rgb(231, 85, 85) !important;
+}
 .notification-container {
   position: relative;
 }
