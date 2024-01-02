@@ -7,10 +7,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
-const colourOptions = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-];
+
 
 
 const AddnewShip = () => {
