@@ -24,25 +24,18 @@ const Table = () => {
         // console.log(selectedUserData.client);
         // let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
+        const isAdmin = userData.userInfo.role;
+        console.log(isAdmin)
         // console.log(userIDForData);
         // item.role === "Admin" ? : item
         setTableData({
-          tab1:  data.filter((item) => item ),
-          tab2: data.filter(
-            (item) =>
-              item.parcel === "Delivered" && item.client == userIDForData
-          ),
-          tab3: data.filter(
-            (item) =>
-              item.parcel === "In Transit" && item.client == userIDForData
-          ),
-          tab4: data.filter(
-            (item) => item.parcel === "Returned" && item.client == userIDForData
-          ),
-          tab5: data.filter(
-            (item) => item.parcel === "Cancelled" && item.client == userIDForData
-          ),
+          tab1: isAdmin === "Client" ? data.filter((item) => item.client === userIDForData) : data,
+          tab2: isAdmin === "Client" ? data.filter((item) => item.parcel === "Delivered" && item.client === userIDForData) : data.filter((item) => item.parcel === "Delivered"),
+          tab3: isAdmin === "Client" ? data.filter((item) => item.parcel === "In Transit" && item.client === userIDForData) : data.filter((item) => item.parcel === "In Transit"),
+          tab4: isAdmin === "Client" ? data.filter((item) => item.parcel === "Returned" && item.client === userIDForData) : data.filter((item) => item.parcel === "Returned"),
+          tab5: isAdmin === "Client" ? data.filter((item) => item.parcel === "Cancelled" && item.client === userIDForData) : data.filter((item) => item.parcel === "Cancelled"),
         });
+        
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);

@@ -104,7 +104,7 @@ const Dashboard = () => {
               </div>
               <div className="col-lg-2  ">
                 <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\restart.png" alt="" />
+                  <img src="\assets\prohibition.png" alt="" />
                   <h2>{cancelledParcels.length}</h2>
                   <p>Cancelled</p>
                 </div>
