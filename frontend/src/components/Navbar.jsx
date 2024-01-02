@@ -36,6 +36,9 @@ const Navbar = () => {
                     <li>
                       <a href="/import">Import Page</a>
                     </li>
+                    <li>
+                      <a href="/add-product">Add New Product</a>
+                    </li>
                   </ul>
                 )}
               </li>

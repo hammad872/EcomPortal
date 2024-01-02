@@ -7,6 +7,7 @@ import { SignupForm } from "./components/SignupForm";
 import Dashboard from "./components/Dashboard";
 import AddnewShip from "./components/AddnewShip";
 import ImportShip from "./components/ImportShip";
+import AddProduct from "./components/AddProduct";
 
 function App() {
   
@@ -51,6 +52,9 @@ function App() {
           path="/import"
           element={<PrivateRoute element={<ImportShip />} />}
         />
+        <Route path="/add-product"
+          element={<PrivateRoute element={<AddProduct />} />}
+          />
       </Routes>
     </BrowserRouter>
   );

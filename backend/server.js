@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
+const ProductModel = require("./models/Product");  
 
 const app = express();
 app.use(cors());
@@ -164,6 +165,31 @@ app.get("/getregister", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+
+app.post("/addproduct", async (req, res) => {
+  const { productTitle, sourcing } = req.body;
+
+  try {
+    const product = await ProductModel.create({ productTitle, sourcing });
+    res.json(product);
+  } catch (err) {
+    console.error("Error adding product:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/getproducts", async (req, res) => {
+  try {
+    const products = await ProductModel.find();
+    res.json(products);
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
