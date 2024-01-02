@@ -5,6 +5,10 @@ const shipmentSchema = new mongoose.Schema({
       type: String,
       required:false,
    },
+   clientName:{
+      type: String,
+      required:false,
+   },
   parcel: {
     type: String,
     required: true,

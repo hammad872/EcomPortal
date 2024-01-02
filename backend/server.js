@@ -78,6 +78,7 @@ app.post("/addshipment", async (req, res) => {
     receiverName,
     city,
     client,
+    clientName,
     customerEmail,
     customerAddress,
     contactNumber,
@@ -91,6 +92,7 @@ app.post("/addshipment", async (req, res) => {
     const shipment = await ShipmentModel.create({
       reference,
       client,
+      clientName,
       parcel,
       receiverName,
       city,
@@ -122,6 +124,7 @@ app.get("/getshipments", async (req, res) => {
     const formattedShipments = shipments.map((shipment) => ({
       id: shipment._id,
       client: shipment.client,
+      clientName: shipment.clientName,
       parcel: shipment.parcel,
       reference: shipment.reference,
       receiverName: shipment.receiverName,

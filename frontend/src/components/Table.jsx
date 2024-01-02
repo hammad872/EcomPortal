@@ -10,9 +10,10 @@ const Table = () => {
     tab2: [],
     tab3: [],
     tab4: [],
+    tab5: [],
   });
   const [loading, setLoading] = useState(true);
-
+  let userData = JSON.parse(localStorage.getItem("loginToken"));
   useEffect(() => {
     axios
       .get("http://localhost:3001/getshipments")
@@ -21,11 +22,12 @@ const Table = () => {
         // console.log(data.filter((item) => item.timestamps))
 
         // console.log(selectedUserData.client);
-        let userData = JSON.parse(localStorage.getItem("loginToken"));
+        // let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
         // console.log(userIDForData);
+        // item.role === "Admin" ? : item
         setTableData({
-          tab1:  data.filter((item) => item.client == userIDForData),
+          tab1:  data.filter((item) => item ),
           tab2: data.filter(
             (item) =>
               item.parcel === "Delivered" && item.client == userIDForData
@@ -36,6 +38,9 @@ const Table = () => {
           ),
           tab4: data.filter(
             (item) => item.parcel === "Returned" && item.client == userIDForData
+          ),
+          tab5: data.filter(
+            (item) => item.parcel === "Cancelled" && item.client == userIDForData
           ),
         });
       })
@@ -71,6 +76,14 @@ const Table = () => {
       headerName: "Created At",
       width: 200,
     },
+    userData.userInfo.role === "Admin" ? 
+    {
+      field: "clientName",
+      headerName: "Client Name",
+      width: 200,
+    }
+    :
+    []
   ];
 
   return (
@@ -100,6 +113,12 @@ const Table = () => {
             onClick={() => setActiveTab("tab4")}
           >
             Returned
+          </button>
+          <button
+            className="custom-button"
+            onClick={() => setActiveTab("tab5")}
+          >
+            Cancelled
           </button>
         </div>
 
@@ -202,6 +221,32 @@ const Table = () => {
             ) : (
               <DataGrid
                 rows={tableData.tab4}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+              />
+            )}
+          </div>
+        )}
+        {activeTab === "tab5" && (
+          <div
+            id="tab4"
+            style={{ height: 400, width: "100%" }}
+            className="mt-4"
+          >
+            {loading ? (
+              <CircularProgress
+                style={{
+                  left: "50%",
+                  position: "absolute",
+                  bottom: "10%",
+                  color: "#FF6262",
+                }}
+              />
+            ) : (
+              <DataGrid
+                rows={tableData.tab5}
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}

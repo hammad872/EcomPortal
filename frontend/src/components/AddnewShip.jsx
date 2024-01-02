@@ -14,11 +14,13 @@ const AddnewShip = () => {
     reference: "",
     receiverName: "",
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
+    clientName: isAdminLoggedIn === "Admin" ? "" : userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
     codAmount: "",
+    // codAmount: "",
   });
 
   const [employeeName, setEmployeeName] = useState([]);
@@ -100,7 +102,9 @@ const AddnewShip = () => {
   // );
   // console.log(isAdminPresent);
   // console.log("ok");
-
+  const FilteredAdmin =  employeeName.filter( (item) => item.role === "Client" ) ;
+  // console.log(FilteredAdmin)
+  // console.log(employeeName)
   return (
     <>
       <div className="container">
@@ -139,21 +143,32 @@ const AddnewShip = () => {
                           value={formData.client}
                         >
                           <option>Select a client</option>
-                          {employeeName.map((employee) => (
+                           { FilteredAdmin.map((employee ) => (
                             <option key={employee.id} value={employee.id}>
                               {employee.username}
                             </option>
                           ))}
                         </select>
                       ) : (
-                        <input 
-                        id="client"
-                        name="client"
-                        defaultValue={userData.userInfo._id}
-                        className="form-control"
-                        onChange={handleChange}
-                        style={{display:"none"}}
-                        />
+                        <>
+                          <input 
+                          id="client"
+                          name="client"
+                          defaultValue={userData.userInfo._id}
+                          className="form-control"
+                          onChange={handleChange}
+                          style={{display:"none"}}
+                          />
+                          
+                          <input 
+                          id="clientName"
+                          name="clientName"
+                          defaultValue={userData.userInfo.username}
+                          className="form-control"
+                          onChange={handleChange}
+                          style={{display:"none"}}
+                          /> 
+                        </>
                       )}
 
 
@@ -180,6 +195,7 @@ const AddnewShip = () => {
                           <option value="Delivered">Delivered</option>
                           <option value="In Transit">In Transit</option>
                           <option value="Returned">Returned</option>
+                          <option value="Cancelled">Cancelled</option>
                         </select>
                       </div>
                     </div>
