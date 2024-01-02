@@ -19,15 +19,8 @@ const Table = () => {
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
         const data = shipmentResponse.data;
-        // console.log(data.filter((item) => item.timestamps))
-
-        // console.log(selectedUserData.client);
-        // let userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
         const isAdmin = userData.userInfo.role;
-        console.log(isAdmin)
-        // console.log(userIDForData);
-        // item.role === "Admin" ? : item
         setTableData({
           tab1: isAdmin === "Client" ? data.filter((item) => item.client === userIDForData) : data,
           tab2: isAdmin === "Client" ? data.filter((item) => item.parcel === "Delivered" && item.client === userIDForData) : data.filter((item) => item.parcel === "Delivered"),

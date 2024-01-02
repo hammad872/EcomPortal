@@ -31,6 +31,9 @@ const AddnewShip = () => {
   });
 
   const [employeeName, setEmployeeName] = useState([]);
+  const [getProductList, setProductList] = useState([]);
+
+  console.log(getProductList)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,6 +100,17 @@ const AddnewShip = () => {
       .get("http://localhost:3001/getregister")
       .then((employeeNameResponse) => {
         setEmployeeName(employeeNameResponse.data); // Update this line
+      })
+      .catch((error) => {
+        console.error("Error fetching shipment data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/getproducts")
+      .then((ProductData) => {
+        setProductList(ProductData.data); // Update this line
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
@@ -212,9 +226,10 @@ const AddnewShip = () => {
                         <Select
                           closeMenuOnSelect={false}
                           components={animatedComponents}
-                          defaultValue={[colourOptions[4], colourOptions[5]]}
                           isMulti
-                          options={colourOptions}
+                          options={getProductList.map( (e) => {
+                            return {value : e.productTitle, label : e.productTitle}
+                          })}
                         />
                       </div>
                     </div>
