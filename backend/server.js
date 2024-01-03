@@ -129,7 +129,7 @@ app.get("/getshipments", async (req, res) => {
       clientName: shipment.clientName,
       parcel: shipment.parcel,
       reference: shipment.reference,
-      product: shipment.product,
+      // product: shipment.product,
       receiverName: shipment.receiverName,
       city: shipment.city,
       customerEmail: shipment.customerEmail,

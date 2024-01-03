@@ -10,10 +10,10 @@ const EmployeesSchema = new mongoose.Schema({
     required: true,
   },
 
-  slug: {
-    type: String,
-    required: true,
-  },
+  // slug: {
+  //   type: String,
+  //   required: true,
+  // },
   password: {
     type: String,
     required: true,

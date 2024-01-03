@@ -3,10 +3,10 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Swal from "sweetalert2";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
+// import Select from "react-select";
+// import makeAnimated from "react-select/animated";
 
-const animatedComponents = makeAnimated();
+// const animatedComponents = makeAnimated();
 
 
 
@@ -29,7 +29,7 @@ const AddnewShip = () => {
   });
 
   const [employeeName, setEmployeeName] = useState([]);
-  const [getProductList, setProductList] = useState([]);
+  // const [getProductList, setProductList] = useState([]);
 
   // console.log(getProductList)
 
@@ -105,16 +105,16 @@ const AddnewShip = () => {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/getproducts")
-      .then((ProductData) => {
-        setProductList(ProductData.data); // Update this line
-      })
-      .catch((error) => {
-        console.error("Error fetching shipment data:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3001/getproducts")
+  //     .then((ProductData) => {
+  //       setProductList(ProductData.data); // Update this line
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching shipment data:", error);
+  //     });
+  // }, []);
 
   // const isAdminPresent = employeeName.filter(
   //   (employee) => employee.role === "Admin"
@@ -124,6 +124,14 @@ const AddnewShip = () => {
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
   // console.log(FilteredAdmin)
   // console.log(employeeName)
+
+  console.log(FilteredAdmin)
+
+  //   const Hassan = FilteredAdmin.filter( (item) => {
+  //   const hanBharwe = item.id
+  //   console.log(hanBharwe)
+  //   // console.log("hanBharwe")
+  //  }) 
   return (
     <>
       <div className="container">
@@ -226,7 +234,7 @@ const AddnewShip = () => {
                         </select>
                       </div>
                     </div>
-                    <div className="sm:col-span-3">
+                    {/* <div className="sm:col-span-3">
                       <label
                         htmlFor="parcel"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -243,7 +251,7 @@ const AddnewShip = () => {
                           })}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                       <div className="sm:col-span-3">
                         <label
