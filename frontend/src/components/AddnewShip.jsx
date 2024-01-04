@@ -98,12 +98,11 @@ const AddnewShip = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: value,
-        productName: formData.productName
+        productName: formData.productName,
       }));
     }
   };
-  
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/getregister")
@@ -128,11 +127,10 @@ const AddnewShip = () => {
 
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
 
-  const [productName, setProductName] = useState(''); // Provide an initial value appropriate for your use case
+  const [productName, setProductName] = useState(""); // Provide an initial value appropriate for your use case
   useEffect(() => {
     console.log(productName); // Log the updated value of productName
   }, [productName]); // Run this effect whenever productName changes
-
 
   return (
     <>
@@ -237,28 +235,27 @@ const AddnewShip = () => {
                         Product
                       </label>
                       <div className="mt-2">
-                      <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      isMulti
-      name="product"
-      id="product"
-      options={getProductList.map((e) => ({
-        value: e.productTitle,
-        label: e.productTitle,
-      }))}
-      onChange={(selectedOptions) => {
-        if (selectedOptions.length === 1) {
-          setProductName(selectedOptions[0].value);
-        } else {
-          const values = selectedOptions.map(
-            (option) => option.value
-          );
-          setProductName(values);
-        }
-      }}
-    />
-    
+                        <Select
+                          closeMenuOnSelect={false}
+                          components={animatedComponents}
+                          isMulti
+                          name="product"
+                          id="product"
+                          options={getProductList.map((e) => ({
+                            value: e.productTitle,
+                            label: e.productTitle,
+                          }))}
+                          onChange={(selectedOptions) => {
+                            if (selectedOptions.length === 1) {
+                              setProductName(selectedOptions.value);
+                            } else {
+                              const values = selectedOptions.map(
+                                (option) => option.value
+                              );
+                              setProductName(values);
+                            }
+                          }}
+                        />
                       </div>
                     </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -412,7 +409,6 @@ const AddnewShip = () => {
       </div>
     </>
   );
-  
 };
 
 export default AddnewShip;
