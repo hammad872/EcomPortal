@@ -8,8 +8,6 @@ import Swal from "sweetalert2";
 
 // const animatedComponents = makeAnimated();
 
-
-
 const AddnewShip = () => {
   const userData = JSON.parse(localStorage.getItem("loginToken"));
   const isAdminLoggedIn = userData.userInfo.role;
@@ -17,9 +15,9 @@ const AddnewShip = () => {
     parcel: "",
     reference: "",
     receiverName: "",
-    product: "" , // Updated to include the client field
+    product: "", // Updated to include the client field
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
-    clientName:  userData.userInfo.username, // Updated to include the client field
+    clientName: userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
     customerEmail: "",
     customerAddress: "",
@@ -72,7 +70,7 @@ const AddnewShip = () => {
         title: "Please Fill all the Fields",
         text: "An error occurred while adding the shipment.",
       });
-      return
+      return;
     }
   };
 
@@ -89,10 +87,23 @@ const AddnewShip = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // If the field is client, split the value into client and update the state
+    if (name === "client") {
+      const [selectedId, selectedUsername] = value.split("-");
+      setFormData({
+        ...formData,
+        client: selectedId,
+        clientName: selectedUsername,
+      });
+    } else {
+      // If it's clientName or any other field, update it normally
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
   useEffect(() => {
     axios
@@ -125,13 +136,13 @@ const AddnewShip = () => {
   // console.log(FilteredAdmin)
   // console.log(employeeName)
 
-  console.log(FilteredAdmin)
+  console.log(FilteredAdmin);
 
   //   const Hassan = FilteredAdmin.filter( (item) => {
   //   const hanBharwe = item.id
   //   console.log(hanBharwe)
   //   // console.log("hanBharwe")
-  //  }) 
+  //  })
   return (
     <>
       <div className="container">
@@ -160,10 +171,9 @@ const AddnewShip = () => {
                         Client
                       </label>
                       <div className="mt-2">
-
                         {isAdminLoggedIn === "Admin" ? (
                           <>
-                           <input
+                            <input
                               id="clientName"
                               name="clientName"
                               defaultValue={userData.userInfo.username}
@@ -171,22 +181,24 @@ const AddnewShip = () => {
                               onChange={handleChange}
                               style={{ display: "none" }}
                             />
-                          <select
-                            id="client"
-                            name="client"
-                            className="form-input"
-                            onChange={handleChange}
-                            value={formData.client}
-                          >
-                            <option>Select a client</option>
-                            {FilteredAdmin.map((employee) => (
-                              <option key={employee.id} value={employee.id}>
-                                {employee.username}
-                              </option>
-                            ))}
-                          </select>
+                            <select
+                              id="client"
+                              name="client"
+                              className="form-input"
+                              onChange={handleChange}
+                              value={`${formData.client}-${formData.clientName}`}
+                            >
+                              <option>Select a client</option>
+                              {FilteredAdmin.map((employee) => (
+                                <option
+                                  key={employee.id}
+                                  value={`${employee.id}-${employee.username}`}
+                                >
+                                  {employee.username}
+                                </option>
+                              ))}
+                            </select>
                           </>
-
                         ) : (
                           <>
                             <input
