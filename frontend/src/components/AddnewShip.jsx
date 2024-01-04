@@ -11,6 +11,15 @@ const animatedComponents = makeAnimated();
 const AddnewShip = () => {
   const userData = JSON.parse(localStorage.getItem("loginToken"));
   const isAdminLoggedIn = userData.userInfo.role;
+  const [productName, setProductName] = useState(""); // Provide an initial value appropriate for your use case
+  // Add this code to your useEffect hook where you handle formData changes
+  useEffect(() => {
+    console.log(productName); // Log the updated value of productName
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      productName: productName,
+    }));
+  }, [productName]); // Run this effect whenever productName changes
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
@@ -43,7 +52,7 @@ const AddnewShip = () => {
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
-        productName: formData.productName,
+        productName : formData.productName,
         // Updated to use userId directly
       });
 
@@ -127,10 +136,9 @@ const AddnewShip = () => {
 
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
 
-  const [productName, setProductName] = useState(""); // Provide an initial value appropriate for your use case
-  useEffect(() => {
-    console.log(productName); // Log the updated value of productName
-  }, [productName]); // Run this effect whenever productName changes
+  // useEffect(() => {
+  //   console.log(productName); // Log the updated value of productName
+  // }, [ productName ]); // Run this effect whenever productName changes
 
   return (
     <>
@@ -246,14 +254,14 @@ const AddnewShip = () => {
                             label: e.productTitle,
                           }))}
                           onChange={(selectedOptions) => {
-                            if (selectedOptions.length === 1) {
-                              setProductName(selectedOptions.value);
-                            } else {
-                              const values = selectedOptions.map(
-                                (option) => option.value
-                              );
-                              setProductName(values);
-                            }
+                            const selectedProducts = selectedOptions.map(
+                              (option) => ({
+                                prodName: option.value,
+                              })
+                            );
+                            setProductName(selectedProducts)
+                            // Further processing or setting state with the array of objects
+                            console.log(selectedProducts)
                           }}
                         />
                       </div>

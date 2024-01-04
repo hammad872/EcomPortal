@@ -630,3 +630,15 @@ form h3 {
 .dropdown {
   cursor: pointer;
 }
+.Product h3 {
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 5px;
+  color: #ff6262;
+}
+
+
+.css-ptkaw2-MuiDataGrid-root {
+  height: 400px !important;
+}

@@ -8,9 +8,9 @@ import Dashboard from "./components/Dashboard";
 import AddnewShip from "./components/AddnewShip";
 import ImportShip from "./components/ImportShip";
 import AddProduct from "./components/AddProduct";
+import ProductTable from "./components/ProductTable";
 
 function App() {
-  
   useEffect(() => {
     // Check if the user is already logged in
     const loginToken = localStorage.getItem("loginToken");
@@ -18,26 +18,19 @@ function App() {
       setLoggedIn(true);
     }
   }, []);
-  
+
   // PrivateRoute component to handle private routes
   const [isLoggedIn, setLoggedIn] = useState(false);
   const PrivateRoute = ({ element }) => {
     const isLoggedIn = localStorage.getItem("loginToken");
 
-    return isLoggedIn ? (
-      element
-    ) : (
-      <Navigate to="/" replace />
-    );
+    return isLoggedIn ? element : <Navigate to="/" replace />;
   };
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<LoginForm setLoggedIn={setLoggedIn} />}
-        />
+        <Route path="/" element={<LoginForm setLoggedIn={setLoggedIn} />} />
         <Route path="/signup" element={<SignupForm />} />
         {/* Private routes */}
         <Route
@@ -52,9 +45,14 @@ function App() {
           path="/import"
           element={<PrivateRoute element={<ImportShip />} />}
         />
-        <Route path="/add-product"
+        <Route
+          path="/add-product"
           element={<PrivateRoute element={<AddProduct />} />}
-          />
+        />
+        <Route
+        path="/product-table"
+          element={<PrivateRoute element={<ProductTable />} />}
+        />
       </Routes>
     </BrowserRouter>
   );

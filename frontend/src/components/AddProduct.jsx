@@ -21,7 +21,7 @@ const AddProduct = () => {
     e.preventDefault();
 
     try {
-      // Make a POST request to your backend API endpoint
+      // Proceed with adding the product
       const response = await axios.post(
         "http://localhost:3001/addproduct",
         formData

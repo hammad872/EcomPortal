@@ -2,11 +2,18 @@ import React, { useState } from "react";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen2, setDropdownOpen2] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
+  const toggleDropdown2 = () => {
+    setDropdownOpen2(!isDropdownOpen2);
+  };
+
   const isUserAdmin = JSON.parse(localStorage.getItem("loginToken"));
+
   return (
     <>
       <header />
@@ -36,16 +43,27 @@ const Navbar = () => {
                     <li>
                       <a href="/import">Import Page</a>
                     </li>
-                    {isUserAdmin.userInfo.role === "Admin" ? (
-                      <li>
-                        <a href="/add-product">Add New Product</a>
-                      </li>
-                    ) : (
-                      []
-                    )}
                   </ul>
                 )}
               </li>
+              {isUserAdmin.userInfo.role === "Admin" && (
+                <li onClick={toggleDropdown2}>
+                  <a className="dropdown">
+                    Product Entry{" "}
+                    <i className="fa fa-arrow-right" aria-hidden="true"></i>
+                  </a>
+                  {isDropdownOpen2 && (
+                    <ul className="dropdown">
+                      <li>
+                        <a href="/add-product">Add New Product</a>
+                      </li>
+                      <li>
+                        <a href="/product-table">Products</a>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              )}
             </ul>
           </nav>
         </aside>

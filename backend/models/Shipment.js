@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const shipmentSchema = new mongoose.Schema({
-   client:{
+  client:{
       type: String,
       required:false,
    },
-   clientName:{
+  clientName:{
       type: String,
       required:false,
    },
@@ -13,10 +13,16 @@ const shipmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  product: {
-    type: String,
-    required: true,
-  },
+  productName: [
+    {
+      type: mongoose.Schema.Types.Array,
+      ref: 'Product',  // Make sure this matches the model name for shipments
+    },
+  ],
+  // productName: {
+  //   type: String,
+  //   required: true,
+  // },
   reference: {
     type: String,
     required: true,
