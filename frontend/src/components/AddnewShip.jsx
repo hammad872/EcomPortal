@@ -15,7 +15,7 @@ const AddnewShip = () => {
     parcel: "",
     reference: "",
     receiverName: "",
-    product: "", // Updated to include the client field
+    productName: "", // Updated to include the client field
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
     clientName: userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
@@ -23,9 +23,7 @@ const AddnewShip = () => {
     customerAddress: "",
     contactNumber: "",
     codAmount: "",
-    // codAmount: "",
   });
-
   const [employeeName, setEmployeeName] = useState([]);
   const [getProductList, setProductList] = useState([]);
 
@@ -45,6 +43,7 @@ const AddnewShip = () => {
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
+        productName: formData.productName,
         // Updated to use userId directly
       });
 
@@ -90,18 +89,21 @@ const AddnewShip = () => {
     const { name, value } = e.target;
     if (name === "client") {
       const [selectedId, selectedUsername] = value.split("-");
-      setFormData({
-        ...formData,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         client: selectedId,
         clientName: selectedUsername,
-      });
+      }));
     } else {
-      setFormData({
-        ...formData,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         [name]: value,
-      });
+        productName: formData.productName
+      }));
     }
   };
+  
+  
   useEffect(() => {
     axios
       .get("http://localhost:3001/getregister")
@@ -124,11 +126,13 @@ const AddnewShip = () => {
       });
   }, []);
 
- 
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
 
+  const [productName, setProductName] = useState(''); // Provide an initial value appropriate for your use case
+  useEffect(() => {
+    console.log(productName); // Log the updated value of productName
+  }, [productName]); // Run this effect whenever productName changes
 
-  console.log(FilteredAdmin);
 
   return (
     <>
@@ -160,7 +164,6 @@ const AddnewShip = () => {
                       <div className="mt-2">
                         {isAdminLoggedIn === "Admin" ? (
                           <>
-                          
                             <select
                               id="client"
                               name="client"
@@ -234,24 +237,28 @@ const AddnewShip = () => {
                         Product
                       </label>
                       <div className="mt-2">
-                        <Select
-                          closeMenuOnSelect={false}
-                          components={animatedComponents}
-                          isMulti
-                          name="product"
-                          id="product"
-                          options={getProductList.map( (e) => {
-                            return {value : e.productTitle, label : e.productTitle}
-                          })}
-                          onChange={(selectedOptions) => {
-                            // Handle the selected options here
-                            // For example, update state or perform any other action.
-                            console.log(selectedOptions);
-                            selectedOptions.forEach(e => {
-                              console.log(e.value);
-                            });
-                          }}
-                        />
+                      <Select
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      isMulti
+      name="product"
+      id="product"
+      options={getProductList.map((e) => ({
+        value: e.productTitle,
+        label: e.productTitle,
+      }))}
+      onChange={(selectedOptions) => {
+        if (selectedOptions.length === 1) {
+          setProductName(selectedOptions[0].value);
+        } else {
+          const values = selectedOptions.map(
+            (option) => option.value
+          );
+          setProductName(values);
+        }
+      }}
+    />
+    
                       </div>
                     </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -305,7 +312,7 @@ const AddnewShip = () => {
                             className="form-input"
                             onChange={handleChange}
                           >
-                            <option value="Delivered">United State</option>
+                            <option value="United State">United State</option>
                             <option value="Canada">Canada</option>
                             <option value="Mexico">Mexico</option>
                           </select>
@@ -405,6 +412,7 @@ const AddnewShip = () => {
       </div>
     </>
   );
+  
 };
 
 export default AddnewShip;
