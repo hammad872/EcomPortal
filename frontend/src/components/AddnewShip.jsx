@@ -88,8 +88,6 @@ const AddnewShip = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // If the field is client, split the value into client and update the state
     if (name === "client") {
       const [selectedId, selectedUsername] = value.split("-");
       setFormData({
@@ -98,7 +96,6 @@ const AddnewShip = () => {
         clientName: selectedUsername,
       });
     } else {
-      // If it's clientName or any other field, update it normally
       setFormData({
         ...formData,
         [name]: value,
@@ -133,16 +130,10 @@ const AddnewShip = () => {
   // console.log(isAdminPresent);
   // console.log("ok");
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
-  // console.log(FilteredAdmin)
-  // console.log(employeeName)
+
 
   console.log(FilteredAdmin);
 
-  //   const Hassan = FilteredAdmin.filter( (item) => {
-  //   const hanBharwe = item.id
-  //   console.log(hanBharwe)
-  //   // console.log("hanBharwe")
-  //  })
   return (
     <>
       <div className="container">
@@ -173,14 +164,14 @@ const AddnewShip = () => {
                       <div className="mt-2">
                         {isAdminLoggedIn === "Admin" ? (
                           <>
-                            <input
+                            {/* <input
                               id="clientName"
                               name="clientName"
                               defaultValue={userData.userInfo.username}
                               className="form-control"
                               onChange={handleChange}
                               style={{ display: "none" }}
-                            />
+                            /> */}
                             <select
                               id="client"
                               name="client"
