@@ -120,6 +120,7 @@ export const SignupForm = () => {
                     placeholder="Enter the SLUG"
                     className="input"
                     type="text"
+                    
                     onChange={(e) => setSlug(e.target.value)}
                   />
                 </div>
