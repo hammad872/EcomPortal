@@ -642,3 +642,6 @@ form h3 {
 .css-ptkaw2-MuiDataGrid-root {
   height: 400px !important;
 }
+.swal2-container.swal2-center.swal2-backdrop-show {
+  z-index: 99999999999 !important;
+}

@@ -192,7 +192,48 @@ app.get("/getproducts", async (req, res) => {
   }
 });
 
+app.delete("/deleteshipment/:id", async (req, res) => {
+  const shipmentId = req.params.id;
+
+  try {
+    const shipment = await ShipmentModel.findOneAndDelete({ _id: shipmentId });
+
+
+    if (!shipment) {
+      return res.status(404).json({ error: "Shipment not found" });
+    }
+
+    // Remove the shipment from users
+    const userIds = shipment.user;
+
+    if (userIds && userIds.length > 0) {
+      await Promise.all(
+        userIds.map(async (userId) => {
+          const user = await EmployeeModel.findById(userId);
+          if (user) {
+            user.shipments = user.shipments.filter(
+              (userShipmentId) => userShipmentId.toString() !== shipmentId
+            );
+            await user.save();
+          }
+        })
+      );
+    }
+
+    res.json({ message: "Shipment deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting shipment:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
+
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
 });
+
+
