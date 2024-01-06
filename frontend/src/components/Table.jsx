@@ -161,8 +161,8 @@ const Table = () => {
 
 
 
-  const mnyDataMuneebBhai = JSON.stringify(selectedRow, null, 2);
-  const parsedData = JSON.parse(mnyDataMuneebBhai);
+  const myDataString = JSON.stringify(selectedRow, null, 2);
+  const parsedData = JSON.parse(myDataString);
   // console.log(parsedData);
 
   // Now you can access properties like clientName

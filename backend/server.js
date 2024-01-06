@@ -150,23 +150,25 @@ app.get("/getshipments", async (req, res) => {
 
 app.get("/getregister", async (req, res) => {
   try {
-    const employeesWithShipments = await EmployeeModel.find().populate(
-      "shipments"
-    );
+    const employeesWithShipments = await EmployeeModel.find()
+
     const formattedEmployees = employeesWithShipments.map((employee) => ({
       username: employee.username,
       id: employee._id,
       role: employee.role,
+      slug: employee.slug, 
       shipments: employee.shipments.map((shipment) => ({
         id: shipment._id,
       })),
     }));
+
     res.json(formattedEmployees);
   } catch (err) {
     console.error("Error fetching employees with shipments:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 
 

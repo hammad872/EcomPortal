@@ -35,6 +35,7 @@ const AddnewShip = () => {
   });
   const [employeeName, setEmployeeName] = useState([]);
   const [getProductList, setProductList] = useState([]);
+  const [getSlug, setSlug] = useState([]);
 
   // console.log(getProductList)
 
@@ -52,7 +53,7 @@ const AddnewShip = () => {
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
-        productName : formData.productName,
+        productName: formData.productName,
         // Updated to use userId directly
       });
 
@@ -136,9 +137,7 @@ const AddnewShip = () => {
 
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
 
-  // useEffect(() => {
-  //   console.log(productName); // Log the updated value of productName
-  // }, [ productName ]); // Run this effect whenever productName changes
+  // const filteredEmployees = employeeName.filter((item) => item.client === formData.client);
 
   return (
     <>
@@ -212,7 +211,7 @@ const AddnewShip = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-3 mt-3">
                       <label
                         htmlFor="parcel"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -235,6 +234,38 @@ const AddnewShip = () => {
                         </select>
                       </div>
                     </div>
+                    <div className="sm:col-span-3 mt-4">
+                      <label
+                        htmlFor="parcel"
+                        className="block text-sm font-medium mb-2 leading-6 text-gray-900"
+                      >
+                        #Order Number
+                      </label>
+                        <div class="relative mb-6">
+                          <div class="relative mb-6">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                              {FilteredAdmin.map((employee) => {
+                                const res = employee.id === formData.client;
+                                const slugIsHere = res ? employee.slug : null;
+                                // setSlug(slugIsHere)
+                                return (
+                                  <div key={employee.slug}>{slugIsHere}</div>
+                                );
+                              })}
+                            </div>
+                            <input
+                              type="number"
+                              name="orderid"
+                              id="orderid"
+
+                              autoComplete="given-name"
+                              onChange={handleChange}
+                              class="border-1 outline-none border-stone-300	 focus:border-red-500 text-dark-900 text-sm rounded-lg focus:ring-1 focus:ring-red-500 block w-full ps-10 p-2.5 light:bg-white-700 light:placeholder-gray-400 text-gray-950"
+                              placeholder="#01234"
+                            />
+                          </div>
+                        </div>
+                    </div>
                     <div className="sm:col-span-3">
                       <label
                         htmlFor="parcel"
@@ -249,6 +280,7 @@ const AddnewShip = () => {
                           isMulti
                           name="product"
                           id="product"
+                          className="focus:border-red-400"
                           options={getProductList.map((e) => ({
                             value: e.productTitle,
                             label: e.productTitle,
@@ -259,9 +291,9 @@ const AddnewShip = () => {
                                 prodName: option.value,
                               })
                             );
-                            setProductName(selectedProducts)
+                            setProductName(selectedProducts);
                             // Further processing or setting state with the array of objects
-                            console.log(selectedProducts)
+                            console.log(selectedProducts);
                           }}
                         />
                       </div>
