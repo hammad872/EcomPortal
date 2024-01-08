@@ -74,6 +74,7 @@ const Table = () => {
   });
 
   const columns = [
+    { field: "orderNumber", headerName: "Order #", width: 80 },
     { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
@@ -240,6 +241,10 @@ const Table = () => {
                     <pre>{}</pre>
 
                     <div className="main-card row py-3">
+                    <div className="card-subtitle">
+                        <span className="card-title">Order #: </span>
+                        <span className="name">{parsedData.orderNumber}</span>
+                      </div>
                       <div className="card-subtitle">
                         <span className="card-title">Reference: </span>
                         <span className="name">{parsedData.reference}</span>
@@ -273,10 +278,6 @@ const Table = () => {
                       <div className="card-subtitle">
                         <span className="card-title">Contact Number: </span>
                         <span className="name">{parsedData.contactNumber}</span>
-                      </div>
-                      <div className="card-subtitle">
-                        <span className="card-title">Parcel Status: </span>
-                        <span className="name">{parsedData.parcel}</span>
                       </div>
                       <div className="card-subtitle">
                         <span className="card-title">Parcel Status: </span>

@@ -28,6 +28,7 @@ const AddnewShip = () => {
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
     clientName: userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
+    orderNumber: "",
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
@@ -255,8 +256,8 @@ const AddnewShip = () => {
                             </div>
                             <input
                               type="number"
-                              name="orderid"
-                              id="orderid"
+                              name="orderNumber"
+                              id="orderNumber"
 
                               autoComplete="given-name"
                               onChange={handleChange}
