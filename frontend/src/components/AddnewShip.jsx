@@ -28,7 +28,7 @@ const AddnewShip = () => {
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
     clientName: userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
-    orderNumber: "1",
+    orderNumber: "",
     customerEmail: "",
     orderID: "",
     customerAddress: "",
