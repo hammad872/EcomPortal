@@ -28,7 +28,7 @@ const AddnewShip = () => {
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
     clientName: userData.userInfo.username, // Updated to include the client field
     city: "United States", // Set a default value
-    orderNumber: "",
+    orderNumber: "1",
     customerEmail: "",
     customerAddress: "",
     contactNumber: "",
@@ -36,9 +36,6 @@ const AddnewShip = () => {
   });
   const [employeeName, setEmployeeName] = useState([]);
   const [getProductList, setProductList] = useState([]);
-  const [getSlug, setSlug] = useState([]);
-
-  // console.log(getProductList)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +45,14 @@ const AddnewShip = () => {
       let userDataLocalParsed = JSON.parse(userDataLocal);
       let userId = userDataLocalParsed.userInfo._id;
 
-      console.log("User ID:", userId);
+      // console.log("User ID:", userId);
       console.log("Form Data:", formData);
 
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
         productName: formData.productName,
+        orderID: formData.orderNumber + formData.slugName,
         // Updated to use userId directly
       });
 
@@ -63,7 +61,7 @@ const AddnewShip = () => {
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: `Shipment has been added ${formData.reference}`,
+          title: `Shipment has been added ${formData.reference} + ${formData.orderID}`,
         });
       } else {
         console.error("Error submitting form data:", response.data);
@@ -99,11 +97,18 @@ const AddnewShip = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "client") {
+      // Assuming 'value' is in the format "selectedId-selectedUsername-orderNumber"
       const [selectedId, selectedUsername] = value.split("-");
+      
+      // Check if slugName is defined (replace 'yourDefaultValue' with an appropriate default value)
+      // const orderIDConcat = slugName ? `${orderNumber}${slugName}` : [];
+      
+  
       setFormData((prevFormData) => ({
         ...prevFormData,
         client: selectedId,
         clientName: selectedUsername,
+        // orderID: orderIDConcat,
       }));
     } else {
       setFormData((prevFormData) => ({
@@ -113,6 +118,9 @@ const AddnewShip = () => {
       }));
     }
   };
+  
+  
+  
 
   useEffect(() => {
     axios
@@ -139,7 +147,7 @@ const AddnewShip = () => {
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
 
   // const filteredEmployees = employeeName.filter((item) => item.client === formData.client);
-
+  // console.log(getSlug)
   return (
     <>
       <div className="container">
@@ -242,30 +250,39 @@ const AddnewShip = () => {
                       >
                         #Order Number
                       </label>
+                      <div class="relative mb-6">
                         <div class="relative mb-6">
-                          <div class="relative mb-6">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                              {FilteredAdmin.map((employee) => {
-                                const res = employee.id === formData.client;
-                                const slugIsHere = res ? employee.slug : null;
-                                // setSlug(slugIsHere)
-                                return (
+                          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            {FilteredAdmin.map((employee) => {
+                              const res = employee.id === formData.client;
+                              const slugIsHere = res ? employee.slug : null;
+                              // setSlug(slugIsHere)
+                              return (
+                                <>
                                   <div key={employee.slug}>{slugIsHere}</div>
-                                );
-                              })}
-                            </div>
-                            <input
-                              type="number"
-                              name="orderNumber"
-                              id="orderNumber"
-
-                              autoComplete="given-name"
-                              onChange={handleChange}
-                              class="border-1 outline-none border-stone-300	 focus:border-red-500 text-dark-900 text-sm rounded-lg focus:ring-1 focus:ring-red-500 block w-full ps-10 p-2.5 light:bg-white-700 light:placeholder-gray-400 text-gray-950"
-                              placeholder="#01234"
-                            />
+                                  <input
+                                    id="slugName"
+                                    name="slugName"
+                                    defaultValue={slugIsHere}
+                                    className="form-control"
+                                    onChange={handleChange}
+                                    style={{ display: "none" }}
+                                  />
+                                </>
+                              );
+                            })}
                           </div>
+                          <input
+                            type="number"
+                            name="orderNumber"
+                            id="orderNumber"
+                            autoComplete="given-name"
+                            onChange={handleChange}
+                            class="border-1 outline-none border-stone-300	 focus:border-red-500 text-dark-900 text-sm rounded-lg focus:ring-1 focus:ring-red-500 block w-full ps-10 p-2.5 light:bg-white-700 light:placeholder-gray-400 text-gray-950"
+                            placeholder="#01234"
+                          />
                         </div>
+                      </div>
                     </div>
                     <div className="sm:col-span-3">
                       <label

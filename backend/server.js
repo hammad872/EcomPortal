@@ -98,7 +98,7 @@ app.post("/addshipment", async (req, res) => {
       clientName,
       parcel,
       receiverName,
-      orderNumber,
+      orderNumber : orderNumber+slugName,
       city,
       productName,
       customerEmail,

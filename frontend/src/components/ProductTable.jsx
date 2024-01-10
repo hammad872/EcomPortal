@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
-// import Swal from "sweetalert2";
 import { DataGrid } from "@mui/x-data-grid";
 import { CircularProgress } from "@mui/material";
 

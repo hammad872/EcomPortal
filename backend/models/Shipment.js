@@ -27,7 +27,7 @@ const shipmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  orderNumber: {
+  orderID: {
     type: String,
     required:true, 
   },
