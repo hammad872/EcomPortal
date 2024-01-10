@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
@@ -11,23 +11,15 @@ const animatedComponents = makeAnimated();
 const AddnewShip = () => {
   const userData = JSON.parse(localStorage.getItem("loginToken"));
   const isAdminLoggedIn = userData.userInfo.role;
-  const [productName, setProductName] = useState(""); // Provide an initial value appropriate for your use case
-  // Add this code to your useEffect hook where you handle formData changes
-  useEffect(() => {
-    console.log(productName); // Log the updated value of productName
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      productName: productName,
-    }));
-  }, [productName]); // Run this effect whenever productName changes
+  const [productName, setProductName] = useState("");
   const [formData, setFormData] = useState({
     parcel: "",
     reference: "",
     receiverName: "",
-    productName: "", // Updated to include the client field
-    client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id, // Updated to include the client field
-    clientName: userData.userInfo.username, // Updated to include the client field
-    city: "United States", // Set a default value
+    productName: "",
+    client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id,
+    clientName: userData.userInfo.username,
+    city: "United States",
     orderNumber: "",
     customerEmail: "",
     orderID: "",
@@ -37,27 +29,31 @@ const AddnewShip = () => {
   });
   const [employeeName, setEmployeeName] = useState([]);
   const [getProductList, setProductList] = useState([]);
+  const formRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       let userDataLocal = localStorage.getItem("loginToken");
       let userDataLocalParsed = JSON.parse(userDataLocal);
       let userId = userDataLocalParsed.userInfo._id;
-  
+
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
-        orderID: `${formData.orderNumber}${formData.slugName}`, // Concatenate orderNumber and slugName
+        orderID: `${formData.orderNumber}${formData.slugName}`,
       });
-  
+
       console.log("Form data submitted:", response.data);
-  
+
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: `Shipment has been added ${formData.reference}`,
+        }).then(() => {
+          // Reset the form after clicking OK on Swal
+          formRef.current.reset();
         });
       } else {
         console.error("Error submitting form data:", response.data);
@@ -77,19 +73,6 @@ const AddnewShip = () => {
       return;
     }
   };
-  
-
-  const handleReset = (e) => {
-    e.preventDefault();
-    setFormData({
-      reference: "",
-      receiverName: "",
-      customerEmail: "",
-      customerAddress: "",
-      contactNumber: "",
-      codAmount: "",
-    });
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,7 +90,7 @@ const AddnewShip = () => {
         slugName: slugIsHere,
       }));
     } else if (name === "orderNumber") {
-      const slugName = formData.slugName || ""; // Get the current slugName or an empty string
+      const slugName = formData.slugName || "";
       const orderIDConcat = `${formData.orderNumber}${slugName}`;
 
       setFormData((prevFormData) => ({
@@ -127,7 +110,7 @@ const AddnewShip = () => {
     axios
       .get("http://localhost:3001/getregister")
       .then((employeeNameResponse) => {
-        setEmployeeName(employeeNameResponse.data); // Update this line
+        setEmployeeName(employeeNameResponse.data);
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
@@ -138,7 +121,7 @@ const AddnewShip = () => {
     axios
       .get("http://localhost:3001/getproducts")
       .then((ProductData) => {
-        setProductList(ProductData.data); // Update this line
+        setProductList(ProductData.data);
       })
       .catch((error) => {
         console.error("Error fetching shipment data:", error);
@@ -146,7 +129,6 @@ const AddnewShip = () => {
   }, []);
 
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
-
   // const filteredEmployees = employeeName.filter((item) => item.client === formData.client);
   // console.log(getSlug)
   return (
@@ -165,7 +147,7 @@ const AddnewShip = () => {
                 padding: "45px",
               }}
             >
-              <form onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit}>
                 <div className="space-y-12">
                   <h3>Shipment Entry</h3>
                   <div className="border-b border-gray-900/10 pb-12">
@@ -454,7 +436,6 @@ const AddnewShip = () => {
                   <button
                     type="button"
                     className="text-sm font-semibold leading-6 text-gray-900"
-                    onClick={handleReset}
                   >
                     Reset
                   </button>
