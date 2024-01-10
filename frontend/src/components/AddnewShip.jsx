@@ -30,6 +30,7 @@ const AddnewShip = () => {
     city: "United States", // Set a default value
     orderNumber: "1",
     customerEmail: "",
+    orderID: "",
     customerAddress: "",
     contactNumber: "",
     codAmount: "",
@@ -39,29 +40,24 @@ const AddnewShip = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       let userDataLocal = localStorage.getItem("loginToken");
       let userDataLocalParsed = JSON.parse(userDataLocal);
       let userId = userDataLocalParsed.userInfo._id;
-
-      // console.log("User ID:", userId);
-      console.log("Form Data:", formData);
-
+  
       const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
-        productName: formData.productName,
-        orderID: formData.orderNumber + formData.slugName,
-        // Updated to use userId directly
+        orderID: `${formData.orderNumber}${formData.slugName}`, // Concatenate orderNumber and slugName
       });
-
+  
       console.log("Form data submitted:", response.data);
-
+  
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: `Shipment has been added ${formData.reference} + ${formData.orderID}`,
+          title: `Shipment has been added ${formData.reference}`,
         });
       } else {
         console.error("Error submitting form data:", response.data);
@@ -81,6 +77,7 @@ const AddnewShip = () => {
       return;
     }
   };
+  
 
   const handleReset = (e) => {
     e.preventDefault();
@@ -96,31 +93,35 @@ const AddnewShip = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (name === "client") {
-      // Assuming 'value' is in the format "selectedId-selectedUsername-orderNumber"
       const [selectedId, selectedUsername] = value.split("-");
-      
-      // Check if slugName is defined (replace 'yourDefaultValue' with an appropriate default value)
-      // const orderIDConcat = slugName ? `${orderNumber}${slugName}` : [];
-      
-  
+      const slugIsHere =
+        FilteredAdmin.find((employee) => employee.id === selectedId)?.slug ||
+        "";
+
       setFormData((prevFormData) => ({
         ...prevFormData,
         client: selectedId,
         clientName: selectedUsername,
-        // orderID: orderIDConcat,
+        slugName: slugIsHere,
+      }));
+    } else if (name === "orderNumber") {
+      const slugName = formData.slugName || ""; // Get the current slugName or an empty string
+      const orderIDConcat = `${formData.orderNumber}${slugName}`;
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        orderID: orderIDConcat,
       }));
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: value,
-        productName: formData.productName,
       }));
     }
   };
-  
-  
-  
 
   useEffect(() => {
     axios
@@ -272,13 +273,14 @@ const AddnewShip = () => {
                               );
                             })}
                           </div>
-                          <input
+                          <input  
                             type="number"
                             name="orderNumber"
                             id="orderNumber"
                             autoComplete="given-name"
                             onChange={handleChange}
-                            class="border-1 outline-none border-stone-300	 focus:border-red-500 text-dark-900 text-sm rounded-lg focus:ring-1 focus:ring-red-500 block w-full ps-10 p-2.5 light:bg-white-700 light:placeholder-gray-400 text-gray-950"
+                            value={formData.orderNumber}
+                            className="border-1 outline-none border-stone-300	 focus:border-red-500 text-dark-900 text-sm rounded-lg focus:ring-1 focus:ring-red-500 block w-full ps-10 p-2.5 light:bg-white-700 light:placeholder-gray-400 text-gray-950"
                             placeholder="#01234"
                           />
                         </div>

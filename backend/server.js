@@ -81,7 +81,7 @@ app.post("/addshipment", async (req, res) => {
     orderNumber,
     client,
     clientName,
-    productName ,
+    productName,
     customerEmail,
     customerAddress,
     contactNumber,
@@ -90,6 +90,16 @@ app.post("/addshipment", async (req, res) => {
   } = req.body;
 
   try {
+    const selectedUser = await EmployeeModel.findById(client);
+
+    if (!selectedUser) {
+      return res.status(404).json({ error: "Selected client not found" });
+    }
+
+    const slugName = selectedUser.slug || ""; // Get the slugName of the selected user
+
+    const orderID = slugName + orderNumber; // Concatenate slugName first
+
     const users = await EmployeeModel.find({ _id: { $in: userIds } });
 
     const shipment = await ShipmentModel.create({
@@ -98,7 +108,8 @@ app.post("/addshipment", async (req, res) => {
       clientName,
       parcel,
       receiverName,
-      orderNumber : orderNumber+slugName,
+      orderNumber,
+      orderID,
       city,
       productName,
       customerEmail,
@@ -122,7 +133,6 @@ app.post("/addshipment", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 app.get("/getshipments", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
@@ -130,7 +140,7 @@ app.get("/getshipments", async (req, res) => {
       id: shipment._id,
       client: shipment.client,
       clientName: shipment.clientName,
-      orderNumber: shipment.orderNumber,
+      orderID: shipment.orderID, // Update to use orderNumber
       parcel: shipment.parcel,
       reference: shipment.reference,
       productName: shipment.productName,
@@ -148,6 +158,7 @@ app.get("/getshipments", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 
