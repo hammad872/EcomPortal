@@ -24,7 +24,7 @@ const Navbar = () => {
           </a>
           <nav>
             <ul>
-              <li>
+              <li className="mt-5">
                 <a href="/dashboard">
                   <i className="fa fa-bar-chart" aria-hidden="true"></i>{" "}
                   Dashboard

@@ -395,7 +395,7 @@ header.dashboard-header div#profile_card {
 }
 
 aside {
-  background: #FF6262; /* Red theme */
+  background: white; /* Red theme */
   width: 250px;
   height: 100vh;
   position: fixed;
@@ -415,37 +415,42 @@ aside.close {
 aside img {
   width: 100%;
   padding: 11px;
+  background-color: red;
 }
 
 /* Animated Hover Effect */
 /* Sliding Text on Hover */
 nav a {
   display: block;
-  color: #ddd;
+  color: black;
   text-decoration: none;
   padding: 10px;
   transition: transform 0.3s ease-in-out;
 }
 
 nav a:hover {
-  transform: translateX(30px);
+  transform: translateX(30px);;
   color: white;
 }
 
 
 
 /* Sliding Text */
-@keyframes slideIn {
+/* @keyframes slideIn {
   0% {
     transform: translateX(-100%);
   }
   100% {
     transform: translateX(0);
   }
-}
+} */
 
 nav a {
-  animation: slideIn 0.5s forwards;
+  transition: 0.3s;
+}
+
+nav a:hover{
+  background-color: red;
 }
 
 
@@ -467,9 +472,7 @@ nav li{
   transition: 0.3s;
 }
 
-nav li:hover {
-  transform: translateX(30px);
-}
+
 
 
 
