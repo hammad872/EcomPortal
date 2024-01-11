@@ -245,6 +245,55 @@ app.delete("/deleteshipment/:id", async (req, res) => {
 
 
 
+app.post("/searchshipments", async (req, res) => {
+  const { searchBy, searchTerm } = req.body;
+
+  try {
+    let query;
+
+    switch (searchBy) {
+      case "Order Number":
+        query = { orderNumber: searchTerm };
+        break;
+      case "Client":
+        query = { "client.username": searchTerm };
+        break;
+      case "Reference":
+        query = { reference: searchTerm };
+        break;
+      case "ClientName":
+        query = { clientName: searchTerm };
+        break;
+      case "ReceiverName":
+        query = { receiverName: searchTerm };
+        break;
+      default:
+        return res.status(400).json({ error: "Invalid search criteria" });
+    }
+
+    const shipments = await ShipmentModel.find(query);
+
+    const formattedShipments = shipments.map((shipment) => ({
+      id: shipment._id,
+      orderID: shipment.orderID,
+      reference: shipment.reference,
+      receiverName: shipment.receiverName,
+      city: shipment.city,
+      customerEmail: shipment.customerEmail,
+      customerAddress: shipment.customerAddress,
+      parcel: shipment.parcel,
+      contactNumber: shipment.contactNumber,
+      codAmount: shipment.codAmount,
+      timestamps: shipment.createdAt,
+      clientName: shipment.clientName,
+    }));
+
+    res.json(formattedShipments);
+  } catch (err) {
+    console.error("Error searching shipments:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 
