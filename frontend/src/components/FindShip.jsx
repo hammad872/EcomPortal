@@ -92,17 +92,17 @@ const FindShip = () => {
   ];
   return (
     <>
-      <div className="container">
-        <Header />
-        <div className="row">
-          <div className="col-lg-3">
-            <Navbar />
-          </div>
-          <div className="col-lg-6 py-5">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="auth-div mt-5">
-                  <img src="\assets\logo-black.png" alt="" />
+    <div className="container">
+      <Header />
+      <div className="row">
+        <div className="col-lg-3">
+          <Navbar />
+        </div>
+        <div className="col-lg-8 py-5">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="auth-div mt-5">
+              <img src="\assets\logo-black.png" alt="" />
                   <form className="form" onSubmit={(e) => e.preventDefault()}>
                     <div className="flex-column">
                       <label>Search By</label>
@@ -134,27 +134,31 @@ const FindShip = () => {
                       Search
                     </button>
                   </form>
-                </div>
-              </div>
-              <div className="col-lg-12">
-              {filteredShipments.length > 0 && (
-                <div style={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    rows={filteredShipments}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5, 10, 20]}
-                    checkboxSelection
-                  />
-                </div>
-              )}
               </div>
             </div>
           </div>
-          <div className="col-lg-3"></div>
         </div>
       </div>
-    </>
+    </div>
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-10">
+          {filteredShipments.length > 0 && (
+            <div style={{ height: 400, width: "100%", marginTop:"40px"}}>
+              <DataGrid
+                rows={filteredShipments}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5, 10, 20]}
+                checkboxSelection
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </>
   );
 };
 
