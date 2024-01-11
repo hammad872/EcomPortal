@@ -5,12 +5,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 
 const FindShip = () => {
-    const [searchBy, setSearchBy] = useState("Order Number");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [shipments, setShipments] = useState([]);
-    const [filteredShipments, setFilteredShipments] = useState([]);
-    let userData = JSON.parse(localStorage.getItem("loginToken"));
-    useEffect(() => {
+  const [searchBy, setSearchBy] = useState("Order Number");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [shipments, setShipments] = useState([]);
+  const [filteredShipments, setFilteredShipments] = useState([]);
+  let userData = JSON.parse(localStorage.getItem("loginToken"));
+  useEffect(() => {
     // Fetch initial shipments when the component mounts
     fetchShipments();
   }, []);
@@ -35,9 +35,9 @@ const FindShip = () => {
       setFilteredShipments(shipments);
       return;
     }
-  
+
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
-  
+
     const filteredResults = shipments.filter((shipment) => {
       switch (searchBy) {
         case "Order Number":
@@ -45,14 +45,16 @@ const FindShip = () => {
         case "Reference":
           return shipment.reference.toLowerCase().includes(lowerCaseSearchTerm);
         case "ClientName":
-          return shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm);
+          return shipment.clientName
+            .toLowerCase()
+            .includes(lowerCaseSearchTerm);
         default:
           return false;
       }
     });
-  
+
     console.log("Filtered Results:", filteredResults); // Add this line to log the filtered results
-  
+
     setFilteredShipments(filteredResults);
   };
 
@@ -92,16 +94,15 @@ const FindShip = () => {
       : []),
   ];
 
-
   return (
     <>
       <div className="container">
         <Header />
         <div className="row">
-          <div className="col-lg-2">
+          <div className="col-lg-3">
             <Navbar />
           </div>
-          <div className="col-lg-8 py-5">
+          <div className="col-lg-6 py-5">
             <div className="auth-div mt-5">
               <img src="\assets\logo-black.png" alt="" />
               <form className="form" onSubmit={(e) => e.preventDefault()}>
@@ -149,6 +150,7 @@ const FindShip = () => {
               )}
             </div>
           </div>
+          <div className="col-lg-3"></div>
         </div>
       </div>
     </>
