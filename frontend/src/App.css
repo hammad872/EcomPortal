@@ -1,16 +1,17 @@
-*{
-  font-family: 'Poppins', sans-serif;
+* {
+  font-family: "Poppins", sans-serif;
 }
 
-.thm-clr{
-  color: #FF6262 !important;
+.thm-clr {
+  color: #ff6262 !important;
 }
 .auth-div {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   flex-direction: column;
   border-radius: 12px;
 }
@@ -89,7 +90,7 @@
 .auth-div .span {
   font-size: 14px;
   margin-left: 5px;
-  color: #E75555;
+  color: #e75555;
   font-weight: 500;
   cursor: pointer;
 }
@@ -163,7 +164,6 @@ button:focus {
   outline: none;
 }
 
-
 /* Header
 ---------------*/
 
@@ -181,7 +181,7 @@ header.dashboard-header {
     z-index: 1;
     justify-content: center;
     align-items: center;
-}
+  }
 
   .card__img {
     height: 192px;
@@ -192,8 +192,6 @@ header.dashboard-header {
     height: 100%;
     border-radius: 20px 20px 0 0;
   }
-
-  
 
   .card__avatar {
     position: absolute;
@@ -213,7 +211,6 @@ header.dashboard-header {
   }
 
   .card__title {
-
     font-weight: 500;
     font-size: 18px;
     color: var(--main-color);
@@ -241,13 +238,10 @@ header.dashboard-header {
     text-align: center;
   }
 
-
   .card__btn:hover {
-    background: #E75555;
+    background: #e75555;
     color: var(--bg-color);
-
   }
-
 }
 .bell-noti {
   .button {
@@ -370,19 +364,19 @@ header.dashboard-header div#profile_card {
 
 .ship_stat {
   text-align: center;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 
 .ship_stat h2 {
-  font-size: 25px ;
+  font-size: 25px;
   font-weight: 700;
   margin-top: 20px;
 }
 
 .ship_stat p {
   font-size: 20px;
-  color: #DB5151;
+  color: #db5151;
 }
 
 .ship_stat img {
@@ -390,7 +384,7 @@ header.dashboard-header div#profile_card {
   margin: 0 auto;
 }
 
- ul {
+ul {
   list-style-type: none;
 }
 
@@ -407,11 +401,12 @@ aside {
 }
 
 aside.close {
+  overflow: hidden;
   left: 0;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   transition: 0.3s;
-  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
 }
-
 aside img {
   width: 100%;
   padding: 11px;
@@ -429,11 +424,9 @@ nav a {
 }
 
 nav a:hover {
-  transform: translateX(30px);;
+  transform: translateX(30px);
   color: white;
 }
-
-
 
 /* Sliding Text */
 /* @keyframes slideIn {
@@ -449,8 +442,14 @@ nav a {
   transition: 0.3s;
 }
 
-nav a:hover{
-  background-color: red;
+aside.close nav li:hover{
+  background-color: #d1181e;
+}
+.MuiDataGrid-root.MuiDataGrid-root--densityStandard.MuiDataGrid-withBorderColor.css-ptkaw2-MuiDataGrid-root {
+  background-color: #fff !important;
+}
+aside.close ul li {
+  border-bottom: 1px solid #e5e5e5;
 }
 
 
@@ -471,28 +470,22 @@ aside button {
 nav li{
   transition: 0.3s;
 }
-
-
-
-
-
 .custom-button {
   cursor: pointer;
   position: relative;
   padding: 6px 40px;
   font-size: 18px;
-  color: #DB5151;
-  border: 2px solid #DB5151;
+  color: #db5151;
+  border: 2px solid #db5151;
   border-radius: 34px;
   background-color: transparent;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   overflow: hidden;
 }
 
-
 .custom-button::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   margin: auto;
@@ -501,8 +494,8 @@ nav li{
   border-radius: inherit;
   scale: 0;
   z-index: -1;
-  background-color: #F7AFAF;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  background-color: #f7afaf;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .custom-button:hover::before {
@@ -512,7 +505,7 @@ nav li{
 .custom-button:hover {
   color: #212121;
   scale: 1.1;
-  box-shadow: 0 0px 20px #F7AFAF;
+  box-shadow: 0 0px 20px #f7afaf;
 }
 
 .custom-button:active {
@@ -525,17 +518,21 @@ nav li{
   gap: 1rem;
 }
 
-.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
   color: rgb(231, 85, 85) !important;
 }
 
 .MuiDataGrid-cell {
   outline-color: rgb(231, 85, 85) !important;
 }
-.css-t3ipsp-control:focus  , .css-t3ipsp-control:hover , .css-13cymwt-control:focus , .css-13cymwt-control:hover{
+.css-t3ipsp-control:focus,
+.css-t3ipsp-control:hover,
+.css-13cymwt-control:focus,
+.css-13cymwt-control:hover {
   border-color: rgb(231, 85, 85) !important;
-  box-shadow:  0 0 0 1px  rgb(231, 85, 85) !important;
-  outline-color:   rgb(231, 85, 85) !important;
+  box-shadow: 0 0 0 1px rgb(231, 85, 85) !important;
+  outline-color: rgb(231, 85, 85) !important;
 }
 .notification-container {
   position: relative;
@@ -545,7 +542,7 @@ nav li{
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: #E75555;
+  background-color: #e75555;
   color: white;
   border-radius: 50%;
   padding: 4px 8px;
@@ -557,20 +554,20 @@ form h3 {
   font-weight: 600;
   text-align: center;
   margin-top: 5px;
-  color: #FF6262;
+  color: #ff6262;
 }
 
 .form-input {
   width: 100%;
   border-radius: 0.375rem; /* Corresponds to rounded-md in Tailwind */
-  border:1px solid #cbcbcb;
+  border: 1px solid #cbcbcb;
   padding-top: 0.375rem; /* Corresponds to py-1.5 in Tailwind */
   padding-bottom: 0.375rem; /* Corresponds to py-1.5 in Tailwind */
   color: #1a202c; /* Corresponds to text-gray-900 in Tailwind */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Corresponds to shadow-sm in Tailwind */
   box-sizing: border-box;
   outline: none;
-  
+
   font-size: 0.875rem; /* Corresponds to sm:text-sm in Tailwind */
   line-height: 1.5; /* Corresponds to sm:leading-6 in Tailwind */
   padding-left: 10px;
@@ -578,37 +575,36 @@ form h3 {
 }
 
 .form-input::placeholder {
-  color: #9ca3af; 
+  color: #9ca3af;
 }
 
 .form-input:focus {
-  border-color: #FF6262
+  border-color: #ff6262;
 }
 
 .submit-button {
   border-radius: 0.375rem;
-  background-color: #FF6262;
-  padding: 0.5rem 0.75rem; 
+  background-color: #ff6262;
+  padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 600;
   color: #ffffff;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
-  transition: background-color 0.3s ease; 
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color:  #ee3131; 
+  background-color: #ee3131;
 }
 
 .MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--sortable.MuiDataGrid-columnHeader--sorted.MuiDataGrid-withBorderColor {
-  outline-color: #FF6262 !important;
+  outline-color: #ff6262 !important;
 }
-
 
 .form-input2 {
   width: 100%;
   border-radius: 10px; /* Corresponds to rounded-md in Tailwind */
-  border:1px solid #cbcbcb;
+  border: 1px solid #cbcbcb;
   padding-top: 0.375rem; /* Corresponds to py-1.5 in Tailwind */
   padding-bottom: 0.375rem; /* Corresponds to py-1.5 in Tailwind */
   color: #1a202c; /* Corresponds to text-gray-900 in Tailwind */
@@ -623,11 +619,11 @@ form h3 {
 }
 
 .form-input2::placeholder {
-  color: #9ca3af; 
+  color: #9ca3af;
 }
 
 .form-input2:focus {
-  border-color: rgb(74, 74, 253)
+  border-color: rgb(74, 74, 253);
 }
 
 .dropdown {
@@ -641,10 +637,32 @@ form h3 {
   color: #ff6262;
 }
 
-
 .css-ptkaw2-MuiDataGrid-root {
   height: 400px !important;
 }
 .swal2-container.swal2-center.swal2-backdrop-show {
   z-index: 99999999999 !important;
 }
+
+.profile {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #FF0000;
+  margin: 10px auto;
+  width: 80%;
+  display: flex;
+  padding: 10px 15px 10px 10px;
+  border-radius: 10px;
+  justify-content: space-around;
+
+}
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  font-size: 16px;
+  color: red;
+  text-align: center;
+  line-height: 45px;
+}
+

@@ -43,8 +43,8 @@ const AddnewShip = () => {
         ...formData,
         userIds: [userId],
         orderID: `${formData.orderNumber}${formData.slugName}`,
+        productName: productName, // Include productName in the request
       });
-
       console.log("Form data submitted:", response.data);
 
       if (response.status === 200) {
@@ -288,11 +288,7 @@ const AddnewShip = () => {
                             label: e.productTitle,
                           }))}
                           onChange={(selectedOptions) => {
-                            const selectedProducts = selectedOptions.map(
-                              (option) => ({
-                                prodName: option.value,
-                              })
-                            );
+                            const selectedProducts = selectedOptions.map((option) => option.value);
                             setProductName(selectedProducts);
                             // Further processing or setting state with the array of objects
                             console.log(selectedProducts);

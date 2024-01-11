@@ -74,7 +74,7 @@ const Table = () => {
   });
 
   const columns = [
-  { field: "orderID", headerName: "Order #", width: 150 },
+    { field: "orderID", headerName: "Order #", width: 80 },
     { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
@@ -241,54 +241,54 @@ const Table = () => {
                     <pre>{}</pre>
 
                     <div className="main-card row py-3">
-                    <div className="card-subtitle ">
-                        <span className="card-title fw-bold">Order #: </span>
+                    <div className="card-subtitle">
+                        <span className="card-title">Order #: </span>
                         <span className="name">{parsedData.orderID}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Reference: </span>
+                        <span className="card-title">Reference: </span>
                         <span className="name">{parsedData.reference}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Receiver Name: </span>
+                        <span className="card-title">Receiver Name: </span>
                         <span className="name">{parsedData.receiverName}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">City: </span>
+                        <span className="card-title">City: </span>
                         <span className="name">{parsedData.city}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Customer Email: </span>
+                        <span className="card-title">Customer Email: </span>
                         <span className="name">{parsedData.customerEmail}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Customer Address: </span>
+                        <span className="card-title">Customer Address: </span>
                         <p className="name">{parsedData.customerAddress}</p>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Client Name: </span>
+                        <span className="card-title">Client Name: </span>
                         <span className="name text-uppercase">
                           {parsedData.clientName}
                         </span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">COD Amount: </span>
+                        <span className="card-title">COD Amount: </span>
                         <span className="name">{parsedData.codAmount}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Contact Number: </span>
+                        <span className="card-title">Contact Number: </span>
                         <span className="name">{parsedData.contactNumber}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Parcel Status: </span>
+                        <span className="card-title">Parcel Status: </span>
                         <span className="name">{parsedData.parcel}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Products: </span>
+                        <span className="card-title">Products: </span>
                         <span className="name">
-                          <ol className="prod-list list-group-numbered">
+                          <ol className="prod-list">
                             {parsedData.productName.map((nestedArray, index) => (
-                              <li className="fst-italic" key={index}>{nestedArray[0].prodName}</li>
+                              <li key={index}>{nestedArray[0].prodName}</li>
                               ))}
                             </ol>
                         </span>

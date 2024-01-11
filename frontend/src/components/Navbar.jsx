@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -13,7 +13,21 @@ const Navbar = () => {
   };
 
   const isUserAdmin = JSON.parse(localStorage.getItem("loginToken"));
+  let userData = JSON.parse(localStorage.getItem("loginToken"));
+  const [innerUsername, setUser_name] = useState();
+  const [innerRole, setUser_Role] = useState();
+  const [innerSlug, setUser_slug] = useState();
 
+  useEffect(() => {
+    // This code will run when the component mounts
+    setUser_name(userData.userInfo.username);
+    setUser_Role(userData.userInfo.role);
+    setUser_slug(userData.userInfo.slug);
+  }, [
+    userData.userInfo.username,
+    userData.userInfo.role,
+    userData.userInfo.slug,
+  ]);
   return (
     <>
       <header />
@@ -22,6 +36,15 @@ const Navbar = () => {
           <a href="/dashboard">
             <img src="\assets\logo.png" alt="" />
           </a>
+          <div className="shadow profile">
+              <div className="profileImage">
+                <p> {innerSlug} </p>
+              </div>
+            <div className="profileText">
+              <p className="text-white text-uppercase">{innerUsername}</p>
+              <p className="text-white">{innerRole}</p>
+          </div>
+            </div>
           <nav>
             <ul>
               <li className="mt-5">
