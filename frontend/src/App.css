@@ -410,7 +410,7 @@ aside.close {
 aside img {
   width: 100%;
   padding: 11px;
-  background-color: red;
+  background-color: #d1181e;
 }
 
 /* Animated Hover Effect */
@@ -646,7 +646,7 @@ form h3 {
 
 .profile {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #FF0000;
+  background: #d1181e;
   margin: 10px auto;
   width: 80%;
   display: flex;
@@ -656,8 +656,9 @@ form h3 {
 
 }
 .profileImage {
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background: #ffffff;
   font-size: 16px;
@@ -665,4 +666,22 @@ form h3 {
   text-align: center;
   line-height: 45px;
 }
+.profileImage:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #87ebbd;
+  border-radius: 50%;
+}
 
+.logoutbutton{
+  transition: 3s;
+  margin: 0 auto;
+}
+
+.logoutbutton:hover{
+  cursor: pointer;
+}

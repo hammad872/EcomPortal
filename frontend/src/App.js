@@ -9,6 +9,7 @@ import AddnewShip from "./components/AddnewShip";
 import ImportShip from "./components/ImportShip";
 import AddProduct from "./components/AddProduct";
 import ProductTable from "./components/ProductTable";
+import FindShip from "./components/FindShip";
 
 function App() {
   useEffect(() => {
@@ -50,8 +51,12 @@ function App() {
           element={<PrivateRoute element={<AddProduct />} />}
         />
         <Route
-        path="/product-table"
+          path="/product-table"
           element={<PrivateRoute element={<ProductTable />} />}
+        />
+        <Route
+          path="/find-shipment"
+          element={<PrivateRoute element={<FindShip />} />}
         />
       </Routes>
     </BrowserRouter>

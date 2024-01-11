@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -10,6 +11,13 @@ const Navbar = () => {
 
   const toggleDropdown2 = () => {
     setDropdownOpen2(!isDropdownOpen2);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("loginToken");
+    navigate("/");
   };
 
   const isUserAdmin = JSON.parse(localStorage.getItem("loginToken"));
@@ -37,14 +45,14 @@ const Navbar = () => {
             <img src="\assets\logo.png" alt="" />
           </a>
           <div className="shadow profile">
-              <div className="profileImage">
-                <p> {innerSlug} </p>
-              </div>
+            <div className="profileImage">
+              <p> {innerSlug} </p>
+            </div>
             <div className="profileText">
               <p className="text-white text-uppercase">{innerUsername}</p>
               <p className="text-white">{innerRole}</p>
-          </div>
             </div>
+          </div>
           <nav>
             <ul>
               <li className="mt-5">
@@ -65,6 +73,9 @@ const Navbar = () => {
                     </li>
                     <li>
                       <a href="/import">Import Page</a>
+                    </li>
+                    <li>
+                      <a href="/find-shipment">Find Shipment</a>
                     </li>
                   </ul>
                 )}
@@ -87,6 +98,12 @@ const Navbar = () => {
                   )}
                 </li>
               )}
+              <li onClick={handleLogout}>
+                <a className="dropdown">
+                  <i className="fa fa-sign-out" aria-hidden="true"></i> &nbsp;
+                  Log Out
+                </a>
+              </li>
             </ul>
           </nav>
         </aside>
