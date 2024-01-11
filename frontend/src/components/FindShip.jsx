@@ -14,7 +14,7 @@ const FindShip = () => {
     // Fetch initial shipments when the component mounts
     fetchShipments();
   }, []);
-
+  
   const fetchShipments = async () => {
     try {
       const response = await axios.get("http://localhost:3001/getshipments");
@@ -35,23 +35,20 @@ const FindShip = () => {
       setFilteredShipments(shipments);
       return;
     }
-
+    const userIDForData = userData.userInfo._id;
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
 
     const filteredResults = shipments.filter((shipment) => {
-      switch (searchBy) {
-        case "Order Number":
-          return shipment.orderID.toLowerCase().includes(lowerCaseSearchTerm);
-        case "Reference":
-          return shipment.reference.toLowerCase().includes(lowerCaseSearchTerm);
-        case "ClientName":
-          return shipment.clientName
-            .toLowerCase()
-            .includes(lowerCaseSearchTerm);
-        default:
-          return false;
-      }
+      const matchesSearchTerm =
+        (searchBy === "Order Number" && shipment.orderID.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (searchBy === "Reference" && shipment.reference.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (searchBy === "ClientName" && shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm));
+    
+      const matchesUserID = shipment.client === userIDForData;
+    
+      return matchesSearchTerm && matchesUserID;
     });
+    
 
     console.log("Filtered Results:", filteredResults); // Add this line to log the filtered results
 
@@ -93,7 +90,6 @@ const FindShip = () => {
         ]
       : []),
   ];
-
   return (
     <>
       <div className="container">
@@ -103,40 +99,44 @@ const FindShip = () => {
             <Navbar />
           </div>
           <div className="col-lg-6 py-5">
-            <div className="auth-div mt-5">
-              <img src="\assets\logo-black.png" alt="" />
-              <form className="form" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex-column">
-                  <label>Search By</label>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="auth-div mt-5">
+                  <img src="\assets\logo-black.png" alt="" />
+                  <form className="form" onSubmit={(e) => e.preventDefault()}>
+                    <div className="flex-column">
+                      <label>Search By</label>
+                    </div>
+                    <select
+                      id="search"
+                      name="search"
+                      autoComplete="country-name"
+                      className="form-input"
+                      value={searchBy}
+                      onChange={(e) => setSearchBy(e.target.value)}
+                    >
+                      <option value="Order Number">Order Number</option>
+                      <option value="Reference">Reference</option>
+                      <option value="ClientName">Client Name</option>
+                    </select>
+                    <div className="flex-column">
+                      <label>Enter Here</label>
+                    </div>
+                    <div className="inputForm">
+                      <input
+                        className="input"
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </div>
+                    <button className="button-submit" onClick={handleSearch}>
+                      Search
+                    </button>
+                  </form>
                 </div>
-                <select
-                  id="search"
-                  name="search"
-                  autoComplete="country-name"
-                  className="form-input"
-                  value={searchBy}
-                  onChange={(e) => setSearchBy(e.target.value)}
-                >
-                  <option value="Order Number">Order Number</option>
-                  <option value="Reference">Reference</option>
-                  <option value="ClientName">Client Name</option>
-                </select>
-                <div className="flex-column">
-                  <label>Enter Here</label>
-                </div>
-                <div className="inputForm">
-                  <input
-                    className="input"
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-                <button className="button-submit" onClick={handleSearch}>
-                  Search
-                </button>
-              </form>
-
+              </div>
+              <div className="col-lg-12">
               {filteredShipments.length > 0 && (
                 <div style={{ height: 400, width: "100%" }}>
                   <DataGrid
@@ -148,6 +148,7 @@ const FindShip = () => {
                   />
                 </div>
               )}
+              </div>
             </div>
           </div>
           <div className="col-lg-3"></div>
