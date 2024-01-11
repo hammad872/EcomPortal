@@ -287,9 +287,10 @@ const Table = () => {
                         <span className="card-title">Products: </span>
                         <span className="name">
                           <ol className="prod-list">
-                            {parsedData.productName.map((nestedArray, index) => (
-                              <li key={index}>{nestedArray[0].prodName}</li>
-                              ))}
+                              {parsedData.productName.map((nestedArray, index) => (
+                                  <li key={index}>{nestedArray[0]}</li>
+                                ))}
+
                             </ol>
                         </span>
                       </div>
