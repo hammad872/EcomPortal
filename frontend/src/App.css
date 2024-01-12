@@ -423,28 +423,37 @@ nav a {
   transition: transform 0.3s ease-in-out;
 }
 
-nav a:hover {
-  transform: translateX(30px);
-  color: white;
-}
 
-/* Sliding Text */
-/* @keyframes slideIn {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-} */
 
 nav a {
-  transition: 0.3s;
+  transition: all linear 0.3s;
 }
-
-aside.close nav li:hover{
+/* nav > ul.dropdown-main > li:hover{
   background-color: #d1181e;
 }
+nav > ul.dropdown-inner > li:hover{
+  background-color: #d1181e;
+} */
+aside.close nav > ul > li:hover > a{
+  cursor: pointer;
+  color: #fff !important;
+}
+.active-sidenav {
+  background-color: #d1181e;
+  color: #fff;
+}
+i.rotate {
+  transform: rotate(90deg);
+}
+
+aside.close nav > ul > li:hover > a {
+  background-color: #d1181e;
+}
+aside.close > nav > ul.dropdown-inner > li:hover > a {
+  color: #D1181E !important;
+}
+
+
 .MuiDataGrid-root.MuiDataGrid-root--densityStandard.MuiDataGrid-withBorderColor.css-ptkaw2-MuiDataGrid-root {
   background-color: #fff !important;
 }

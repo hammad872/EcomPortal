@@ -13,7 +13,7 @@ const AddnewShip = () => {
   const isAdminLoggedIn = userData.userInfo.role;
   const [productName, setProductName] = useState("");
   const [formData, setFormData] = useState({
-    parcel: "",
+    parcel: "In Transit",
     reference: "",
     receiverName: "",
     productName: "",
@@ -210,21 +210,7 @@ const AddnewShip = () => {
                       >
                         Parcel
                       </label>
-                      <div className="mt-2">
-                        <select
-                          id="parcel"
-                          name="parcel"
-                          autoComplete="country-name"
-                          className="form-input"
-                          onChange={handleChange}
-                        >
-                          <option>Parcel Status</option>
-                          <option value="Delivered">Delivered</option>
-                          <option value="In Transit">In Transit</option>
-                          <option value="Returned">Returned</option>
-                          <option value="Cancelled">Cancelled</option>
-                        </select>
-                      </div>
+                      
                     </div>
                     <div className="sm:col-span-3 mt-4">
                       <label

@@ -5,12 +5,24 @@ const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownOpen2, setDropdownOpen2] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
     setDropdownOpen(!isDropdownOpen);
-  };
+  
+    // Toggle the "active-sidenav" class on the clicked element
+    event.currentTarget.querySelector('a').classList.toggle("active-sidenav");
+    event.currentTarget.querySelector('i.fa-caret-right').classList.toggle("rotate");
 
-  const toggleDropdown2 = () => {
+
+  };
+  
+  
+
+  const toggleDropdown2 = (event) => {
     setDropdownOpen2(!isDropdownOpen2);
+
+    event.currentTarget.querySelector('a').classList.toggle("active-sidenav");
+    event.currentTarget.querySelector('i.fa-caret-right').classList.toggle("rotate");
+
   };
 
   const navigate = useNavigate();
@@ -49,8 +61,10 @@ const Navbar = () => {
               <p> {innerSlug} </p>
             </div>
             <div className="profileText">
-              <p className="text-white text-uppercase">{innerUsername}</p>
-              <p className="text-white">{innerRole}</p>
+              <p className="text-white text-center text-uppercase fw-bold">
+                {innerUsername}
+              </p>
+              <p className="text-white text-center">{innerRole}</p>
             </div>
           </div>
           <nav>
@@ -61,35 +75,50 @@ const Navbar = () => {
                   Dashboard
                 </a>
               </li>
-              <li onClick={toggleDropdown}>
-                <a className="dropdown">
-                  Shipment Entry{" "}
-                  <i className="fa fa-arrow-right" aria-hidden="true"></i>
+              <li className="" onClick={toggleDropdown}>
+                <a className="dropdown-main">
+                <i class="fa fa-plane" aria-hidden="true"></i>
+
+                  &nbsp;Shipment Entry&nbsp;&nbsp;
+                  <i class="fa fa-caret-right" aria-hidden="true"></i>
                 </a>
                 {isDropdownOpen && (
-                  <ul className="dropdown">
+                  <ul className="dropdown-inner">
                     <li>
-                      <a href="/add-new">Add New Page</a>
+                      <a href="/add-new">
+                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        &nbsp; Add New Shipment
+                      </a>
                     </li>
                     <li>
-                      <a href="/import">Import Page</a>
+                      <a href="/import">
+                        <i class="fa fa-upload"  aria-hidden="true"></i>&nbsp;
+                        Import Shipment
+                      </a>
                     </li>
                     <li>
-                      <a href="/find-shipment">Find Shipment</a>
+                      <a href="/find-shipment">
+                        {" "}
+                        <i class="fa fa-search"  aria-hidden="true"></i> &nbsp;
+                        Find Shipment
+                      </a>
                     </li>
                   </ul>
                 )}
               </li>
               {isUserAdmin.userInfo.role === "Admin" && (
-                <li onClick={toggleDropdown2}>
-                  <a className="dropdown">
-                    Product Entry{" "}
-                    <i className="fa fa-arrow-right" aria-hidden="true"></i>
+                <li className="" onClick={toggleDropdown2}>
+                  <a className="dropdown-main">
+                  <i class="fa fa-th-large" aria-hidden="true"></i>
+                    &nbsp;
+                    Product Entry&nbsp;&nbsp;
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
                   </a>
                   {isDropdownOpen2 && (
-                    <ul className="dropdown">
+                    <ul className="dropdown-inner">
                       <li>
-                        <a href="/add-product">Add New Product</a>
+                        <a href="/add-product"> <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        &nbsp;Add New Product</a>
                       </li>
                       <li>
                         <a href="/product-table">Products</a>
@@ -99,7 +128,7 @@ const Navbar = () => {
                 </li>
               )}
               <li onClick={handleLogout}>
-                <a className="dropdown">
+                <a className="dropdown-main">
                   <i className="fa fa-sign-out" aria-hidden="true"></i> &nbsp;
                   Log Out
                 </a>
