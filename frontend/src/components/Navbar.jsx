@@ -85,22 +85,29 @@ const Navbar = () => {
                 {isDropdownOpen && (
                   <ul className="dropdown-inner">
                     <li>
-                      <a href="/add-new">
+                      <a href="/add-new" className="hover:text-red-500 text-sm hover:ps-8 ">
                         <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         &nbsp; Add New Shipment
                       </a>
                     </li>
                     <li>
-                      <a href="/import">
+                      <a href="/import" className="hover:text-red-500 text-sm hover:ps-8 ">
                         <i class="fa fa-upload"  aria-hidden="true"></i>&nbsp;
                         Import Shipment
                       </a>
                     </li>
                     <li>
-                      <a href="/find-shipment">
+                      <a href="/find-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
                         {" "}
                         <i class="fa fa-search"  aria-hidden="true"></i> &nbsp;
                         Find Shipment
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/find-mult-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
+                        {" "}
+                        <i class="fa fa-users"  aria-hidden="true"></i> &nbsp;
+                        Find Multiple Shipments
                       </a>
                     </li>
                   </ul>
@@ -117,11 +124,11 @@ const Navbar = () => {
                   {isDropdownOpen2 && (
                     <ul className="dropdown-inner">
                       <li>
-                        <a href="/add-product"> <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <a href="/add-product" className="hover:text-red-500 text-sm hover:ps-8 "> <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         &nbsp;Add New Product</a>
                       </li>
                       <li>
-                        <a href="/product-table">Products</a>
+                        <a href="/product-table" className="hover:text-red-500 text-sm hover:ps-8 ">Products</a>
                       </li>
                     </ul>
                   )}

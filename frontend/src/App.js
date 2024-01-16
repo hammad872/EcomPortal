@@ -10,6 +10,7 @@ import ImportShip from "./components/ImportShip";
 import AddProduct from "./components/AddProduct";
 import ProductTable from "./components/ProductTable";
 import FindShip from "./components/FindShip";
+import FindMultiShip from "./components/FindMultiShip";
 
 function App() {
   useEffect(() => {
@@ -57,6 +58,10 @@ function App() {
         <Route
           path="/find-shipment"
           element={<PrivateRoute element={<FindShip />} />}
+        />
+        <Route
+          path="/find-mult-shipment"
+          element={<PrivateRoute element={<FindMultiShip />} />}
         />
       </Routes>
     </BrowserRouter>

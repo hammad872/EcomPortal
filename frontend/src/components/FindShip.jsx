@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const FindShip = () => {
   const [searchBy, setSearchBy] = useState("--Select a Field--");
@@ -41,22 +42,37 @@ const FindShip = () => {
 
     const filteredResults = shipments.filter((shipment) => {
       const matchesSearchTerm =
-        (searchBy === "Order Number" &&
+        (searchBy === 'Order Number' &&
           shipment.orderID.toLowerCase().includes(lowerCaseSearchTerm)) ||
-        (searchBy === "Reference" &&
+        (searchBy === 'Reference' &&
           shipment.reference.toLowerCase().includes(lowerCaseSearchTerm)) ||
-        (searchBy === "ClientName" &&
+        (searchBy === 'Client Name' &&
           shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm));
 
       const matchesUserID = shipment.client === userIDForData;
 
-      return matchesSearchTerm && matchesUserID;
+      if (userData.userInfo.role === 'Client') {
+        return matchesSearchTerm && matchesUserID;
+      } else {
+        return matchesSearchTerm;
+      }
     });
 
-    console.log("Filtered Results:", filteredResults); // Add this line to log the filtered results
+    console.log('Filtered Results:', filteredResults);
+
+    if (filteredResults.length === 0) {
+      // Show SweetAlert when no shipments are found
+      Swal.fire({
+        icon: 'error',
+        title: 'Shipment Not Found',
+        text: 'No shipments match the search criteria.',
+      });
+    }
 
     setFilteredShipments(filteredResults);
   };
+
+  
 
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },

@@ -139,12 +139,13 @@ const AddnewShip = () => {
           <div className="col-lg-2">
             <Navbar />
           </div>
-          <div className="col-lg-10 p-5" style={{}}>
+          <div className="col-lg-10 p-5 ">
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                 borderRadius: "10px",
                 padding: "45px",
+                backgroundColor:"white"
               }}
             >
             <form ref={formRef} onSubmit={handleSubmit}>
@@ -203,18 +204,9 @@ const AddnewShip = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-3 mt-3">
-                      <label
-                        htmlFor="parcel"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Parcel
-                      </label>
-                      
-                    </div>
                     <div className="sm:col-span-3 mt-4">
                       <label
-                        htmlFor="parcel"
+                        htmlFor="orderNumber"
                         className="block text-sm font-medium mb-2 leading-6 text-gray-900"
                       >
                         #Order Number
@@ -256,7 +248,7 @@ const AddnewShip = () => {
                     </div>
                     <div className="sm:col-span-3">
                       <label
-                        htmlFor="parcel"
+                        htmlFor="product"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Product
@@ -320,7 +312,7 @@ const AddnewShip = () => {
                       </div>
                       <div className="sm:col-span-3">
                         <label
-                          htmlFor="country"
+                          htmlFor="city"
                           className="block text-sm font-medium leading-6 text-gray-900"
                         >
                           City
