@@ -134,7 +134,7 @@ const FindShip = () => {
                         role="alert"
                       >
                         <p>
-                        Select and Enter The Field
+                        Select and Enter The Field To Find Shipment
                         </p>
                       </div>
                     </div>
