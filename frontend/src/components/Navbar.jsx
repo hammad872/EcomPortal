@@ -104,7 +104,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="/find-mult-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
+                      <a href="/find-multi-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
                         {" "}
                         <i class="fa fa-users"  aria-hidden="true"></i> &nbsp;
                         Find Multiple Shipments

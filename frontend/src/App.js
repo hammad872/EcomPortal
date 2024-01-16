@@ -60,7 +60,7 @@ function App() {
           element={<PrivateRoute element={<FindShip />} />}
         />
         <Route
-          path="/find-mult-shipment"
+          path="/find-multi-shipment"
           element={<PrivateRoute element={<FindMultiShip />} />}
         />
       </Routes>

@@ -32,14 +32,19 @@ const FindShip = () => {
   };
 
   const handleSearch = () => {
-    if (!searchTerm) {
-      // If searchTerm is empty, reset filteredShipments to all shipments
-      setFilteredShipments(shipments);
+    if (!searchTerm || searchBy === "--Select a Field--") {
+      // If searchTerm is empty or no specific field is selected, show a warning
+      Swal.fire({
+        icon: 'warning',
+        title: 'Select Field and Enter Search Term',
+        text: 'Please select a valid field and enter a search term.',
+      });
       return;
     }
+  
     const userIDForData = userData.userInfo._id;
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
+  
     const filteredResults = shipments.filter((shipment) => {
       const matchesSearchTerm =
         (searchBy === 'Order Number' &&
@@ -48,27 +53,27 @@ const FindShip = () => {
           shipment.reference.toLowerCase().includes(lowerCaseSearchTerm)) ||
         (searchBy === 'Client Name' &&
           shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm));
-
+  
       const matchesUserID = shipment.client === userIDForData;
-
+  
       if (userData.userInfo.role === 'Client') {
         return matchesSearchTerm && matchesUserID;
       } else {
         return matchesSearchTerm;
       }
     });
-
+  
     console.log('Filtered Results:', filteredResults);
-
+  
     if (filteredResults.length === 0) {
-      // Show SweetAlert when no shipments are found
+      // Show SweetAlert when no shipments are found based on the selected field
       Swal.fire({
         icon: 'error',
         title: 'Shipment Not Found',
-        text: 'No shipments match the search criteria.',
+        text: `No shipments found for ${searchBy}.`,
       });
     }
-
+  
     setFilteredShipments(filteredResults);
   };
 
@@ -123,6 +128,16 @@ const FindShip = () => {
                 <div className="auth-div mt-5">
                   <img src="\assets\logo-black.png" alt="" />
                   <form className="form" onSubmit={(e) => e.preventDefault()}>
+                  <div className="flex-column">
+                      <div
+                        className="alert p-2 alert-primary text-sm-center"
+                        role="alert"
+                      >
+                        <p>
+                        Select and Enter The Field
+                        </p>
+                      </div>
+                    </div>
                     <div className="flex-column">
                       <label>Search By</label>
                     </div>

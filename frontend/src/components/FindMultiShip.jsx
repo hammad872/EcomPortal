@@ -30,48 +30,42 @@ const FindShip = () => {
   const fetchShipments = async () => {
     try {
       const response = await axios.get("http://localhost:3001/getshipments");
-  
+
       if (!response.data || !Array.isArray(response.data)) {
         throw new Error("Invalid response format");
       }
-  
+
       setShipments(response.data);
-  
+
       // Use filter with a proper return statement
     } catch (error) {
       console.error("Error fetching shipments:", error.message);
     }
   };
-  
+
   // console.log(shipments)
 
   const handleSearch = () => {
     if (!searchTerm) {
       // If searchTerm is empty, reset filteredShipments to all shipments
       setFilteredShipments(shipments);
-      return;
+      return;  
     }
+
     const userIDForData = userData.userInfo._id;
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    const orders = searchTerm
+      .split(",")
+      .map((order) => order.trim().toLowerCase());
 
     const filteredResults = shipments.filter((shipment) => {
-      const matchesSearchTerm =
-        shipment.orderID.toLowerCase() == lowerCaseSearchTerm;
-
-      console.log("Order Status", matchesSearchTerm);
-      console.log("Input", lowerCaseSearchTerm);
-      // console.log("mine:",lowerCaseSearchTerm)
-      // console.log(shipment.orderID.toLowerCase())
-
-      // const matchesUserID = shipment.client === userIDForData;
-
-      // if (userData.userInfo.role === "Client") {
-      //   console.log(matchesSearchTerm)
-      //   return matchesSearchTerm && matchesUserID;
-      // } else {
-      //   console.log(matchesSearchTerm)
-      //   return matchesSearchTerm;
-      // }
+      const matchesSearchTerm = orders.includes(shipment.orderID.toLowerCase());
+      // Optionally, you can add other conditions here if needed.
+      const matchesUserID = shipment.client === userIDForData;
+      if (userData.userInfo.role === "Client") {
+        return matchesSearchTerm && matchesUserID;
+      } else {
+        return matchesSearchTerm;
+      }
     });
 
     console.log("Filtered Results:", filteredResults);
