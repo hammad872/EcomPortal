@@ -34,7 +34,7 @@ const shipmentSchema = new mongoose.Schema({
     type: String,
   },
   contactNumber: {
-    type: String ,
+    type: Number ,
   },
   codAmount: {
     type: Number,
