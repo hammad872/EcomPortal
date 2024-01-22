@@ -177,7 +177,7 @@ header.dashboard-header {
     --bg-color: #fff;
     position: relative;
     width: auto;
-    height: 266px;
+    height: 200px;
     border-radius: 20px;
     background: var(--bg-color);
     text-align: center;
@@ -228,17 +228,18 @@ header.dashboard-header {
 
   .card__btn {
     margin-top: 15px;
-    height: 31px;
+    height: 100%;
     border: 2px solid var(--main-color);
     border-radius: 4px;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--main-color);
     background: var(--bg-color);
     text-transform: uppercase;
     transition: all 0.3s;
-    width: 92%;
+    width: 100%;
     text-align: center;
+    padding: 0 22px;
   }
 
   .card__btn:hover {
@@ -406,9 +407,10 @@ aside {
 aside.close {
   overflow: hidden;
   left: 0;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   transition: 0.3s;
-  transition-timing-function: cubic-bezier(0.9, 0, 1, 1);
+  transition-timing-function: cubic-bezier(0.9,  0,  1,  1);
 }
 aside img {
   width: 100%;
@@ -426,8 +428,6 @@ nav a {
   transition: transform 0.3s ease-in-out;
 }
 
-
-
 nav a {
   transition: all linear 0.3s;
 }
@@ -437,7 +437,7 @@ nav a {
 nav > ul.dropdown-inner > li:hover{
   background-color: #d1181e;
 } */
-aside.close nav > ul > li:hover > a{
+aside.close nav > ul > li:hover > a {
   cursor: pointer;
   color: #fff !important;
 }
@@ -453,9 +453,8 @@ aside.close nav > ul > li:hover > a {
   background-color: #d1181e;
 }
 aside.close > nav > ul.dropdown-inner > li:hover > a {
-  color: #D1181E !important;
+  color: #d1181e !important;
 }
-
 
 .MuiDataGrid-root.MuiDataGrid-root--densityStandard.MuiDataGrid-withBorderColor.css-ptkaw2-MuiDataGrid-root {
   background-color: #fff !important;
@@ -463,7 +462,6 @@ aside.close > nav > ul.dropdown-inner > li:hover > a {
 aside.close ul li {
   border-bottom: 1px solid #e5e5e5;
 }
-
 
 aside button {
   border: none;
@@ -477,9 +475,7 @@ aside button {
   cursor: pointer;
 }
 
-
-
-nav li{
+nav li {
   transition: 0.3s;
 }
 .custom-button {
@@ -665,7 +661,6 @@ form h3 {
   padding: 10px 15px 10px 10px;
   border-radius: 10px;
   justify-content: space-around;
-
 }
 .profileImage {
   position: relative;
@@ -689,11 +684,15 @@ form h3 {
   border-radius: 50%;
 }
 
-.logoutbutton{
+.logoutbutton {
   transition: 3s;
   margin: 0 auto;
 }
 
-.logoutbutton:hover{
+.logoutbutton:hover {
   cursor: pointer;
+}
+
+.col-lg-2-5 {
+  width: 19.83%;
 }

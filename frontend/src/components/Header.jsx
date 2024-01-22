@@ -58,7 +58,6 @@ const Header = () => {
                 <button className="card__btn mx-1" onClick={handleLogout}>
                   Logout
                 </button>
-                <button className="card__btn mx-1 ">Button</button>
               </div>
             </div>
           )}
