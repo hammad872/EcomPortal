@@ -7,11 +7,10 @@ const shipmentSchema = new mongoose.Schema({
    },
   clientName:{
       type: String,
-      required:false,
+      required:true,
    },
   parcel: {
     type: String,
-    required: true,
   },
   productName: [
     {
@@ -19,37 +18,26 @@ const shipmentSchema = new mongoose.Schema({
       ref: 'Product',  // Make sure this matches the model name for shipments
     },
   ],
-  reference: {
-    type: String,
-    required: true,
-  },
   receiverName: {
     type: String,
-    required: true,
   },
   orderID: {
     type: String,
-    required:true, 
   },
   city: {
     type: String,
-    required: true,
   },
   customerEmail: {      
     type: String,
-    required: true,
   },
   customerAddress: {
     type: String,
-    required: true,
   },
   contactNumber: {
     type: String ,
-    required: true,
   },
   codAmount: {
     type: Number,
-    required: true,
   },
  
 }, { timestamps: true });

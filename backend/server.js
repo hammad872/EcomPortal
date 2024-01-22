@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
-const ProductModel = require("./models/Product");  
+const ProductModel = require("./models/Product");
 
 const app = express();
 app.use(cors());
@@ -74,7 +74,6 @@ app.post("/addshipment", async (req, res) => {
   console.log("Received Request Body:", req.body);
 
   const {
-    reference,
     parcel,
     receiverName,
     city,
@@ -103,7 +102,6 @@ app.post("/addshipment", async (req, res) => {
     const users = await EmployeeModel.find({ _id: { $in: userIds } });
 
     const shipment = await ShipmentModel.create({
-      reference,
       client,
       clientName,
       parcel,
@@ -142,7 +140,6 @@ app.get("/getshipments", async (req, res) => {
       clientName: shipment.clientName,
       orderID: shipment.orderID, // Update to use orderNumber
       parcel: shipment.parcel,
-      reference: shipment.reference,
       productName: shipment.productName,
       receiverName: shipment.receiverName,
       city: shipment.city,
@@ -159,18 +156,15 @@ app.get("/getshipments", async (req, res) => {
   }
 });
 
-
-
-
 app.get("/getregister", async (req, res) => {
   try {
-    const employeesWithShipments = await EmployeeModel.find()
+    const employeesWithShipments = await EmployeeModel.find();
 
     const formattedEmployees = employeesWithShipments.map((employee) => ({
       username: employee.username,
       id: employee._id,
       role: employee.role,
-      slug: employee.slug, 
+      slug: employee.slug,
       shipments: employee.shipments.map((shipment) => ({
         id: shipment._id,
       })),
@@ -182,9 +176,6 @@ app.get("/getregister", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
-
 
 app.post("/addproduct", async (req, res) => {
   const { productTitle, sourcing } = req.body;
@@ -214,7 +205,6 @@ app.delete("/deleteshipment/:id", async (req, res) => {
   try {
     const shipment = await ShipmentModel.findOneAndDelete({ _id: shipmentId });
 
-
     if (!shipment) {
       return res.status(404).json({ error: "Shipment not found" });
     }
@@ -243,8 +233,6 @@ app.delete("/deleteshipment/:id", async (req, res) => {
   }
 });
 
-
-
 app.post("/searchshipments", async (req, res) => {
   const { searchBy, searchTerm } = req.body;
 
@@ -257,9 +245,6 @@ app.post("/searchshipments", async (req, res) => {
         break;
       case "Client":
         query = { "client.username": searchTerm };
-        break;
-      case "Reference":
-        query = { reference: searchTerm };
         break;
       case "ClientName":
         query = { clientName: searchTerm };
@@ -276,7 +261,6 @@ app.post("/searchshipments", async (req, res) => {
     const formattedShipments = shipments.map((shipment) => ({
       id: shipment._id,
       orderID: shipment.orderID,
-      reference: shipment.reference,
       receiverName: shipment.receiverName,
       city: shipment.city,
       customerEmail: shipment.customerEmail,
@@ -295,10 +279,47 @@ app.post("/searchshipments", async (req, res) => {
   }
 });
 
+app.post("/upload-csv", async (req, res) => {
+  try {
+    const data = req.body.data;
+    const selectedClient = req.body.clientName;
 
+    // Fetch slug for the selected client from getregister
+    const clientInfo = await EmployeeModel.findOne({
+      username: selectedClient,
+    });
+    const clientSlug = clientInfo ? clientInfo.slug || "" : "";
 
+    const shipments = data.map((row) => {
+      // Map CSV fields to Shipment fields
+      const orderID = (clientSlug + row.Name).replace(/#/g, ""); // Remove '#' characters
+      return {
+        orderID,
+        clientName: selectedClient,
+        parcel: "In Transit",
+        productName: row["Lineitem name"],
+        codAmount: row.Total,
+        customerAddress: row["Billing Address1"],
+        receiverName: row["Billing Name"],
+        contactNumber: row["Phone"],
+        city: row["Shipping Province Name"],
+        customerEmail: row["Email"],
+        // Map other CSV fields to Shipment fields here
+      };
+    });
+
+    const insertedShipments = await ShipmentModel.insertMany(shipments);
+
+    console.log("Data saved to MongoDB successfully");
+    res.status(200).json({
+      message: "Data saved successfully",
+      shipments: insertedShipments,
+    });
+  } catch (err) {
+    console.error("Error saving data to MongoDB:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
 });
-
-

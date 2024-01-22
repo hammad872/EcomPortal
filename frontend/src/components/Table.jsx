@@ -75,7 +75,6 @@ const Table = () => {
 
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },
-    { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
     { field: "customerEmail", headerName: "Customer Email", width: 200 },

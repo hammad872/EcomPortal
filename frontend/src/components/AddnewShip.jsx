@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
+
 const animatedComponents = makeAnimated();
 
 const AddnewShip = () => {
@@ -14,7 +15,6 @@ const AddnewShip = () => {
   const [productName, setProductName] = useState("");
   const [formData, setFormData] = useState({
     parcel: "In Transit",
-    reference: "",
     receiverName: "",
     productName: "",
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id,
@@ -50,7 +50,7 @@ const AddnewShip = () => {
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: `Shipment has been added ${formData.reference}`,
+          title: `Shipment has been added ${formData.receiverName}`,
         }).then(() => {
           // Reset the form after clicking OK on Swal
           formRef.current.reset();
@@ -275,24 +275,6 @@ const AddnewShip = () => {
                       </div>
                     </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="reference"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Reference
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="reference"
-                            id="reference"
-                            autoComplete="given-name"
-                            className="form-input"
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
                       <div className="sm:col-span-3">
                         <label
                           htmlFor="receiverName"
