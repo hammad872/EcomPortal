@@ -83,7 +83,7 @@ const Table = () => {
     {
       field: "contactNumber",
       headerName: "Contact Number",
-      type: "number",
+      type: "string",
       width: 150,
     },
     {
