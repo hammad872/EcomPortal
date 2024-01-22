@@ -1,3 +1,10 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Header from "./Header";
@@ -49,7 +56,7 @@ const FindShip = () => {
     if (!searchTerm) {
       // If searchTerm is empty, reset filteredShipments to all shipments
       setFilteredShipments(shipments);
-      return;  
+      return;
     }
 
     const userIDForData = userData.userInfo._id;
@@ -117,6 +124,67 @@ const FindShip = () => {
         ]
       : []),
   ];
+
+  // const [popupInfo , setPopupInfo ] = useState();
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const handleCellClick = (params) => {
+    setSelectedRow(params.row);
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+  const handleDeleteShipment = async (e) => {
+    // Show SweetAlert confirmation dialog
+    const isConfirmed = await Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this shipment!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    });
+
+    // If the user confirms the deletion, proceed with the delete request
+    if (isConfirmed.value) {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/deleteshipment/${e}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              // Add any additional headers if needed
+            },
+          }
+        );
+
+        const data = await response.json();
+        console.log(data);
+
+        // Optionally, show a success message
+        Swal.fire("Deleted!", "Your shipment has been deleted.", "success");
+          // Fetch initial shipments when the component mounts
+          // selectedRow.style.display = "none";
+
+      } catch (error) {
+        console.error("Error deleting shipment:", error);
+        // Show an error message using SweetAlert
+        Swal.fire(
+          "Error",
+          "An error occurred while deleting the shipment.",
+          "error"
+        );
+      }
+    }
+    // If the user cancels the deletion, do nothing
+  };
+
+  const myDataString = JSON.stringify(selectedRow, null, 2);
+  const parsedData = JSON.parse(myDataString);
   return (
     <>
       <div className="container">
@@ -182,8 +250,113 @@ const FindShip = () => {
                   columns={columns}
                   pageSize={5}
                   rowsPerPageOptions={[5, 10, 20]}
-                  checkboxSelection
+                  onCellClick={handleCellClick}
                 />
+                <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+                  <DialogTitle>Shipment Details</DialogTitle>
+                  <DialogContent>
+                    {selectedRow && (
+                      <div className="text-left">
+                        {/* { JSON.stringify(selectedRow, null, 2)} */}
+                        <pre>{}</pre>
+
+                        <div className="main-card row py-3">
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Order #:{" "}
+                            </span>
+                            <span className="name">{parsedData.orderID}</span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Reference:{" "}
+                            </span>
+                            <span className="name">{parsedData.reference}</span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Receiver Name:{" "}
+                            </span>
+                            <span className="name">
+                              {parsedData.receiverName}
+                            </span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">City: </span>
+                            <span className="name">{parsedData.city}</span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Customer Email:{" "}
+                            </span>
+                            <span className="name">
+                              {parsedData.customerEmail}
+                            </span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Customer Address:{" "}
+                            </span>
+                            <p className="name">{parsedData.customerAddress}</p>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Client Name:{" "}
+                            </span>
+                            <span className="name text-uppercase">
+                              {parsedData.clientName}
+                            </span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              COD Amount:{" "}
+                            </span>
+                            <span className="name">{parsedData.codAmount}</span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Contact Number:{" "}
+                            </span>
+                            <span className="name">
+                              {parsedData.contactNumber}
+                            </span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Parcel Status:{" "}
+                            </span>
+                            <span className="name">{parsedData.parcel}</span>
+                          </div>
+                          <div className="card-subtitle">
+                            <span className="card-title fw-bold">
+                              Products:{" "}
+                            </span>
+                            <span className="name">
+                              <ol className="prod-list list-group-numbered">
+                                {parsedData.productName.map(
+                                  (nestedArray, index) => (
+                                    <li key={index}>{nestedArray[0]}</li>
+                                  )
+                                )}
+                              </ol>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                    <Button onClick={handleCloseDialog} color="primary">
+                      <span className="text-primary fw-bold">Close</span>
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div>
             )}
           </div>
