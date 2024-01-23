@@ -283,10 +283,12 @@ app.post("/upload-csv", async (req, res) => {
   try {
     const data = req.body.data;
     const selectedClient = req.body.clientName;
+    const selectedClientId = req.body.client;
 
     // Fetch slug for the selected client from getregister
     const clientInfo = await EmployeeModel.findOne({
       username: selectedClient,
+      _id: selectedClientId
     });
     const clientSlug = clientInfo ? clientInfo.slug || "" : "";
 
@@ -296,6 +298,7 @@ app.post("/upload-csv", async (req, res) => {
       return {
         orderID,
         clientName: selectedClient,
+        client: selectedClientId,
         parcel: "In Transit",
         productName: row["Lineitem name"],
         codAmount: row.Total,

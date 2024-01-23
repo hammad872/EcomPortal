@@ -36,12 +36,15 @@ const ImportShip = () => {
     setCsvData([]);
     setFileUploaded(false);
   };
-
+  // const handleClientSelection = (e) =>{
+  //   const { name, value } = e.target;
+  // }
   const sendDataToMongoDB = () => {
     // Modify the API endpoint accordingly
     axios
       .post("http://localhost:3001/upload-csv", {
         data: csvData,
+        client: selectedClient.clientId,
         clientName: selectedClient.clientName,
       })
       .then((response) => {
