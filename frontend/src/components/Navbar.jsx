@@ -110,6 +110,13 @@ const Navbar = () => {
                         Find Multiple Shipments
                       </a>
                     </li>
+                    <li>
+                      <a href="/change-status" className="hover:text-red-500 text-sm hover:ps-8 ">
+                        {" "}
+                        <i class="fa fa-users"  aria-hidden="true"></i> &nbsp;
+                        Change Status
+                      </a>
+                    </li>
                   </ul>
                 )}
               </li>

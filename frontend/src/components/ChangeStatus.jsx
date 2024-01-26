@@ -1,10 +1,3 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Header from "./Header";
@@ -13,21 +6,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const FindShip = () => {
-  // const [searchBy, setSearchBy] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [shipments, setShipments] = useState([]);
   const [filteredShipments, setFilteredShipments] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState(""); // Added state for selected status
   let userData = JSON.parse(localStorage.getItem("loginToken"));
-  const isAdminLoggedIn = userData.userInfo.role;
-  const FilteredOrders = searchTerm.length === 0 ? [] : searchTerm.split(",");
-
-  // console.log(FilteredOrders)
-  const values = [];
-  FilteredOrders.forEach((e) => {
-    values.push(e);
-  });
-
-  console.log(values);
 
   useEffect(() => {
     // Fetch initial shipments when the component mounts
@@ -43,14 +26,10 @@ const FindShip = () => {
       }
 
       setShipments(response.data);
-
-      // Use filter with a proper return statement
     } catch (error) {
       console.error("Error fetching shipments:", error.message);
     }
   };
-
-  // console.log(shipments)
 
   const handleSearch = () => {
     if (!searchTerm) {
@@ -65,8 +44,9 @@ const FindShip = () => {
       .map((order) => order.trim().toLowerCase());
 
     const filteredResults = shipments.filter((shipment) => {
-      const matchesSearchTerm = orders.includes(shipment.orderID.toLowerCase());
-      // Optionally, you can add other conditions here if needed.
+      const matchesSearchTerm = orders.includes(
+        shipment.orderID.toLowerCase()
+      );
       const matchesUserID = shipment.client === userIDForData;
       if (userData.userInfo.role === "Client") {
         return matchesSearchTerm && matchesUserID;
@@ -87,6 +67,46 @@ const FindShip = () => {
     }
 
     setFilteredShipments(filteredResults);
+  };
+
+  const handleStatusChange = async () => {
+    if (!selectedStatus) {
+      Swal.fire({
+        icon: "warning",
+        title: "Select Status",
+        text: "Please select a status to update the shipment.",
+      });
+      return;
+    }
+
+    // Assuming you want to change the status of all filtered shipments
+    const orderIdsToUpdate = filteredShipments.map((shipment) => shipment.orderID);
+
+    try {
+      const response = await axios.patch(
+        "http://localhost:3001/changestatus",
+        { newStatus: selectedStatus, orderIds: orderIdsToUpdate }
+      );
+
+      if (response.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Status Changed",
+          text: "Shipment status has been updated successfully.",
+        });
+
+        // Refetch shipments after status change
+        fetchShipments();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while updating the shipment status.",
+        });
+      }
+    } catch (error) {
+      console.error("Error changing shipment status:", error.message);
+    }
   };
 
   const columns = [
@@ -125,66 +145,6 @@ const FindShip = () => {
       : []),
   ];
 
-  // const [popupInfo , setPopupInfo ] = useState();
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [isDialogOpen, setDialogOpen] = useState(false);
-  const handleCellClick = (params) => {
-    setSelectedRow(params.row);
-    setDialogOpen(true);
-  };
-
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
-  };
-  const handleDeleteShipment = async (e) => {
-    // Show SweetAlert confirmation dialog
-    const isConfirmed = await Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this shipment!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    });
-
-    // If the user confirms the deletion, proceed with the delete request
-    if (isConfirmed.value) {
-      try {
-        const response = await fetch(
-          `http://localhost:3001/deleteshipment/${e}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              // Add any additional headers if needed
-            },
-          }
-        );
-
-        const data = await response.json();
-        console.log(data);
-
-        // Optionally, show a success message
-        Swal.fire("Deleted!", "Your shipment has been deleted.", "success");
-          // Fetch initial shipments when the component mounts
-          // selectedRow.style.display = "none";
-
-      } catch (error) {
-        console.error("Error deleting shipment:", error);
-        // Show an error message using SweetAlert
-        Swal.fire(
-          "Error",
-          "An error occurred while deleting the shipment.",
-          "error"
-        );
-      }
-    }
-    // If the user cancels the deletion, do nothing
-  };
-
-  const myDataString = JSON.stringify(selectedRow, null, 2);
-  const parsedData = JSON.parse(myDataString);
   return (
     <>
       <div className="container">
@@ -206,7 +166,7 @@ const FindShip = () => {
                         role="alert"
                       >
                         <p>
-                          Enter Order Numbers by (,) comma seperated <br />
+                          Enter Order Numbers by (,) comma separated <br />
                           <em>eg., XXXX, XXX, XXX</em>
                         </p>
                       </div>
@@ -222,8 +182,34 @@ const FindShip = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
                     </div>
-                    <button className="button-submit" onClick={handleSearch}>
+                    <div className="flex-column">
+                      <label>Change Status</label>
+                    </div>
+                    <div className="inputForm">
+                      <select
+                        className="input"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.target.value)}
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Returned">Returned</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <button
+                      className="button-submit"
+                      type="submit"
+                      onClick={handleSearch}
+                    >
                       Search
+                    </button>
+                    <button
+                      className="button-submit"
+                      type="submit"
+                      onClick={handleStatusChange}
+                    >
+                      Change Status
                     </button>
                   </form>
                 </div>
@@ -250,113 +236,7 @@ const FindShip = () => {
                   columns={columns}
                   pageSize={5}
                   rowsPerPageOptions={[5, 10, 20]}
-                  onCellClick={handleCellClick}
                 />
-                <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
-                  <DialogTitle>Shipment Details</DialogTitle>
-                  <DialogContent>
-                    {selectedRow && (
-                      <div className="text-left">
-                        {/* { JSON.stringify(selectedRow, null, 2)} */}
-                        <pre>{}</pre>
-
-                        <div className="main-card row py-3">
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Order #:{" "}
-                            </span>
-                            <span className="name">{parsedData.orderID}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Reference:{" "}
-                            </span>
-                            <span className="name">{parsedData.reference}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Receiver Name:{" "}
-                            </span>
-                            <span className="name">
-                              {parsedData.receiverName}
-                            </span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">City: </span>
-                            <span className="name">{parsedData.city}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Customer Email:{" "}
-                            </span>
-                            <span className="name">
-                              {parsedData.customerEmail}
-                            </span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Customer Address:{" "}
-                            </span>
-                            <p className="name">{parsedData.customerAddress}</p>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Client Name:{" "}
-                            </span>
-                            <span className="name text-uppercase">
-                              {parsedData.clientName}
-                            </span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              COD Amount:{" "}
-                            </span>
-                            <span className="name">{parsedData.codAmount}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Contact Number:{" "}
-                            </span>
-                            <span className="name">
-                              {parsedData.contactNumber}
-                            </span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Parcel Status:{" "}
-                            </span>
-                            <span className="name">{parsedData.parcel}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Products:{" "}
-                            </span>
-                            <span className="name">
-                              <ol className="prod-list list-group-numbered">
-                                {parsedData.productName.map(
-                                  (nestedArray, index) => (
-                                    <li key={index}>{nestedArray[0]}</li>
-                                  )
-                                )}
-                              </ol>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={() => handleDeleteShipment(parsedData.id)}
-                      color="secondary"
-                    >
-                      <span className="text-danger fw-bold">Delete</span>
-                    </Button>
-                    <Button onClick={handleCloseDialog} color="primary">
-                      <span className="text-primary fw-bold">Close</span>
-                    </Button>
-                  </DialogActions>
-                </Dialog>
               </div>
             )}
           </div>
@@ -365,4 +245,5 @@ const FindShip = () => {
     </>
   );
 };
+
 export default FindShip;

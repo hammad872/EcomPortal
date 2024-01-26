@@ -323,6 +323,31 @@ app.post("/upload-csv", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.patch("/changestatus", async (req, res) => {
+  const { newStatus, orderIds } = req.body;
+
+  try {
+    // Validate newStatus
+    if (!["Delivered", "Returned", "Cancelled"].includes(newStatus)) {
+      return res.status(400).json({ error: "Invalid status" });
+    }
+
+    // Update status for the specified orders
+    await ShipmentModel.updateMany(
+      { orderID: { $in: orderIds } },
+      { parcel: newStatus }
+    );
+
+    res.json({ success: true, message: "Status updated successfully" });
+  } catch (err) {
+    console.error("Error changing status:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
 });

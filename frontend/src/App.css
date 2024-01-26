@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* background-color: #ffffff; */
+  background-color: #ffffff;
   padding: 30px;
   width: 65%;
   border-radius: 20px;
@@ -697,54 +697,3 @@ form h3 {
   width: 19.83%;
 }
 
-.Import h3 {
-  font-size: 25px;
-  font-weight: 600;
-  text-align: center;
-  margin-top: 5px;
-  color: #ff6262;
-}
-
-.custum-file-upload {
-  height: 200px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: space-between;
-  gap: 20px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed #e8e8e8;
-  background-color: #ccc;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0px 48px 35px -48px #e8e8e8;
-  margin: 0 auto;
-}
-
-.custum-file-upload .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custum-file-upload .icon svg {
-  height: 80px;
-  fill: #e8e8e8;
-}
-
-.custum-file-upload .text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custum-file-upload .text span {
-  font-weight: 400;
-  color: #e8e8e8;
-}
-
-.custum-file-upload input {
-  display: none;
-}
