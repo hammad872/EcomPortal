@@ -94,8 +94,9 @@ const Table = () => {
       width: 150,
     },
     {
-      field: "timestamps",
-      headerName: "Created At",
+      field: "date",
+      headerName: "Data Of Order",
+      type: Date,
       width: 200,
     },
     ...(userData.userInfo.role === "Admin"
@@ -334,7 +335,6 @@ const Table = () => {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
               />
             )}
           </div>
@@ -361,7 +361,6 @@ const Table = () => {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
               />
             )}
           </div>
@@ -388,7 +387,6 @@ const Table = () => {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
               />
             )}
           </div>

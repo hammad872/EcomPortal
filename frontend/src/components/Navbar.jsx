@@ -113,7 +113,7 @@ const Navbar = () => {
                     <li>
                       <a href="/change-status" className="hover:text-red-500 text-sm hover:ps-8 ">
                         {" "}
-                        <i class="fa fa-users"  aria-hidden="true"></i> &nbsp;
+                        <i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;
                         Change Status
                       </a>
                     </li>

@@ -39,6 +39,9 @@ const shipmentSchema = new mongoose.Schema(
     codAmount: {
       type: Number,
     },
+    date: {
+      type: Date,
+    }
   },
   { timestamps: true }
 );

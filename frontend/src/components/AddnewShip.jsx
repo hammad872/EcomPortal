@@ -331,6 +331,24 @@ const AddnewShip = () => {
                           />
                         </div>
                       </div>
+                      <div className="sm:col-span-3">
+                        <label
+                          htmlFor="date"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Date Of Order
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="date"
+                            name="date"
+                            type="date"
+                            autoComplete="date"
+                            className="form-input"
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
                       <div className="col-span-full">
                         <label
                           htmlFor="customerAddress"

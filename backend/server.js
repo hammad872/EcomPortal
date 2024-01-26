@@ -84,6 +84,7 @@ app.post("/addshipment", async (req, res) => {
     customerEmail,
     customerAddress,
     contactNumber,
+    date,
     codAmount,
     userIds,
   } = req.body;
@@ -107,6 +108,7 @@ app.post("/addshipment", async (req, res) => {
       parcel,
       receiverName,
       orderNumber,
+      date,
       orderID,
       city,
       productName,
@@ -134,27 +136,37 @@ app.post("/addshipment", async (req, res) => {
 app.get("/getshipments", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
-    const formattedShipments = shipments.map((shipment) => ({
-      id: shipment._id,
-      client: shipment.client,
-      clientName: shipment.clientName,
-      orderID: shipment.orderID, // Update to use orderNumber
-      parcel: shipment.parcel,
-      productName: shipment.productName,
-      receiverName: shipment.receiverName,
-      city: shipment.city,
-      customerEmail: shipment.customerEmail,
-      customerAddress: shipment.customerAddress,
-      contactNumber: shipment.contactNumber,
-      codAmount: shipment.codAmount,
-      timestamps: shipment.createdAt,
-    }));
+    const formattedShipments = shipments.map((shipment) => {
+      // Check if the date is a valid date
+      const formattedDate =
+        shipment.date instanceof Date && !isNaN(shipment.date)
+          ? new Date(shipment.date).toISOString().split("T")[0]
+          : null;
+
+      return {
+        id: shipment._id,
+        client: shipment.client,
+        clientName: shipment.clientName,
+        orderID: shipment.orderID,
+        parcel: shipment.parcel,
+        productName: shipment.productName,
+        date: formattedDate, // Use the formatted date or null
+        receiverName: shipment.receiverName,
+        city: shipment.city,
+        customerEmail: shipment.customerEmail,
+        customerAddress: shipment.customerAddress,
+        contactNumber: shipment.contactNumber,
+        codAmount: shipment.codAmount,
+        timestamps: shipment.createdAt,
+      };
+    });
     res.json(formattedShipments);
   } catch (err) {
     console.error("Error fetching shipments:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 app.get("/getregister", async (req, res) => {
   try {
@@ -260,10 +272,12 @@ app.post("/searchshipments", async (req, res) => {
 
     const formattedShipments = shipments.map((shipment) => ({
       id: shipment._id,
+
       orderID: shipment.orderID,
       receiverName: shipment.receiverName,
       city: shipment.city,
       customerEmail: shipment.customerEmail,
+      date:shipment.date,
       customerAddress: shipment.customerAddress,
       parcel: shipment.parcel,
       contactNumber: shipment.contactNumber,
@@ -307,6 +321,7 @@ app.post("/upload-csv", async (req, res) => {
         contactNumber: row["Phone"],
         city: row["Shipping Province Name"],
         customerEmail: row["Email"],
+        date: row["Fulfilled at"],
         // Map other CSV fields to Shipment fields here
       };
     });
@@ -346,6 +361,28 @@ app.patch("/changestatus", async (req, res) => {
   }
 });
 
+
+app.get("/totalcodamount", async (req, res) => {
+  try {
+    const shipments = await ShipmentModel.find();
+
+    console.log("Shipments:", shipments); // Log shipments to check if data is fetched correctly
+
+    // Calculate the total COD amount, considering only valid codAmount values
+    const totalCODAmount = shipments.reduce((acc, shipment) => {
+      // Ensure codAmount is a valid number before adding to the accumulator
+      const codAmount = typeof shipment.codAmount === 'number' ? shipment.codAmount : 0;
+      return acc + codAmount;
+    }, 0);
+
+    console.log("Total COD Amount:", totalCODAmount); // Log the total COD amount
+
+    res.json({ totalCODAmount });
+  } catch (err) {
+    console.error("Error calculating total COD amount:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.listen(3001, () => {

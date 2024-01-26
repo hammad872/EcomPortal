@@ -119,7 +119,7 @@ const ImportShip = () => {
                   ))}
                 </select>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 file">
                 <label for="file" class="custum-file-upload">
                   <div class="icon">
                     <svg
@@ -156,6 +156,7 @@ const ImportShip = () => {
                 </label>
 
                 {fileUploaded && (
+                  
                   <span style={{ marginLeft: "10px", color: "green" }}>
                     ✓ File Uploaded
                   </span>
