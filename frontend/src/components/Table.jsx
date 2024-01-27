@@ -242,13 +242,13 @@ const Table = () => {
                     <pre>{}</pre>
 
                     <div className="main-card row py-3">
-                    <div className="card-subtitle">
+                    <div className="card-subtitle text-primary">
                         <span className="card-title fw-bold">Order #: </span>
                         <span className="name">{parsedData.orderID}</span>
                       </div>
-                      <div className="card-subtitle">
-                        <span className="card-title fw-bold">Reference: </span>
-                        <span className="name">{parsedData.reference}</span>
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">Date Of Order: </span>
+                        <span className="name">{parsedData.date}</span>
                       </div>
                       <div className="card-subtitle">
                         <span className="card-title fw-bold">Receiver Name: </span>

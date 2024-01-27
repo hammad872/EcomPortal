@@ -61,11 +61,18 @@ const Dashboard = () => {
         );
 
         // Calculate the total COD amount from shipment data
-        const calculatedCODAmount = data.reduce(
+        const myCOD = data.reduce(
           (total, parcel) => total + (parcel.codAmount || 0),
           0
         );
-        setTotalCODAmount(calculatedCODAmount);
+        const myCODUser = data.filter((item) => item.client === userIDForData);
+        const myCODUserFinal = myCODUser.reduce(
+          (total, parcel) => total + (parcel.codAmount || 0),
+          0
+        );
+        isAdmin === "Client"
+          ? setTotalCODAmount(myCODUserFinal)
+          : setTotalCODAmount(myCOD);
       } catch (error) {
         console.error("Error fetching shipment data:", error);
       }
@@ -76,7 +83,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container-fluid">
         <Header />
         <div className="row">
           <div className="col-lg-2">
