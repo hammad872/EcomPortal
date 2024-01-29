@@ -33,7 +33,22 @@ const Table = () => {
   let userData = JSON.parse(localStorage.getItem("loginToken"));
 
   const generateCSVData = (tabData) => {
-    return (tabData ?? []).map((row) => [
+    // Check if tabData is defined before mapping
+    const headers = [
+      `<strong>OrderID</strong>`,
+      `<strong>ReceiverName</strong>`,
+      `<strong>City</strong>`,
+      `<strong>CustomerEmail</strong>`,
+      `<strong>CustomerAddress</strong>`,
+      `<strong>Parcel</strong>`,
+      `<strong>ContactNumber</strong>`,
+      `<strong>CODAmount</strong>`,
+      `<strong>Date</strong>`,
+      `<strong>ClientName</strong>`,
+      `<strong>ProductName</strong>`, // Assuming ProductName is an array
+    ];
+  
+    const data = (tabData ?? []).map((row) => [
       row.orderID,
       row.receiverName,
       row.city,
@@ -44,10 +59,11 @@ const Table = () => {
       row.codAmount,
       row.date,
       row.clientName,
-      row.productName,
+      row.productName ? row.productName.map((nestedArray) => nestedArray[0]).join(", ") : "", // Assuming ProductName is an array
     ]);
-
-    return csvData;
+  
+    // Include headers as the first row
+    return [headers, ...data];
   };
 
   useEffect(() => {
@@ -244,25 +260,17 @@ const Table = () => {
 
         {activeTab === "tab1" && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab1) }))}
-            >
-             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
+            
+             
               <CSVLink
+                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab1) }))}
                 data={csvData.tab1}
                 filename={`total_parcel.csv`}
-                className="btn btn-primary mb-3"
+                className="btn thm-bg-clr text-white mb-3"
                 style={{
-                  width: "100%",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                  opacity: "0",
+                  width: "10%",
                 }}
-              ></CSVLink>
-            </Button>
+              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
 
             <div
               id="tab1"
@@ -391,25 +399,16 @@ const Table = () => {
 
         {activeTab === "tab2" && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab2) }))}
-            >
-             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
-              <CSVLink
+            <CSVLink
+                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab2: generateCSVData(tableData.tab2) }))}
                 data={csvData.tab2}
-                filename={`delivered.csv`}
-                className="btn btn-primary mb-3"
+                filename={`total_parcel.csv`}
+                className="btn thm-bg-clr text-white mb-3"
                 style={{
-                  width: "100%",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                  opacity: "0",
+                  width: "10%",
                 }}
-              ></CSVLink>
-            </Button>
+              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+
             <div
               id="tab2"
               style={{ height: 400, width: "100%" }}
@@ -438,25 +437,16 @@ const Table = () => {
 
         {activeTab === "tab3" && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab3) }))}
-            >
-             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
-              <CSVLink
+            <CSVLink
+                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab3: generateCSVData(tableData.tab3) }))}
                 data={csvData.tab3}
-                filename={`in_transit.csv`}
-                className="btn btn-primary mb-3"
+                filename={`total_parcel.csv`}
+                className="btn thm-bg-clr text-white mb-3"
                 style={{
-                  width: "100%",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                  opacity: "0",
+                  width: "10%",
                 }}
-              ></CSVLink>
-            </Button>
+              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+
             <div
               id="tab3"
               style={{ height: 400, width: "100%" }}
@@ -485,25 +475,16 @@ const Table = () => {
 
         {activeTab === "tab4" && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab4) }))}
-            >
-             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
-              <CSVLink
+            <CSVLink
+                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab4: generateCSVData(tableData.tab4) }))}
                 data={csvData.tab4}
-                filename={`returned.csv`}
-                className="btn btn-primary mb-3"
+                filename={`total_parcel.csv`}
+                className="btn thm-bg-clr text-white mb-3"
                 style={{
-                  width: "100%",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                  opacity: "0",
+                  width: "10%",
                 }}
-              ></CSVLink>
-            </Button>
+              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+
             <div
               id="tab4"
               style={{ height: 400, width: "100%" }}
@@ -531,25 +512,15 @@ const Table = () => {
         )}
         {activeTab === "tab5" && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab5) }))}
-            >
-             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
-              <CSVLink
+            <CSVLink
+                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab5: generateCSVData(tableData.tab5) }))}
                 data={csvData.tab5}
-                filename={`cancelled.csv`}
-                className="btn btn-primary mb-3"
+                filename={`total_parcel.csv`}
+                className="btn thm-bg-clr text-white mb-3"
                 style={{
-                  width: "100%",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                  opacity: "0",
+                  width: "10%",
                 }}
-              ></CSVLink>
-            </Button>
+              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
             <div
               id="tab4"
               style={{ height: 400, width: "100%" }}

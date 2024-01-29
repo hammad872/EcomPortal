@@ -8,6 +8,10 @@
 .thm-clr {
   color: #ff6262 !important;
 }
+.thm-bg-clr {
+  background-color: #ff6262 !important;
+}
+
 .auth-div {
   height: 100%;
   display: flex;
