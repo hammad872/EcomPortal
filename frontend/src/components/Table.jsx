@@ -249,7 +249,7 @@ const Table = () => {
               color="primary"
               onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab1) }))}
             >
-              Export CSV
+             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
               <CSVLink
                 data={csvData.tab1}
                 filename={`total_parcel.csv`}
@@ -396,7 +396,7 @@ const Table = () => {
               color="primary"
               onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab2) }))}
             >
-              Export CSV
+             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
               <CSVLink
                 data={csvData.tab2}
                 filename={`delivered.csv`}
@@ -443,7 +443,7 @@ const Table = () => {
               color="primary"
               onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab3) }))}
             >
-              Export CSV
+             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
               <CSVLink
                 data={csvData.tab3}
                 filename={`in_transit.csv`}
@@ -490,7 +490,7 @@ const Table = () => {
               color="primary"
               onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab4) }))}
             >
-              Export CSV
+             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
               <CSVLink
                 data={csvData.tab4}
                 filename={`returned.csv`}
@@ -536,7 +536,7 @@ const Table = () => {
               color="primary"
               onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab5) }))}
             >
-              Export CSV
+             <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV
               <CSVLink
                 data={csvData.tab5}
                 filename={`cancelled.csv`}
