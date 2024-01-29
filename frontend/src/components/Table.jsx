@@ -35,19 +35,19 @@ const Table = () => {
   const generateCSVData = (tabData) => {
     // Check if tabData is defined before mapping
     const headers = [
-      `<strong>OrderID</strong>`,
-      `<strong>ReceiverName</strong>`,
-      `<strong>City</strong>`,
-      `<strong>CustomerEmail</strong>`,
-      `<strong>CustomerAddress</strong>`,
-      `<strong>Parcel</strong>`,
-      `<strong>ContactNumber</strong>`,
-      `<strong>CODAmount</strong>`,
-      `<strong>Date</strong>`,
-      `<strong>ClientName</strong>`,
-      `<strong>ProductName</strong>`, // Assuming ProductName is an array
+      `OrderID`,
+      `ReceiverName`,
+      `City`,
+      `CustomerEmail`,
+      `CustomerAddress`,
+      `Parcel`,
+      `ContactNumber`,
+      `CODAmount`,
+      `Date`,
+      `ClientName`,
+      `ProductName`, // Assuming ProductName is an array
     ];
-  
+
     const data = (tabData ?? []).map((row) => [
       row.orderID,
       row.receiverName,
@@ -59,9 +59,11 @@ const Table = () => {
       row.codAmount,
       row.date,
       row.clientName,
-      row.productName ? row.productName.map((nestedArray) => nestedArray[0]).join(", ") : "", // Assuming ProductName is an array
+      row.productName
+        ? row.productName.map((nestedArray) => nestedArray[0]).join(", ")
+        : "", // Assuming ProductName is an array
     ]);
-  
+
     // Include headers as the first row
     return [headers, ...data];
   };
@@ -260,17 +262,20 @@ const Table = () => {
 
         {activeTab === "tab1" && (
           <div>
-            
-             
-              <CSVLink
-                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab1) }))}
-                data={csvData.tab1}
-                filename={`total_parcel.csv`}
-                className="btn thm-bg-clr text-white mb-3"
-                style={{
-                  width: "10%",
-                }}
-              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+            <CSVLink
+              onClick={() =>
+                setCSVData((prevCSVData) => ({
+                  ...prevCSVData,
+                  tab1: generateCSVData(tableData.tab1),
+                }))
+              }
+              data={csvData.tab1}
+              filename={`total_parcel.csv`}
+              className="btn thm-bg-clr text-white mb-3 mt-3"
+            >
+              <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export
+              CSV
+            </CSVLink>
 
             <div
               id="tab1"
@@ -400,14 +405,19 @@ const Table = () => {
         {activeTab === "tab2" && (
           <div>
             <CSVLink
-                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab2: generateCSVData(tableData.tab2) }))}
-                data={csvData.tab2}
-                filename={`total_parcel.csv`}
-                className="btn thm-bg-clr text-white mb-3"
-                style={{
-                  width: "10%",
-                }}
-              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+              onClick={() =>
+                setCSVData((prevCSVData) => ({
+                  ...prevCSVData,
+                  tab2: generateCSVData(tableData.tab2),
+                }))
+              }
+              data={csvData.tab2}
+              filename={`delivered.csv`}
+              className="btn thm-bg-clr text-white mb-3 mt-3"
+            >
+              <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export
+              CSV
+            </CSVLink>
 
             <div
               id="tab2"
@@ -438,14 +448,19 @@ const Table = () => {
         {activeTab === "tab3" && (
           <div>
             <CSVLink
-                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab3: generateCSVData(tableData.tab3) }))}
-                data={csvData.tab3}
-                filename={`total_parcel.csv`}
-                className="btn thm-bg-clr text-white mb-3"
-                style={{
-                  width: "10%",
-                }}
-              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+              onClick={() =>
+                setCSVData((prevCSVData) => ({
+                  ...prevCSVData,
+                  tab3: generateCSVData(tableData.tab3),
+                }))
+              }
+              data={csvData.tab3}
+              filename={`in_transit.csv`}
+              className="btn thm-bg-clr text-white mb-3 mt-3"
+            >
+              <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export
+              CSV
+            </CSVLink>
 
             <div
               id="tab3"
@@ -476,14 +491,19 @@ const Table = () => {
         {activeTab === "tab4" && (
           <div>
             <CSVLink
-                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab4: generateCSVData(tableData.tab4) }))}
-                data={csvData.tab4}
-                filename={`total_parcel.csv`}
-                className="btn thm-bg-clr text-white mb-3"
-                style={{
-                  width: "10%",
-                }}
-              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+              onClick={() =>
+                setCSVData((prevCSVData) => ({
+                  ...prevCSVData,
+                  tab4: generateCSVData(tableData.tab4),
+                }))
+              }
+              data={csvData.tab4}
+              filename={`returned.csv`}
+              className="btn thm-bg-clr text-white mb-3 mt-3"
+            >
+              <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export
+              CSV
+            </CSVLink>
 
             <div
               id="tab4"
@@ -513,14 +533,19 @@ const Table = () => {
         {activeTab === "tab5" && (
           <div>
             <CSVLink
-                onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab5: generateCSVData(tableData.tab5) }))}
-                data={csvData.tab5}
-                filename={`total_parcel.csv`}
-                className="btn thm-bg-clr text-white mb-3"
-                style={{
-                  width: "10%",
-                }}
-              ><i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export CSV</CSVLink>
+              onClick={() =>
+                setCSVData((prevCSVData) => ({
+                  ...prevCSVData,
+                  tab5: generateCSVData(tableData.tab5),
+                }))
+              }
+              data={csvData.tab5}
+              filename={`cancelled.csv`}
+              className="btn thm-bg-clr text-white mb-3 mt-3"
+            >
+              <i class="fa fa-download" aria-hidden="true"></i> &nbsp; Export
+              CSV
+            </CSVLink>
             <div
               id="tab4"
               style={{ height: 400, width: "100%" }}
@@ -541,7 +566,6 @@ const Table = () => {
                   columns={columns}
                   pageSize={5}
                   rowsPerPageOptions={[5]}
-                  checkboxSelection
                 />
               )}
             </div>
