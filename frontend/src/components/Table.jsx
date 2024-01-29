@@ -438,10 +438,107 @@ const Table = () => {
                   rows={tableData.tab2}
                   columns={columns}
                   pageSize={5}
+                  onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
               )}
             </div>
+            <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+              <DialogTitle>Shipment Details</DialogTitle>
+              <DialogContent>
+                {selectedRow && (
+                  <div className="text-left">
+                    {/* { JSON.stringify(selectedRow, null, 2)} */}
+                    <pre>{}</pre>
+
+                    <div className="main-card row py-3">
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">Order #: </span>
+                        <span className="name">{parsedData.orderID}</span>
+                      </div>
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">
+                          Date Of Order:{" "}
+                        </span>
+                        <span className="name">{parsedData.date}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Receiver Name:{" "}
+                        </span>
+                        <span className="name">{parsedData.receiverName}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">City: </span>
+                        <span className="name">{parsedData.city}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Email:{" "}
+                        </span>
+                        <span className="name">{parsedData.customerEmail}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Address:{" "}
+                        </span>
+                        <p className="name">{parsedData.customerAddress}</p>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Client Name:{" "}
+                        </span>
+                        <span className="name text-uppercase">
+                          {parsedData.clientName}
+                        </span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">COD Amount: </span>
+                        <span className="name">{parsedData.codAmount}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Contact Number:{" "}
+                        </span>
+                        <span className="name">{parsedData.contactNumber}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Parcel Status:{" "}
+                        </span>
+                        <span className="name">{parsedData.parcel}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">Products: </span>
+                        <span className="name">
+                          <ol className="prod-list list-group-numbered">
+                            {parsedData.productName.map(
+                              (nestedArray, index) => (
+                                <li key={index}>{nestedArray[0]}</li>
+                              )
+                            )}
+                          </ol>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-success fw-bold">Edit</span>
+                </Button>
+                <Button
+                  onClick={() => handleDeleteShipment(parsedData.id)}
+                  color="secondary"
+                >
+                  <span className="text-danger fw-bold">Delete</span>
+                </Button>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-primary fw-bold">Close</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         )}
 
@@ -481,10 +578,107 @@ const Table = () => {
                   rows={tableData.tab3}
                   columns={columns}
                   pageSize={5}
+                  onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
               )}
             </div>
+            <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+              <DialogTitle>Shipment Details</DialogTitle>
+              <DialogContent>
+                {selectedRow && (
+                  <div className="text-left">
+                    {/* { JSON.stringify(selectedRow, null, 2)} */}
+                    <pre>{}</pre>
+
+                    <div className="main-card row py-3">
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">Order #: </span>
+                        <span className="name">{parsedData.orderID}</span>
+                      </div>
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">
+                          Date Of Order:{" "}
+                        </span>
+                        <span className="name">{parsedData.date}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Receiver Name:{" "}
+                        </span>
+                        <span className="name">{parsedData.receiverName}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">City: </span>
+                        <span className="name">{parsedData.city}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Email:{" "}
+                        </span>
+                        <span className="name">{parsedData.customerEmail}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Address:{" "}
+                        </span>
+                        <p className="name">{parsedData.customerAddress}</p>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Client Name:{" "}
+                        </span>
+                        <span className="name text-uppercase">
+                          {parsedData.clientName}
+                        </span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">COD Amount: </span>
+                        <span className="name">{parsedData.codAmount}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Contact Number:{" "}
+                        </span>
+                        <span className="name">{parsedData.contactNumber}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Parcel Status:{" "}
+                        </span>
+                        <span className="name">{parsedData.parcel}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">Products: </span>
+                        <span className="name">
+                          <ol className="prod-list list-group-numbered">
+                            {parsedData.productName.map(
+                              (nestedArray, index) => (
+                                <li key={index}>{nestedArray[0]}</li>
+                              )
+                            )}
+                          </ol>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-success fw-bold">Edit</span>
+                </Button>
+                <Button
+                  onClick={() => handleDeleteShipment(parsedData.id)}
+                  color="secondary"
+                >
+                  <span className="text-danger fw-bold">Delete</span>
+                </Button>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-primary fw-bold">Close</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         )}
 
@@ -524,10 +718,107 @@ const Table = () => {
                   rows={tableData.tab4}
                   columns={columns}
                   pageSize={5}
+                  onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
               )}
             </div>
+            <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+              <DialogTitle>Shipment Details</DialogTitle>
+              <DialogContent>
+                {selectedRow && (
+                  <div className="text-left">
+                    {/* { JSON.stringify(selectedRow, null, 2)} */}
+                    <pre>{}</pre>
+
+                    <div className="main-card row py-3">
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">Order #: </span>
+                        <span className="name">{parsedData.orderID}</span>
+                      </div>
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">
+                          Date Of Order:{" "}
+                        </span>
+                        <span className="name">{parsedData.date}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Receiver Name:{" "}
+                        </span>
+                        <span className="name">{parsedData.receiverName}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">City: </span>
+                        <span className="name">{parsedData.city}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Email:{" "}
+                        </span>
+                        <span className="name">{parsedData.customerEmail}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Address:{" "}
+                        </span>
+                        <p className="name">{parsedData.customerAddress}</p>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Client Name:{" "}
+                        </span>
+                        <span className="name text-uppercase">
+                          {parsedData.clientName}
+                        </span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">COD Amount: </span>
+                        <span className="name">{parsedData.codAmount}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Contact Number:{" "}
+                        </span>
+                        <span className="name">{parsedData.contactNumber}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Parcel Status:{" "}
+                        </span>
+                        <span className="name">{parsedData.parcel}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">Products: </span>
+                        <span className="name">
+                          <ol className="prod-list list-group-numbered">
+                            {parsedData.productName.map(
+                              (nestedArray, index) => (
+                                <li key={index}>{nestedArray[0]}</li>
+                              )
+                            )}
+                          </ol>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-success fw-bold">Edit</span>
+                </Button>
+                <Button
+                  onClick={() => handleDeleteShipment(parsedData.id)}
+                  color="secondary"
+                >
+                  <span className="text-danger fw-bold">Delete</span>
+                </Button>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-primary fw-bold">Close</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         )}
         {activeTab === "tab5" && (
@@ -565,10 +856,107 @@ const Table = () => {
                   rows={tableData.tab5}
                   columns={columns}
                   pageSize={5}
+                  onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
               )}
             </div>
+            <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+              <DialogTitle>Shipment Details</DialogTitle>
+              <DialogContent>
+                {selectedRow && (
+                  <div className="text-left">
+                    {/* { JSON.stringify(selectedRow, null, 2)} */}
+                    <pre>{}</pre>
+
+                    <div className="main-card row py-3">
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">Order #: </span>
+                        <span className="name">{parsedData.orderID}</span>
+                      </div>
+                      <div className="card-subtitle text-primary">
+                        <span className="card-title fw-bold">
+                          Date Of Order:{" "}
+                        </span>
+                        <span className="name">{parsedData.date}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Receiver Name:{" "}
+                        </span>
+                        <span className="name">{parsedData.receiverName}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">City: </span>
+                        <span className="name">{parsedData.city}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Email:{" "}
+                        </span>
+                        <span className="name">{parsedData.customerEmail}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Customer Address:{" "}
+                        </span>
+                        <p className="name">{parsedData.customerAddress}</p>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Client Name:{" "}
+                        </span>
+                        <span className="name text-uppercase">
+                          {parsedData.clientName}
+                        </span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">COD Amount: </span>
+                        <span className="name">{parsedData.codAmount}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Contact Number:{" "}
+                        </span>
+                        <span className="name">{parsedData.contactNumber}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">
+                          Parcel Status:{" "}
+                        </span>
+                        <span className="name">{parsedData.parcel}</span>
+                      </div>
+                      <div className="card-subtitle">
+                        <span className="card-title fw-bold">Products: </span>
+                        <span className="name">
+                          <ol className="prod-list list-group-numbered">
+                            {parsedData.productName.map(
+                              (nestedArray, index) => (
+                                <li key={index}>{nestedArray[0]}</li>
+                              )
+                            )}
+                          </ol>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-success fw-bold">Edit</span>
+                </Button>
+                <Button
+                  onClick={() => handleDeleteShipment(parsedData.id)}
+                  color="secondary"
+                >
+                  <span className="text-danger fw-bold">Delete</span>
+                </Button>
+                <Button onClick={handleCloseDialog} color="primary">
+                  <span className="text-primary fw-bold">Close</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         )}
 
