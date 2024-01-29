@@ -91,7 +91,7 @@ const Dashboard = () => {
           </div>
           <div className="col-lg-10">
             {/* Total Sales Card */}
-            <div className="row mb-4">
+            <div className="row mb-4 ml-3">
               <div className="kpi-card red2">
                 <span className="card-value">
                   {new Intl.NumberFormat("en-US", {

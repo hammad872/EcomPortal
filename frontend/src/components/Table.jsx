@@ -1,16 +1,17 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import { CSVLink } from "react-csv";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import CircularProgress from "@mui/material/CircularProgress";
-// import { json } from "react-router-dom";
+
+// Add these imports for Dialog components
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+
 const Table = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [tableData, setTableData] = useState({
@@ -21,14 +22,40 @@ const Table = () => {
     tab5: [],
   });
   const [loading, setLoading] = useState(true);
+  const [csvData, setCSVData] = useState({
+    tab1: [],
+    tab2: [],
+    tab3: [],
+    tab4: [],
+    tab5: [],
+  });
+
   let userData = JSON.parse(localStorage.getItem("loginToken"));
+
+  const generateCSVData = (tabData) => {
+    return (tabData ?? []).map((row) => [
+      row.orderID,
+      row.receiverName,
+      row.city,
+      row.customerEmail,
+      row.customerAddress,
+      row.parcel,
+      row.contactNumber,
+      row.codAmount,
+      row.date,
+      row.clientName,
+      row.productName,
+    ]);
+
+    return csvData;
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/getshipments")
       .then((shipmentResponse) => {
         const data = shipmentResponse.data;
         const userIDForData = userData.userInfo._id;
-        // console.log(userIDForData)
         const isAdmin = userData.userInfo.role;
         setTableData({
           tab1:
@@ -72,7 +99,14 @@ const Table = () => {
       .finally(() => {
         setLoading(false);
       });
-  });
+  }, [userData.userInfo._id, userData.userInfo.role]);
+
+  useEffect(() => {
+    setCSVData((prevCSVData) => ({
+      ...prevCSVData,
+      [activeTab]: generateCSVData(tableData[activeTab]),
+    }));
+  }, [activeTab, tableData]);
 
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },
@@ -124,44 +158,47 @@ const Table = () => {
   const handleDeleteShipment = async (e) => {
     // Show SweetAlert confirmation dialog
     const isConfirmed = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this shipment!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this shipment!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
       reverseButtons: true,
     });
-  
+
     // If the user confirms the deletion, proceed with the delete request
     if (isConfirmed.value) {
       try {
-        const response = await fetch(`http://localhost:3001/deleteshipment/${e}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            // Add any additional headers if needed
-          },
-        });
-  
+        const response = await fetch(
+          `http://localhost:3001/deleteshipment/${e}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              // Add any additional headers if needed
+            },
+          }
+        );
+
         const data = await response.json();
         console.log(data);
-  
+
         // Optionally, show a success message
-        Swal.fire('Deleted!', 'Your shipment has been deleted.', 'success');
-        handleCloseDialog()
+        Swal.fire("Deleted!", "Your shipment has been deleted.", "success");
+        handleCloseDialog();
       } catch (error) {
-        console.error('Error deleting shipment:', error);
+        console.error("Error deleting shipment:", error);
         // Show an error message using SweetAlert
-        Swal.fire('Error', 'An error occurred while deleting the shipment.', 'error');
+        Swal.fire(
+          "Error",
+          "An error occurred while deleting the shipment.",
+          "error"
+        );
       }
     }
     // If the user cancels the deletion, do nothing
   };
-  
-
-
-
 
   const myDataString = JSON.stringify(selectedRow, null, 2);
   const parsedData = JSON.parse(myDataString);
@@ -207,6 +244,26 @@ const Table = () => {
 
         {activeTab === "tab1" && (
           <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab1) }))}
+            >
+              Export CSV
+              <CSVLink
+                data={csvData.tab1}
+                filename={`total_parcel.csv`}
+                className="btn btn-primary mb-3"
+                style={{
+                  width: "100%",
+                  position: "absolute",
+                  left: "0",
+                  top: "0",
+                  opacity: "0",
+                }}
+              ></CSVLink>
+            </Button>
+
             <div
               id="tab1"
               style={{ height: 400, width: "100%" }}
@@ -242,16 +299,20 @@ const Table = () => {
                     <pre>{}</pre>
 
                     <div className="main-card row py-3">
-                    <div className="card-subtitle text-primary">
+                      <div className="card-subtitle text-primary">
                         <span className="card-title fw-bold">Order #: </span>
                         <span className="name">{parsedData.orderID}</span>
                       </div>
                       <div className="card-subtitle text-primary">
-                        <span className="card-title fw-bold">Date Of Order: </span>
+                        <span className="card-title fw-bold">
+                          Date Of Order:{" "}
+                        </span>
                         <span className="name">{parsedData.date}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Receiver Name: </span>
+                        <span className="card-title fw-bold">
+                          Receiver Name:{" "}
+                        </span>
                         <span className="name">{parsedData.receiverName}</span>
                       </div>
                       <div className="card-subtitle">
@@ -259,15 +320,21 @@ const Table = () => {
                         <span className="name">{parsedData.city}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Customer Email: </span>
+                        <span className="card-title fw-bold">
+                          Customer Email:{" "}
+                        </span>
                         <span className="name">{parsedData.customerEmail}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Customer Address: </span>
+                        <span className="card-title fw-bold">
+                          Customer Address:{" "}
+                        </span>
                         <p className="name">{parsedData.customerAddress}</p>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Client Name: </span>
+                        <span className="card-title fw-bold">
+                          Client Name:{" "}
+                        </span>
                         <span className="name text-uppercase">
                           {parsedData.clientName}
                         </span>
@@ -277,22 +344,27 @@ const Table = () => {
                         <span className="name">{parsedData.codAmount}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Contact Number: </span>
+                        <span className="card-title fw-bold">
+                          Contact Number:{" "}
+                        </span>
                         <span className="name">{parsedData.contactNumber}</span>
                       </div>
                       <div className="card-subtitle">
-                        <span className="card-title fw-bold">Parcel Status: </span>
+                        <span className="card-title fw-bold">
+                          Parcel Status:{" "}
+                        </span>
                         <span className="name">{parsedData.parcel}</span>
                       </div>
                       <div className="card-subtitle">
                         <span className="card-title fw-bold">Products: </span>
                         <span className="name">
                           <ol className="prod-list list-group-numbered">
-                              {parsedData.productName.map((nestedArray, index) => (
-                                  <li key={index}>{nestedArray[0]}</li>
-                                ))}
-
-                            </ol>
+                            {parsedData.productName.map(
+                              (nestedArray, index) => (
+                                <li key={index}>{nestedArray[0]}</li>
+                              )
+                            )}
+                          </ol>
                         </span>
                       </div>
                     </div>
@@ -301,9 +373,12 @@ const Table = () => {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold" >Edit</span>
+                  <span className="text-success fw-bold">Edit</span>
                 </Button>
-                <Button onClick={ () => handleDeleteShipment(parsedData.id)} color="secondary">
+                <Button
+                  onClick={() => handleDeleteShipment(parsedData.id)}
+                  color="secondary"
+                >
                   <span className="text-danger fw-bold">Delete</span>
                 </Button>
                 <Button onClick={handleCloseDialog} color="primary">
@@ -315,106 +390,190 @@ const Table = () => {
         )}
 
         {activeTab === "tab2" && (
-          <div
-            id="tab2"
-            style={{ height: 400, width: "100%" }}
-            className="mt-4"
-          >
-            {loading ? (
-              <CircularProgress
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab2) }))}
+            >
+              Export CSV
+              <CSVLink
+                data={csvData.tab2}
+                filename={`delivered.csv`}
+                className="btn btn-primary mb-3"
                 style={{
-                  left: "50%",
+                  width: "100%",
                   position: "absolute",
-                  bottom: "10%",
-                  color: "#FF6262",
+                  left: "0",
+                  top: "0",
+                  opacity: "0",
                 }}
-              />
-            ) : (
-              <DataGrid
-                rows={tableData.tab2}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            )}
+              ></CSVLink>
+            </Button>
+            <div
+              id="tab2"
+              style={{ height: 400, width: "100%" }}
+              className="mt-4"
+            >
+              {loading ? (
+                <CircularProgress
+                  style={{
+                    left: "50%",
+                    position: "absolute",
+                    bottom: "10%",
+                    color: "#FF6262",
+                  }}
+                />
+              ) : (
+                <DataGrid
+                  rows={tableData.tab2}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                />
+              )}
+            </div>
           </div>
         )}
 
         {activeTab === "tab3" && (
-          <div
-            id="tab3"
-            style={{ height: 400, width: "100%" }}
-            className="mt-4"
-          >
-            {loading ? (
-              <CircularProgress
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab3) }))}
+            >
+              Export CSV
+              <CSVLink
+                data={csvData.tab3}
+                filename={`in_transit.csv`}
+                className="btn btn-primary mb-3"
                 style={{
-                  left: "50%",
+                  width: "100%",
                   position: "absolute",
-                  bottom: "10%",
-                  color: "#FF6262",
+                  left: "0",
+                  top: "0",
+                  opacity: "0",
                 }}
-              />
-            ) : (
-              <DataGrid
-                rows={tableData.tab3}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            )}
+              ></CSVLink>
+            </Button>
+            <div
+              id="tab3"
+              style={{ height: 400, width: "100%" }}
+              className="mt-4"
+            >
+              {loading ? (
+                <CircularProgress
+                  style={{
+                    left: "50%",
+                    position: "absolute",
+                    bottom: "10%",
+                    color: "#FF6262",
+                  }}
+                />
+              ) : (
+                <DataGrid
+                  rows={tableData.tab3}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                />
+              )}
+            </div>
           </div>
         )}
 
         {activeTab === "tab4" && (
-          <div
-            id="tab4"
-            style={{ height: 400, width: "100%" }}
-            className="mt-4"
-          >
-            {loading ? (
-              <CircularProgress
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab4) }))}
+            >
+              Export CSV
+              <CSVLink
+                data={csvData.tab4}
+                filename={`returned.csv`}
+                className="btn btn-primary mb-3"
                 style={{
-                  left: "50%",
+                  width: "100%",
                   position: "absolute",
-                  bottom: "10%",
-                  color: "#FF6262",
+                  left: "0",
+                  top: "0",
+                  opacity: "0",
                 }}
-              />
-            ) : (
-              <DataGrid
-                rows={tableData.tab4}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            )}
+              ></CSVLink>
+            </Button>
+            <div
+              id="tab4"
+              style={{ height: 400, width: "100%" }}
+              className="mt-4"
+            >
+              {loading ? (
+                <CircularProgress
+                  style={{
+                    left: "50%",
+                    position: "absolute",
+                    bottom: "10%",
+                    color: "#FF6262",
+                  }}
+                />
+              ) : (
+                <DataGrid
+                  rows={tableData.tab4}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                />
+              )}
+            </div>
           </div>
         )}
         {activeTab === "tab5" && (
-          <div
-            id="tab4"
-            style={{ height: 400, width: "100%" }}
-            className="mt-4"
-          >
-            {loading ? (
-              <CircularProgress
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCSVData((prevCSVData) => ({ ...prevCSVData, tab1: generateCSVData(tableData.tab5) }))}
+            >
+              Export CSV
+              <CSVLink
+                data={csvData.tab5}
+                filename={`cancelled.csv`}
+                className="btn btn-primary mb-3"
                 style={{
-                  left: "50%",
+                  width: "100%",
                   position: "absolute",
-                  bottom: "10%",
-                  color: "#FF6262",
+                  left: "0",
+                  top: "0",
+                  opacity: "0",
                 }}
-              />
-            ) : (
-              <DataGrid
-                rows={tableData.tab5}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-              />
-            )}
+              ></CSVLink>
+            </Button>
+            <div
+              id="tab4"
+              style={{ height: 400, width: "100%" }}
+              className="mt-4"
+            >
+              {loading ? (
+                <CircularProgress
+                  style={{
+                    left: "50%",
+                    position: "absolute",
+                    bottom: "10%",
+                    color: "#FF6262",
+                  }}
+                />
+              ) : (
+                <DataGrid
+                  rows={tableData.tab5}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  checkboxSelection
+                />
+              )}
+            </div>
           </div>
         )}
 
