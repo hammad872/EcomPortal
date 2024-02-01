@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://ecomportal-ymi0.onrender.com/getshipments");
+        const response = await axios.get("http://localhost:3001/getshipments");
         const data = response.data;
         const userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;

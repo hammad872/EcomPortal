@@ -36,7 +36,7 @@ const FindShip = () => {
 
   const fetchShipments = async () => {
     try {
-      const response = await axios.get("http://ecomportal-ymi0.onrender.com/getshipments");
+      const response = await axios.get("http://localhost:3001/getshipments");
 
       if (!response.data || !Array.isArray(response.data)) {
         throw new Error("Invalid response format");
@@ -152,7 +152,7 @@ const FindShip = () => {
     if (isConfirmed.value) {
       try {
         const response = await fetch(
-          `http://ecomportal-ymi0.onrender.com/deleteshipment/${e}`,
+          `http://localhost:3001/deleteshipment/${e}`,
           {
             method: "DELETE",
             headers: {

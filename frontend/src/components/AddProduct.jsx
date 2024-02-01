@@ -23,7 +23,7 @@ const AddProduct = () => {
     try {
       // Proceed with adding the product
       const response = await axios.post(
-        "http://ecomportal-ymi0.onrender.com/addproduct",
+        "http://http://localhost:3001/addproduct",
         formData
       );
 

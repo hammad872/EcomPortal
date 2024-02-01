@@ -19,7 +19,7 @@ const FindShip = () => {
 
   const fetchShipments = async () => {
     try {
-      const response = await axios.get("http://ecomportal-ymi0.onrender.com/getshipments");
+      const response = await axios.get("http://localhost:3001/getshipments");
 
       if (!response.data || !Array.isArray(response.data)) {
         throw new Error("Invalid response format");
@@ -84,7 +84,7 @@ const FindShip = () => {
 
     try {
       const response = await axios.patch(
-        "http://ecomportal-ymi0.onrender.com/changestatus",
+        "http://localhost:3001/changestatus",
         { newStatus: selectedStatus, orderIds: orderIdsToUpdate }
       );
 

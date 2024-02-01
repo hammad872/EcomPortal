@@ -42,7 +42,7 @@ const ImportShip = () => {
   const sendDataToMongoDB = () => {
     // Modify the API endpoint accordingly
     axios
-      .post("http://ecomportal-ymi0.onrender.com/upload-csv", {
+      .post("http://localhost:3001/upload-csv", {
         data: csvData,
         client: selectedClient.clientId,
         clientName: selectedClient.clientName,
@@ -71,7 +71,7 @@ const ImportShip = () => {
   // Modify the API endpoint accordingly
   useEffect(() => {
     axios
-      .get("http://ecomportal-ymi0.onrender.com/getregister")
+      .get("http://localhost:3001/getregister")
       .then((response) => {
         const clientOptions = response.data
           .filter((item) => item.role === "Client")
