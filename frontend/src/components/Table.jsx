@@ -295,7 +295,7 @@ const Table = () => {
                 <DataGrid
                   rows={tableData.tab1}
                   columns={columns}
-                  pageSize={5}
+                  pageSize={10}
                   rowsPerPageOptions={[5]}
                   // checkboxSelection
                   onCellClick={handleCellClick}

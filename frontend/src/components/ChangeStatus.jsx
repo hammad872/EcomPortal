@@ -111,7 +111,6 @@ const FindShip = () => {
 
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },
-    { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
     { field: "customerEmail", headerName: "Customer Email", width: 200 },
@@ -130,8 +129,9 @@ const FindShip = () => {
       width: 150,
     },
     {
-      field: "timestamps",
-      headerName: "Created At",
+      field: "date",
+      headerName: "Data Of Order",
+      type: Date,
       width: 200,
     },
     ...(userData.userInfo.role === "Admin"
@@ -144,6 +144,7 @@ const FindShip = () => {
         ]
       : []),
   ];
+
 
   return (
     <>

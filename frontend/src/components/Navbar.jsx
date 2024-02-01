@@ -7,22 +7,21 @@ const Navbar = () => {
 
   const toggleDropdown = (event) => {
     setDropdownOpen(!isDropdownOpen);
-  
+
     // Toggle the "active-sidenav" class on the clicked element
-    event.currentTarget.querySelector('a').classList.toggle("active-sidenav");
-    event.currentTarget.querySelector('i.fa-caret-right').classList.toggle("rotate");
-
-
+    event.currentTarget.querySelector("a").classList.toggle("active-sidenav");
+    event.currentTarget
+      .querySelector("i.fa-caret-right")
+      .classList.toggle("rotate");
   };
-  
-  
 
   const toggleDropdown2 = (event) => {
     setDropdownOpen2(!isDropdownOpen2);
 
-    event.currentTarget.querySelector('a').classList.toggle("active-sidenav");
-    event.currentTarget.querySelector('i.fa-caret-right').classList.toggle("rotate");
-
+    event.currentTarget.querySelector("a").classList.toggle("active-sidenav");
+    event.currentTarget
+      .querySelector("i.fa-caret-right")
+      .classList.toggle("rotate");
   };
 
   const navigate = useNavigate();
@@ -77,41 +76,55 @@ const Navbar = () => {
               </li>
               <li className="" onClick={toggleDropdown}>
                 <a className="dropdown-main">
-                <i class="fa fa-plane" aria-hidden="true"></i>
-
+                  <i class="fa fa-plane" aria-hidden="true"></i>
                   &nbsp;Shipment Entry&nbsp;&nbsp;
                   <i class="fa fa-caret-right" aria-hidden="true"></i>
                 </a>
                 {isDropdownOpen && (
                   <ul className="dropdown-inner">
                     <li>
-                      <a href="/add-new" className="hover:text-red-500 text-sm hover:ps-8 ">
+                      <a
+                        href="/add-new"
+                        className="hover:text-red-500 text-sm hover:ps-8 "
+                      >
                         <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         &nbsp; Add New Shipment
                       </a>
                     </li>
                     <li>
-                      <a href="/import" className="hover:text-red-500 text-sm hover:ps-8 ">
-                        <i class="fa fa-upload"  aria-hidden="true"></i>&nbsp;
+                      <a
+                        href="/import"
+                        className="hover:text-red-500 text-sm hover:ps-8 "
+                      >
+                        <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Import Shipment
                       </a>
                     </li>
                     <li>
-                      <a href="/find-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
+                      <a
+                        href="/find-shipment"
+                        className="hover:text-red-500 text-sm hover:ps-8 "
+                      >
                         {" "}
-                        <i class="fa fa-search"  aria-hidden="true"></i> &nbsp;
+                        <i class="fa fa-search" aria-hidden="true"></i> &nbsp;
                         Find Shipment
                       </a>
                     </li>
                     <li>
-                      <a href="/find-multi-shipment" className="hover:text-red-500 text-sm hover:ps-8 ">
+                      <a
+                        href="/find-multi-shipment"
+                        className="hover:text-red-500 text-sm hover:ps-8 "
+                      >
                         {" "}
-                        <i class="fa fa-users"  aria-hidden="true"></i> &nbsp;
+                        <i class="fa fa-users" aria-hidden="true"></i> &nbsp;
                         Find Multiple Shipments
                       </a>
                     </li>
                     <li>
-                      <a href="/change-status" className="hover:text-red-500 text-sm hover:ps-8 ">
+                      <a
+                        href="/change-status"
+                        className="hover:text-red-500 text-sm hover:ps-8 "
+                      >
                         {" "}
                         <i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;
                         Change Status
@@ -123,19 +136,29 @@ const Navbar = () => {
               {isUserAdmin.userInfo.role === "Admin" && (
                 <li className="" onClick={toggleDropdown2}>
                   <a className="dropdown-main">
-                  <i class="fa fa-th-large" aria-hidden="true"></i>
-                    &nbsp;
-                    Product Entry&nbsp;&nbsp;
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    &nbsp; Product Entry&nbsp;&nbsp;
                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                   </a>
                   {isDropdownOpen2 && (
                     <ul className="dropdown-inner">
                       <li>
-                        <a href="/add-product" className="hover:text-red-500 text-sm hover:ps-8 "> <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                        &nbsp;Add New Product</a>
+                        <a
+                          href="/add-product"
+                          className="hover:text-red-500 text-sm hover:ps-8 "
+                        >
+                          {" "}
+                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          &nbsp;Add New Product
+                        </a>
                       </li>
                       <li>
-                        <a href="/product-table" className="hover:text-red-500 text-sm hover:ps-8 ">Products</a>
+                        <a
+                          href="/product-table"
+                          className="hover:text-red-500 text-sm hover:ps-8 "
+                        >
+                          Products
+                        </a>
                       </li>
                     </ul>
                   )}
@@ -145,6 +168,16 @@ const Navbar = () => {
                 <a className="dropdown-main">
                   <i className="fa fa-sign-out" aria-hidden="true"></i> &nbsp;
                   Log Out
+                </a>
+              </li>
+              <li>
+                <a href="file-download" className="dropdown-main">
+                  File Download
+                </a>
+              </li>
+              <li>
+                <a href="file-upload" className="dropdown-main">
+                  File Upload
                 </a>
               </li>
             </ul>
