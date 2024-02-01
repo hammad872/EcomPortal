@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables from .env file
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -5,16 +6,15 @@ const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
-  
+
 const app = express();
 app.use(cors());
-
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-mongoose.connect(
-  "mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee",
-);
+const { MONGODB_URI, PORT } = process.env;
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.post("/login", async (req, res) => {
   const { email, username, password } = req.body;
@@ -384,6 +384,49 @@ app.get("/totalcodamount", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Server is running on port 3001");
+// Add this code after your existing routes
+
+app.delete("/deleteproduct/:id", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const deletedProduct = await ProductModel.findOneAndDelete({ _id: productId });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json({ message: "Product deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting product:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.patch("/editproduct/:id", async (req, res) => {
+  const productId = req.params.id;
+  const { productTitle, sourcing } = req.body;
+
+  try {
+    const product = await ProductModel.findByIdAndUpdate(
+      productId,
+      { productTitle, sourcing },
+      { new: true } // To return the updated document
+    );
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error("Error updating product:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
