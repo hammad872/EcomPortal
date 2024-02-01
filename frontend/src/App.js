@@ -12,8 +12,7 @@ import ProductTable from "./components/ProductTable";
 import FindShip from "./components/FindShip";
 import FindMultiShip from "./components/FindMultiShip";
 import ChangeStatus from "./components/ChangeStatus";
-import FileUpload from "./components/FileUpload";
-import FileDownload from "./components/FileDownload";
+
 
 function App() {
   useEffect(() => {

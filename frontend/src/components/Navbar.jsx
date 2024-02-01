@@ -171,14 +171,6 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="file-download" className="dropdown-main">
-                  File Download
-                </a>
-              </li>
-              <li>
-                <a href="file-upload" className="dropdown-main">
-                  File Upload
-                </a>
               </li>
             </ul>
           </nav>
