@@ -46,15 +46,21 @@ const FindShip = () => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
     const filteredResults = shipments.filter((shipment) => {
-      const matchesSearchTerm =
-        (searchBy === 'Order Number' &&
-          shipment.orderID.toLowerCase().includes(lowerCaseSearchTerm)) ||
-        (searchBy === 'Reference' &&
-          shipment.reference.toLowerCase().includes(lowerCaseSearchTerm)) ||
-        (searchBy === 'Client Name' &&
-          shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm));
+      console.log(shipments)
+      let matchesSearchTerm = false;
+      let matchesUserID = false;
+
+      if (searchBy === 'Order Number' && shipment.orderID) {
+        matchesSearchTerm = shipment.orderID.toLowerCase().includes(lowerCaseSearchTerm);
+      } else if (searchBy === 'Receiver Name' && shipment.receiverName) {
+        matchesSearchTerm = shipment.receiverName.toLowerCase().includes(lowerCaseSearchTerm);
+      } else if (searchBy === 'Client Name' && shipment.clientName) {
+        matchesSearchTerm = shipment.clientName.toLowerCase().includes(lowerCaseSearchTerm);
+      }
   
-      const matchesUserID = shipment.client === userIDForData;
+      if (shipment.client) {
+        matchesUserID = shipment.client === userIDForData;
+      }
   
       if (userData.userInfo.role === 'Client') {
         return matchesSearchTerm && matchesUserID;
@@ -77,11 +83,8 @@ const FindShip = () => {
     setFilteredShipments(filteredResults);
   };
 
-  
-
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },
-    { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
     { field: "customerEmail", headerName: "Customer Email", width: 200 },
@@ -90,7 +93,7 @@ const FindShip = () => {
     {
       field: "contactNumber",
       headerName: "Contact Number",
-      type: "number",
+      type: "string",
       width: 150,
     },
     {
@@ -100,8 +103,9 @@ const FindShip = () => {
       width: 150,
     },
     {
-      field: "timestamps",
-      headerName: "Created At",
+      field: "date",
+      headerName: "Data Of Order",
+      type: Date,
       width: 200,
     },
     ...(userData.userInfo.role === "Admin"
@@ -114,6 +118,7 @@ const FindShip = () => {
         ]
       : []),
   ];
+
   return (
     <>
       <div className="container">
@@ -153,7 +158,7 @@ const FindShip = () => {
                         --Select a Field--
                       </option>
                       <option value="Order Number">Order Number</option>
-                      <option value="Reference">Reference</option>
+                      <option value="Receiver Name">Receiver Name</option>
                       {isAdminLoggedIn === "Admin" ? (
                         <option value="Client Name">Client Name</option>
                       ) : (

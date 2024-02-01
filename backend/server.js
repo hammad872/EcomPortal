@@ -5,7 +5,7 @@ const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
-
+  
 const app = express();
 app.use(cors());
 
@@ -13,7 +13,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 mongoose.connect(
-  "mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee"
+  "mongodb+srv://hammadsiddiq:ace123@cluster0.wjnke9f.mongodb.net/employee",
 );
 
 app.post("/login", async (req, res) => {
@@ -383,7 +383,6 @@ app.get("/totalcodamount", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");

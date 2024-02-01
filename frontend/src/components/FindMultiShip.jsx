@@ -91,7 +91,6 @@ const FindShip = () => {
 
   const columns = [
     { field: "orderID", headerName: "Order #", width: 80 },
-    { field: "reference", headerName: "Reference", width: 130 },
     { field: "receiverName", headerName: "Receiver Name", width: 200 },
     { field: "city", headerName: "City", width: 130 },
     { field: "customerEmail", headerName: "Customer Email", width: 200 },
@@ -110,8 +109,9 @@ const FindShip = () => {
       width: 150,
     },
     {
-      field: "timestamps",
-      headerName: "Created At",
+      field: "date",
+      headerName: "Data Of Order",
+      type: Date,
       width: 200,
     },
     ...(userData.userInfo.role === "Admin"
@@ -167,9 +167,8 @@ const FindShip = () => {
 
         // Optionally, show a success message
         Swal.fire("Deleted!", "Your shipment has been deleted.", "success");
-          // Fetch initial shipments when the component mounts
-          // selectedRow.style.display = "none";
-
+        // Fetch initial shipments when the component mounts
+        // selectedRow.style.display = "none";
       } catch (error) {
         console.error("Error deleting shipment:", error);
         // Show an error message using SweetAlert
@@ -266,12 +265,6 @@ const FindShip = () => {
                               Order #:{" "}
                             </span>
                             <span className="name">{parsedData.orderID}</span>
-                          </div>
-                          <div className="card-subtitle">
-                            <span className="card-title fw-bold">
-                              Reference:{" "}
-                            </span>
-                            <span className="name">{parsedData.reference}</span>
                           </div>
                           <div className="card-subtitle">
                             <span className="card-title fw-bold">

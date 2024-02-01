@@ -12,6 +12,8 @@ import ProductTable from "./components/ProductTable";
 import FindShip from "./components/FindShip";
 import FindMultiShip from "./components/FindMultiShip";
 import ChangeStatus from "./components/ChangeStatus";
+import FileUpload from "./components/FileUpload";
+import FileDownload from "./components/FileDownload";
 
 function App() {
   useEffect(() => {
@@ -67,6 +69,14 @@ function App() {
         <Route
           path="/change-status"
           element={<PrivateRoute element={<ChangeStatus />} />}
+        />
+        <Route
+          path="/file-upload"
+          element={<PrivateRoute element={<FileUpload />} />}
+        />
+        <Route
+          path="/file-download"
+          element={<PrivateRoute element={<FileDownload />} />}
         />
       </Routes>
     </BrowserRouter>
