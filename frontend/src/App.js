@@ -70,14 +70,6 @@ function App() {
           path="/change-status"
           element={<PrivateRoute element={<ChangeStatus />} />}
         />
-        <Route
-          path="/file-upload"
-          element={<PrivateRoute element={<FileUpload />} />}
-        />
-        <Route
-          path="/file-download"
-          element={<PrivateRoute element={<FileDownload />} />}
-        />
       </Routes>
     </BrowserRouter>
   );
