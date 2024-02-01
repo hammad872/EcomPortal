@@ -37,7 +37,7 @@ export const LoginForm = ({ setLoggedIn }) => {
       : { username: inputValue, password };
 
     axios
-      .post("http://localhost:3001/login", dataToSend)
+      .post("http://ecomportal-ymi0.onrender.com/login", dataToSend)
       .then((result) => {
         console.log(result);
 

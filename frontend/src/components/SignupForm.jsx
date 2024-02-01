@@ -32,7 +32,7 @@ export const SignupForm = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   axios.post('http://localhost:3001/register', {username, email, password, cnic, phone, link})
+  //   axios.post('http://ecomportal-ymi0.onrender.com/register', {username, email, password, cnic, phone, link})
   //     .then(result => {console.log(result)
   //       navigate('/')
   //       window.location.reload();
@@ -44,7 +44,7 @@ export const SignupForm = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3001/register", {
+      .post("http://ecomportal-ymi0.onrender.com/register", {
         username,
         email,
         password,
