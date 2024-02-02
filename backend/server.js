@@ -14,7 +14,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 const { MONGODB_URI, PORT } = process.env;
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGODB_URI);
 
 app.post("/login", async (req, res) => {
   const { email, username, password } = req.body;

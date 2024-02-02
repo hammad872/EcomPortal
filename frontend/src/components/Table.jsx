@@ -70,7 +70,7 @@ const Table = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/getshipments")
+      .get("http://ecomapi-owct.onrender.com/getshipments")
       .then((shipmentResponse) => {
         const data = shipmentResponse.data;
         const userIDForData = userData.userInfo._id;
@@ -189,7 +189,7 @@ const Table = () => {
     if (isConfirmed.value) {
       try {
         const response = await fetch(
-          `http://localhost:3001/deleteshipment/${e}`,
+          `http://ecomapi-owct.onrender.com/deleteshipment/${e}`,
           {
             method: "DELETE",
             headers: {
