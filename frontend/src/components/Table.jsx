@@ -5,6 +5,8 @@ import { CSVLink } from "react-csv";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 // Add these imports for Dialog components
 import Dialog from "@mui/material/Dialog";
@@ -283,22 +285,103 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                <CircularProgress
-                  style={{
-                    left: "50%",
-                    position: "absolute",
-                    bottom: "30%",
-                    color: "#FF6262",
-                  }}
-                />
-              ) : (
+                (
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "2.5px solid #ccc",
+                    }}
+                  >
+                    <tr className="px-3">
+                      &nbsp;
+                      <div className="row">
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                    <tr className="px-3">
+                    
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                  </table>
+                )
+              ) :  (
                 <DataGrid
                   rows={tableData.tab1}
                   columns={columns}
-                  pageSize={10}
-                  rowsPerPageOptions={[5]}
-                  // checkboxSelection
+                  pageSize={5}
                   onCellClick={handleCellClick}
+                  rowsPerPageOptions={[5]}
                 />
               )}
             </div>
@@ -425,15 +508,97 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                <CircularProgress
-                  style={{
-                    left: "50%",
-                    position: "absolute",
-                    bottom: "10%",
-                    color: "#FF6262",
-                  }}
-                />
-              ) : (
+                (
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "2.5px solid #ccc",
+                    }}
+                  >
+                    <tr className="px-3">
+                      &nbsp;
+                      <div className="row">
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                    <tr className="px-3">
+                    
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                  </table>
+                )
+              ) :  (
                 <DataGrid
                   rows={tableData.tab2}
                   columns={columns}
@@ -565,15 +730,97 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                <CircularProgress
-                  style={{
-                    left: "50%",
-                    position: "absolute",
-                    bottom: "10%",
-                    color: "#FF6262",
-                  }}
-                />
-              ) : (
+                (
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "2.5px solid #ccc",
+                    }}
+                  >
+                    <tr className="px-3">
+                      &nbsp;
+                      <div className="row">
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                    <tr className="px-3">
+                    
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                  </table>
+                )
+              ) :  (
                 <DataGrid
                   rows={tableData.tab3}
                   columns={columns}
@@ -705,14 +952,96 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                <CircularProgress
-                  style={{
-                    left: "50%",
-                    position: "absolute",
-                    bottom: "10%",
-                    color: "#FF6262",
-                  }}
-                />
+                (
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "2.5px solid #ccc",
+                    }}
+                  >
+                    <tr className="px-3">
+                      &nbsp;
+                      <div className="row">
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                        <div className="col-lg-2 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                    <tr className="px-3">
+                    
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                    </tr>
+                    <tr className="px-3">
+                      <div className="row">
+                        <div className="col-lg-12 px-5">
+                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                        </div>
+                      </div>
+                      &nbsp;
+                    </tr>
+                  </table>
+                )
               ) : (
                 <DataGrid
                   rows={tableData.tab4}

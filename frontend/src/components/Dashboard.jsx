@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import Table from "./Table";
 import Header from "./Header";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 const Dashboard = () => {
   const [totalParcels, setTotalParcels] = useState([]);
@@ -11,11 +13,15 @@ const Dashboard = () => {
   const [returnedParcels, setReturnedParcels] = useState([]);
   const [cancelledParcels, setCancelledParcels] = useState([]);
   const [totalCODAmount, setTotalCODAmount] = useState(0);
+  const [loading, setLoading] = useState(true); // State to track loading
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://ecomapi-owct.onrender.com/getshipments");
+        const response = await axios.get(
+          "https://ecomapi-owct.onrender.com/getshipments"
+        );
         const data = response.data;
         const userData = JSON.parse(localStorage.getItem("loginToken"));
         const userIDForData = userData.userInfo._id;
@@ -80,6 +86,15 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    // Simulate loading time
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the timeout value as needed
+
+    // Cleanup function
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <>
@@ -105,43 +120,239 @@ const Dashboard = () => {
             </div>
 
             {/* Parcel Statistics Cards */}
-            <div className="row justify-content-center align-items-center column-gap-sm-3">
-              <div className="col-lg-2-5">
-                <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\box.png" alt="" />
-                  <h2>{totalParcels.length}</h2>
-                  <p>Total Parcels</p>
+            {loading ? (
+               <div className="row justify-content-center align-items-center column-gap-sm-3">
+               <div className="col-lg-2-5">
+                 <div className="ship_stat p-3 mx-1">
+                   <Skeleton
+                     variant="rectangle"
+                     width={"60%"}
+                     height={80}
+                     sx={{
+                       fontSize: "1rem",
+                       margin: "0 auto",
+                       bgcolor: "grey.300",
+                     }}
+                   />
+                   <h2>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </h2>
+                   <p>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </p>
+                 </div>
+               </div>
+               <div className="col-lg-2-5">
+                 <div className="ship_stat p-3 mx-1">
+                   <Skeleton
+                     variant="rectangle"
+                     width={"60%"}
+                     height={80}
+                     sx={{
+                       fontSize: "1rem",
+                       margin: "0 auto",
+                       bgcolor: "grey.300",
+                     }}
+                   />
+                   <h2>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </h2>
+                   <p>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </p>
+                 </div>
+               </div>
+               <div className="col-lg-2-5">
+                 <div className="ship_stat p-3 mx-1">
+                   <Skeleton
+                     variant="rectangle"
+                     width={"60%"}
+                     height={80}
+                     sx={{
+                       fontSize: "1rem",
+                       margin: "0 auto",
+                       bgcolor: "grey.300",
+                     }}
+                   />
+                   <h2>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </h2>
+                   <p>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </p>
+                 </div>
+               </div>
+               <div className="col-lg-2-5">
+                 <div className="ship_stat p-3 mx-1">
+                   <Skeleton
+                     variant="rectangle"
+                     width={"60%"}
+                     height={80}
+                     sx={{
+                       fontSize: "1rem",
+                       margin: "0 auto",
+                       bgcolor: "grey.300",
+                     }}
+                   />
+                   <h2>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </h2>
+                   <p>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </p>
+                 </div>
+               </div>
+               <div className="col-lg-2-5">
+                 <div className="ship_stat p-3 mx-1">
+                   <Skeleton
+                     variant="rectangle"
+                     width={"60%"}
+                     height={80}
+                     sx={{
+                       fontSize: "1rem",
+                       margin: "0 auto",
+                       bgcolor: "grey.300",
+                     }}
+                   />
+                   <h2>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </h2>
+                   <p>
+                     <Skeleton
+                       variant="text"
+                       width={"60%"}
+                       height={20}
+                       sx={{
+                         fontSize: "1rem",
+                         margin: "0 auto",
+                         bgcolor: "grey.300",
+                       }}
+                     />
+                   </p>
+                 </div>
+               </div>
+             </div>
+            ) : (
+              <div className="row justify-content-center align-items-center column-gap-sm-3">
+                <div className="col-lg-2-5">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\box.png" alt="" />
+                    <h2>{totalParcels.length}</h2>
+                    <p>Total Parcels</p>
+                  </div>
+                </div>
+                <div className="col-lg-2-5">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\delivery-truck.png" alt="" />
+                    <h2>{deliveredParcels.length}</h2>
+                    <p>Delivered</p>
+                  </div>
+                </div>
+                <div className="col-lg-2-5">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\reload.png" alt="" />
+                    <h2>{inTransitParcels.length}</h2>
+                    <p>In Transit</p>
+                  </div>
+                </div>
+                <div className="col-lg-2-5">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\restart.png" alt="" />
+                    <h2>{returnedParcels.length}</h2>
+                    <p>Returned</p>
+                  </div>
+                </div>
+                <div className="col-lg-2-5">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\prohibition.png" alt="" />
+                    <h2>{cancelledParcels.length}</h2>
+                    <p>Cancelled</p>
+                  </div>
                 </div>
               </div>
-              <div className="col-lg-2-5">
-                <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\delivery-truck.png" alt="" />
-                  <h2>{deliveredParcels.length}</h2>
-                  <p>Delivered</p>
-                </div>
-              </div>
-              <div className="col-lg-2-5">
-                <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\reload.png" alt="" />
-                  <h2>{inTransitParcels.length}</h2>
-                  <p>In Transit</p>
-                </div>
-              </div>
-              <div className="col-lg-2-5">
-                <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\restart.png" alt="" />
-                  <h2>{returnedParcels.length}</h2>
-                  <p>Returned</p>
-                </div>
-              </div>
-              <div className="col-lg-2-5">
-                <div className="ship_stat p-3 mx-1">
-                  <img src="\assets\prohibition.png" alt="" />
-                  <h2>{cancelledParcels.length}</h2>
-                  <p>Cancelled</p>
-                </div>
-              </div>
-            </div>
+            )}
+
             <Table />
           </div>
         </div>
