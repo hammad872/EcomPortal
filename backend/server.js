@@ -6,9 +6,10 @@ const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
-
-const multer = require('multer')
-
+const multer = require('multer');
+const path = require('path'); // Add this line to import the path module
+const crypto = require('crypto');
+const axios = require('axios');
 
 const app = express();
 app.use(cors());
@@ -20,22 +21,41 @@ const { MONGODB_URI, PORT } = process.env;
 mongoose.connect(MONGODB_URI);
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    return cb(null, "./uploads")
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    return cb(null, `${Date.now()}_${file.originalname}`)
-  }
-})
+    // Get the client ID from the request body
+    const clientId = req.body.clientId || "unknown"; // If client ID is not provided, use "unknown"
+    // Concatenate the client ID and current timestamp with the original filename
+    cb(null, `${file.originalname}`);
+  },
+});
 
-const upload = multer({storage})
+const upload = multer({ storage });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  console.log(req.body)
-  console.log(req.file)
-})
+// Serve uploaded files statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Handle file upload endpoint
+app.post("/upload", upload.single("file"), (req, res) => {
+  // Handle the uploaded file
+  console.log("File uploaded:", req.file);
+  res.status(200).send("File uploaded successfully");
+});
 
+// Handle file download endpoint
+app.get("/download/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, "uploads", filename);
+  // Send the file for download
+  res.download(filePath, (err) => {
+    if (err) {
+      console.error("Error downloading file:", err);
+      res.status(500).send("Error downloading file");
+    }
+  });
+});
 app.post("/login", async (req, res) => {
   const { email, username, password } = req.body;
 
@@ -386,16 +406,15 @@ app.get("/totalcodamount", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
 
-    console.log("Shipments:", shipments); // Log shipments to check if data is fetched correctly
+    console.log("Shipments:", shipments); 
 
-    // Calculate the total COD amount, considering only valid codAmount values
     const totalCODAmount = shipments.reduce((acc, shipment) => {
-      // Ensure codAmount is a valid number before adding to the accumulator
+
       const codAmount = typeof shipment.codAmount === 'number' ? shipment.codAmount : 0;
       return acc + codAmount;
     }, 0);
 
-    console.log("Total COD Amount:", totalCODAmount); // Log the total COD amount
+    console.log("Total COD Amount:", totalCODAmount); 
 
     res.json({ totalCODAmount });
   } catch (err) {
@@ -447,6 +466,44 @@ app.patch("/editproduct/:id", async (req, res) => {
 });
 
 
+const apiKey = 'b25cd43e332ae182b01ee511078582ce';
+const apiSecret = '51886e58dcd9b59656de2c5cffd26c70';
+const storeUrl = 'f0d0b6-4.myshopify.com';
+const apiVersion = '2023-01';
+const accessToken = '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'; // Your access token
+
+// Function to create Shopify API authentication headers
+function createAuthHeaders(url, method, body) {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const message = method + url + (body || '') + timestamp;
+    const hmac = crypto.createHmac('sha256', apiSecret);
+    hmac.update(message);
+    const hash = hmac.digest('hex');
+
+    return {
+        'X-Shopify-Access-Token': accessToken,
+        'X-Shopify-Timestamp': timestamp,
+        'X-Shopify-Hmac-Sha256': hash
+    };
+}
+
+// Endpoint to fetch orders
+app.get('/orders', async (req, res) => {
+    try {
+        const url = `https://${storeUrl}/admin/api/${apiVersion}/orders.json`;
+        const authHeaders = createAuthHeaders(url, 'GET');
+
+        const response = await axios.get(url, {
+            headers: authHeaders
+        });
+
+        const orders = response.data.orders;
+        res.json(orders);
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

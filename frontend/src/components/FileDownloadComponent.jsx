@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "./Navbar";
+import Header from "./Header";
 
 const FileDownloadComponent = () => {
-    const handleDownload = () => {
-        axios.get('/download', {
-          responseType: 'blob'
-        })
-        .then(response => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'file.csv');
-          document.body.appendChild(link);
-          link.click();
-        })
-        .catch(error => {
-          console.error('Error downloading file:', error);
-        });
-      };
-    
-      return (
-        <div>
-          <button onClick={handleDownload}>Download</button>
+  let userData = JSON.parse(localStorage.getItem("loginToken"));
+  let currentUser = userData.userInfo._id;
+  const [link, setLink] = useState(""); // Correct usage of useState
+
+  useEffect(() => {
+    // Set the link when the component mounts
+    setLink(`http://localhost:3001/download/${currentUser}-invoice.xls`);
+  }, [currentUser]); // Make sure to include currentUser in the dependency array
+
+  return (
+    <>
+      <div className="container">
+        <Header />
+        <div className="row">
+          <div className="col-lg-2">
+            <Navbar />
+          </div>
+          <div className="col-lg-10 p-5">
+            <div>
+              {/* Render the download link */}
+              <a className="btn btn-primary" href={link}>
+                Download Invoice
+              </a>
+            </div>
+          </div>
         </div>
-      );
-    };
-  
+      </div>
+    </>
+  );
+};
 
 export default FileDownloadComponent;

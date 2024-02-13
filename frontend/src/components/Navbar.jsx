@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SkeletonLoading from "./SkeletonLoading";
 import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownOpen2, setDropdownOpen2] = useState(false);
+  const [isDropdownOpen3, setDropdownOpen3] = useState(false);
   const [loading, setLoading] = useState(true); // State to track loading
 
   const toggleDropdown = (event) => {
@@ -21,6 +21,14 @@ const Navbar = () => {
 
   const toggleDropdown2 = (event) => {
     setDropdownOpen2(!isDropdownOpen2);
+
+    event.currentTarget.querySelector("a").classList.toggle("active-sidenav");
+    event.currentTarget
+      .querySelector("i.fa-caret-right")
+      .classList.toggle("rotate");
+  };
+  const toggleDropdown3 = (event) => {
+    setDropdownOpen3(!isDropdownOpen3);
 
     event.currentTarget.querySelector("a").classList.toggle("active-sidenav");
     event.currentTarget
@@ -144,17 +152,19 @@ const Navbar = () => {
                           &nbsp; Add New Shipment
                         </a>
                       </li>
-                      {isUserAdmin.userInfo.role === "Admin" ?  
-                      <li>
-                        <a
-                          href="/import"
-                          className="hover:text-red-500 text-sm hover:ps-8 "
-                        >
-                          <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
-                          Import Shipment
-                        </a>
-                      </li>
-                       : []}
+                      {isUserAdmin.userInfo.role === "Admin" ? (
+                        <li>
+                          <a
+                            href="/import"
+                            className="hover:text-red-500 text-sm hover:ps-8 "
+                          >
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            &nbsp; Import Shipment
+                          </a>
+                        </li>
+                      ) : (
+                        []
+                      )}
                       <li>
                         <a
                           href="/find-shipment"
@@ -175,18 +185,23 @@ const Navbar = () => {
                           Find Multiple Shipments
                         </a>
                       </li>
-                      {isUserAdmin.userInfo.role === "Admin" ?  
-                      <li>
-                        <a
-                          href="/change-status"
-                          className="hover:text-red-500 text-sm hover:ps-8 "
-                        >
-                          {" "}
-                          <i class="fa fa-refresh" aria-hidden="true"></i>{" "}
-                          &nbsp; Change Status
-                        </a>
-                      </li>
-                      : []}
+                      {isUserAdmin.userInfo.role === "Admin" ? (
+                        <li>
+                          <a
+                            href="/change-status"
+                            className="hover:text-red-500 text-sm hover:ps-8 "
+                          >
+                            {" "}
+                            <i
+                              class="fa fa-refresh"
+                              aria-hidden="true"
+                            ></i>{" "}
+                            &nbsp; Change Status
+                          </a>
+                        </li>
+                      ) : (
+                        []
+                      )}
                     </ul>
                   )}
                 </li>
@@ -224,6 +239,42 @@ const Navbar = () => {
                     )}
                   </li>
                 )}
+                <li className="" onClick={toggleDropdown3}>
+                  <a className="dropdown-main">
+                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                    &nbsp; Invoices&nbsp;&nbsp;
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                  </a>
+                  {isDropdownOpen3 && (
+                    <ul className="dropdown-inner">
+                      {isUserAdmin.userInfo.role === "Admin" && (
+                        <li>
+                          <a
+                            href="/file-upload"
+                            className="hover:text-red-500 text-sm hover:ps-8 "
+                          >
+                            <i
+                              class="fa fa-cloud-upload"
+                              aria-hidden="true"
+                            ></i>
+                            &nbsp;Upload Invoice
+                          </a>
+                        </li>
+                      )}
+                      {isUserAdmin.userInfo.role === "Client" && (
+                      <li>
+                        <a
+                          href="/file-download"
+                          className="hover:text-red-500 text-sm hover:ps-8 "
+                        >
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                          &nbsp; Download Invoice
+                        </a>
+                      </li>
+                      )}
+                    </ul>
+                  )}
+                </li>
                 <li onClick={handleLogout}>
                   <a className="dropdown-main">
                     <i className="fa fa-sign-out" aria-hidden="true"></i> &nbsp;
