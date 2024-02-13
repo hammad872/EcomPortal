@@ -7,6 +7,9 @@ const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
 
+const multer = require('multer')
+
+
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -15,6 +18,23 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const { MONGODB_URI, PORT } = process.env;
 
 mongoose.connect(MONGODB_URI);
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    return cb(null, "./uploads")
+  },
+  filename: function (req, file, cb) {
+    return cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
+const upload = multer({storage})
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  console.log(req.body)
+  console.log(req.file)
+})
+
 
 app.post("/login", async (req, res) => {
   const { email, username, password } = req.body;

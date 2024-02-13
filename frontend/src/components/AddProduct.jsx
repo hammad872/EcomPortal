@@ -23,7 +23,7 @@ const AddProduct = () => {
     try {
       // Proceed with adding the product
       const response = await axios.post(
-        "https://ecomapi-owct.onrender.com/addproduct",
+        "http://localhost:3001/addproduct",
         formData
       );
 

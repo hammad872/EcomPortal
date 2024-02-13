@@ -20,7 +20,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecomapi-owct.onrender.com/getshipments"
+          "http://localhost:3001/getshipments"
         );
         const data = response.data;
         const userData = JSON.parse(localStorage.getItem("loginToken"));

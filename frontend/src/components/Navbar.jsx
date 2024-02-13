@@ -67,45 +67,52 @@ const Navbar = () => {
           <a href="/dashboard">
             <img src="\assets\logo.png" alt="" />
           </a>
-          { loading ?
-          <div className="shadow profile" style={{background: 'transparent',padding: '0'}}>
-            <Skeleton variant="rounded" animation="wave" width={210} height={60} />
-          </div>
-          
-          :
-          <div className="shadow profile">
-            {loading ? (
+          {loading ? (
+            <div
+              className="shadow profile"
+              style={{ background: "transparent", padding: "0" }}
+            >
               <Skeleton
+                variant="rounded"
                 animation="wave"
-                variant="circular"
-                width={40}
-                height={40}
+                width={210}
+                height={60}
               />
-            ) : (
-              <div className="profileImage">
-                {" "}
-                <p> {innerSlug} </p>{" "}
-              </div>
-            )}
-
-            <div className="profileText">
-              {loading ? (
-                <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-              ) : (
-                <p className="text-white text-center text-uppercase fw-bold">
-                  {innerUsername}
-                </p>
-                // <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-              )}
-              {loading ? (
-                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-              ) : (
-                <p className="text-white text-center">{innerRole}</p>
-              )}
             </div>
-          </div>
-          }
-          
+          ) : (
+            <div className="shadow profile">
+              {loading ? (
+                <Skeleton
+                  animation="wave"
+                  variant="circular"
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <div className="profileImage">
+                  {" "}
+                  <p> {innerSlug} </p>{" "}
+                </div>
+              )}
+
+              <div className="profileText">
+                {loading ? (
+                  <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                ) : (
+                  <p className="text-white text-center text-uppercase fw-bold">
+                    {innerUsername}
+                  </p>
+                  // <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                )}
+                {loading ? (
+                  <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                ) : (
+                  <p className="text-white text-center">{innerRole}</p>
+                )}
+              </div>
+            </div>
+          )}
+
           <nav>
             {loading ? (
               Array.from({ length: 4 }).map((_, index) => (
@@ -137,6 +144,7 @@ const Navbar = () => {
                           &nbsp; Add New Shipment
                         </a>
                       </li>
+                      {isUserAdmin.userInfo.role === "Admin" ?  
                       <li>
                         <a
                           href="/import"
@@ -146,6 +154,7 @@ const Navbar = () => {
                           Import Shipment
                         </a>
                       </li>
+                       : []}
                       <li>
                         <a
                           href="/find-shipment"
@@ -166,6 +175,7 @@ const Navbar = () => {
                           Find Multiple Shipments
                         </a>
                       </li>
+                      {isUserAdmin.userInfo.role === "Admin" ?  
                       <li>
                         <a
                           href="/change-status"
@@ -176,6 +186,7 @@ const Navbar = () => {
                           &nbsp; Change Status
                         </a>
                       </li>
+                      : []}
                     </ul>
                   )}
                 </li>

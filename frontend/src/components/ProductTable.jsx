@@ -23,7 +23,7 @@ const ProductTable = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://ecomapi-owct.onrender.com/getproducts");
+      const response = await axios.get("http://localhost:3001/getproducts");
       setTableData(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -34,7 +34,7 @@ const ProductTable = () => {
 
   const deleteProduct = async (productId) => {
     try {
-      await axios.delete(`https://ecomapi-owct.onrender.com/deleteproduct/${productId}`);
+      await axios.delete(`http://localhost:3001/deleteproduct/${productId}`);
       setTableData((prevData) =>
         prevData.filter((product) => product._id !== productId)
       );
@@ -66,7 +66,7 @@ const ProductTable = () => {
   const updateProduct = async () => {
     try {
       const response = await axios.patch(
-        `https://ecomapi-owct.onrender.com/editproduct/${selectedProduct._id}`,
+        `http://localhost:3001/editproduct/${selectedProduct._id}`,
         {
           productTitle: selectedProduct.productTitle,
           sourcing: selectedProduct.sourcing,

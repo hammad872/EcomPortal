@@ -39,7 +39,7 @@ const AddnewShip = () => {
       let userDataLocalParsed = JSON.parse(userDataLocal);
       let userId = userDataLocalParsed.userInfo._id;
 
-      const response = await axios.post("https://ecomapi-owct.onrender.com/addshipment", {
+      const response = await axios.post("http://localhost:3001/addshipment", {
         ...formData,
         userIds: [userId],
         orderID: `${formData.orderNumber}${formData.slugName}`,
@@ -108,7 +108,7 @@ const AddnewShip = () => {
 
   useEffect(() => {
     axios
-      .get("https://ecomapi-owct.onrender.com/getregister")
+      .get("http://localhost:3001/getregister")
       .then((employeeNameResponse) => {
         setEmployeeName(employeeNameResponse.data);
       })
@@ -119,7 +119,7 @@ const AddnewShip = () => {
 
   useEffect(() => {
     axios
-      .get("https://ecomapi-owct.onrender.com/getproducts")
+      .get("http://localhost:3001/getproducts")
       .then((ProductData) => {
         setProductList(ProductData.data);
       })

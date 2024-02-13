@@ -12,6 +12,8 @@ import ProductTable from "./components/ProductTable";
 import FindShip from "./components/FindShip";
 import FindMultiShip from "./components/FindMultiShip";
 import ChangeStatus from "./components/ChangeStatus";
+import FileUploadComponent from "./components/FileUploadComponent";
+import FileDownloadComponent from "./components/FileDownloadComponent";
 
 
 function App() {
@@ -68,6 +70,14 @@ function App() {
         <Route
           path="/change-status"
           element={<PrivateRoute element={<ChangeStatus />} />}
+        />
+        <Route
+          path="/file-upload"
+          element={<PrivateRoute element={<FileUploadComponent />} />}
+        />
+        <Route
+          path="/file-download"
+          element={<PrivateRoute element={<FileDownloadComponent  />} />}
         />
       </Routes>
     </BrowserRouter>

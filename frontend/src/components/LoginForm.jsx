@@ -37,7 +37,7 @@ export const LoginForm = ({ setLoggedIn }) => {
       : { username: inputValue, password };
 
     axios
-      .post("https://ecomapi-owct.onrender.com/login", dataToSend)
+      .post("http://localhost:3001/login", dataToSend)
       .then((result) => {
         console.log(result);
 
