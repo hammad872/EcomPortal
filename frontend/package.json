@@ -28,7 +28,6 @@
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.1",
     "sweetalert2-react-content": "^5.0.7",
-    "tailwindcss": "^3.3.6",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
@@ -57,6 +56,6 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7"
+    "postcss-nesting": "^12.0.2"
   }
 }

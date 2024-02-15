@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env file
+require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -6,10 +6,10 @@ const cors = require("cors");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
-const multer = require('multer');
-const path = require('path'); // Add this line to import the path module
-const crypto = require('crypto');
-const axios = require('axios');
+const multer = require("multer");
+const path = require("path"); // Add this line to import the path module
+const crypto = require("crypto");
+const axios = require("axios");
 
 const app = express();
 app.use(cors());
@@ -173,6 +173,7 @@ app.post("/addshipment", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.get("/getshipments", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
@@ -206,7 +207,6 @@ app.get("/getshipments", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.get("/getregister", async (req, res) => {
   try {
@@ -317,7 +317,7 @@ app.post("/searchshipments", async (req, res) => {
       receiverName: shipment.receiverName,
       city: shipment.city,
       customerEmail: shipment.customerEmail,
-      date:shipment.date,
+      date: shipment.date,
       customerAddress: shipment.customerAddress,
       parcel: shipment.parcel,
       contactNumber: shipment.contactNumber,
@@ -342,7 +342,7 @@ app.post("/upload-csv", async (req, res) => {
     // Fetch slug for the selected client from getregister
     const clientInfo = await EmployeeModel.findOne({
       username: selectedClient,
-      _id: selectedClientId
+      _id: selectedClientId,
     });
     const clientSlug = clientInfo ? clientInfo.slug || "" : "";
 
@@ -401,20 +401,19 @@ app.patch("/changestatus", async (req, res) => {
   }
 });
 
-
 app.get("/totalcodamount", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
 
-    console.log("Shipments:", shipments); 
+    console.log("Shipments:", shipments);
 
     const totalCODAmount = shipments.reduce((acc, shipment) => {
-
-      const codAmount = typeof shipment.codAmount === 'number' ? shipment.codAmount : 0;
+      const codAmount =
+        typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
       return acc + codAmount;
     }, 0);
 
-    console.log("Total COD Amount:", totalCODAmount); 
+    console.log("Total COD Amount:", totalCODAmount);
 
     res.json({ totalCODAmount });
   } catch (err) {
@@ -429,7 +428,9 @@ app.delete("/deleteproduct/:id", async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const deletedProduct = await ProductModel.findOneAndDelete({ _id: productId });
+    const deletedProduct = await ProductModel.findOneAndDelete({
+      _id: productId,
+    });
 
     if (!deletedProduct) {
       return res.status(404).json({ error: "Product not found" });
@@ -441,7 +442,6 @@ app.delete("/deleteproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 app.patch("/editproduct/:id", async (req, res) => {
   const productId = req.params.id;
@@ -465,44 +465,43 @@ app.patch("/editproduct/:id", async (req, res) => {
   }
 });
 
-
-const apiKey = 'b25cd43e332ae182b01ee511078582ce';
-const apiSecret = '51886e58dcd9b59656de2c5cffd26c70';
-const storeUrl = 'f0d0b6-4.myshopify.com';
-const apiVersion = '2023-01';
-const accessToken = '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'; // Your access token
+const apiKey = "b25cd43e332ae182b01ee511078582ce";
+const apiSecret = "51886e58dcd9b59656de2c5cffd26c70";
+const storeUrl = "f0d0b6-4.myshopify.com";
+const apiVersion = "2023-01";
+const accessToken = "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"; // Your access token
 
 // Function to create Shopify API authentication headers
 function createAuthHeaders(url, method, body) {
-    const timestamp = Math.round(new Date().getTime() / 1000);
-    const message = method + url + (body || '') + timestamp;
-    const hmac = crypto.createHmac('sha256', apiSecret);
-    hmac.update(message);
-    const hash = hmac.digest('hex');
+  const timestamp = Math.round(new Date().getTime() / 1000);
+  const message = method + url + (body || "") + timestamp;
+  const hmac = crypto.createHmac("sha256", apiSecret);
+  hmac.update(message);
+  const hash = hmac.digest("hex");
 
-    return {
-        'X-Shopify-Access-Token': accessToken,
-        'X-Shopify-Timestamp': timestamp,
-        'X-Shopify-Hmac-Sha256': hash
-    };
+  return {
+    "X-Shopify-Access-Token": accessToken,
+    "X-Shopify-Timestamp": timestamp,
+    "X-Shopify-Hmac-Sha256": hash,
+  };
 }
 
 // Endpoint to fetch orders
-app.get('/orders', async (req, res) => {
-    try {
-        const url = `https://${storeUrl}/admin/api/${apiVersion}/orders.json`;
-        const authHeaders = createAuthHeaders(url, 'GET');
+app.get("/orders", async (req, res) => {
+  try {
+    const url = `https://${storeUrl}/admin/api/${apiVersion}/orders.json`;
+    const authHeaders = createAuthHeaders(url, "GET");
 
-        const response = await axios.get(url, {
-            headers: authHeaders
-        });
+    const response = await axios.get(url, {
+      headers: authHeaders,
+    });
 
-        const orders = response.data.orders;
-        res.json(orders);
-    } catch (error) {
-        console.error('Error fetching orders:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    const orders = response.data.orders;
+    res.json(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
