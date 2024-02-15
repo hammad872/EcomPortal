@@ -10,12 +10,20 @@ const multer = require("multer");
 const path = require("path"); // Add this line to import the path module
 const crypto = require("crypto");
 const axios = require("axios");
+const cron = require("node-cron");
+const fs = require("fs");
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+cron.schedule('0 * * * *', fetchAndUpdateOrdersToShipmentAPI);
+
+// Define Express routes
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 const { MONGODB_URI, PORT } = process.env;
 
 mongoose.connect(MONGODB_URI);
@@ -464,45 +472,178 @@ app.patch("/editproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+async function fetchAndUpdateOrdersToShipmentAPI() {
+  try {
+    let hasMoreOrders = true;
+    let page = 1;
+    const maxRetries = 3;
 
-const apiKey = "b25cd43e332ae182b01ee511078582ce";
-const apiSecret = "51886e58dcd9b59656de2c5cffd26c70";
-const storeUrl = "f0d0b6-4.myshopify.com";
-const apiVersion = "2023-01";
-const accessToken = "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"; // Your access token
+    while (hasMoreOrders) {
+      const url = `https://${process.env.SHOP_STORE_URL}/admin/api/${process.env.SHOP_API_VERSION}/orders.json`;
 
-// Function to create Shopify API authentication headers
-function createAuthHeaders(url, method, body) {
+      const authHeaders = createAuthHeaders(url, "GET");
+
+      let retryCount = 0;
+      let response;
+      while (retryCount < maxRetries) {
+        try {
+          response = await axios.get(url, {
+            headers: authHeaders,
+          });
+          break;
+        } catch (error) {
+          if (error.response && error.response.status === 430) {
+            // Rate limit exceeded, wait for some time before retrying
+            const waitTime = calculateWaitTime(retryCount);
+            console.log(`Rate limit exceeded. Retrying in ${waitTime} milliseconds...`);
+            await sleep(waitTime);
+            retryCount++;
+          } else {
+            // Other types of errors, log and handle accordingly
+            console.error("Error fetching orders from Shopify API:", error);
+            throw error;
+          }
+        }
+      }
+
+      const orders = response.data.orders;
+
+      if (orders.length === 0) {
+        console.log("No new orders to process.");
+        return;
+      }
+
+      await Promise.all(
+        orders.map(async (order) => {
+          try {
+            if (!order || typeof order.order_number !== "number") {
+              console.error("Invalid order data:", order);
+              return;
+            }
+
+            const orderID = "GL" + order.order_number;
+            const existingOrder = await ShipmentModel.findOne({ orderID });
+            if (existingOrder) {
+              console.log("Order already exists:", order.order_number);
+              return;
+            }
+
+                 // Determine fulfillment status based on order status
+                 let fulfillmentStatus;
+                 switch (order.financial_status) {
+                   case "pending":
+                     fulfillmentStatus = "In Transit";
+                     break;
+                   case "paid":
+                     fulfillmentStatus = "Delivered";
+                     break;
+                   case "voided":
+                     fulfillmentStatus = "Cancelled";
+                     break;
+                   case "refunded":
+                     fulfillmentStatus = "Returned";
+                     break;
+                   default:
+                     fulfillmentStatus = "in transit";
+                 }
+     
+
+            const shipmentData = {
+              parcel: "In Transit",
+              orderID,
+              receiverName: order.shipping_address.name,
+              city: order.shipping_address.city,
+              client: "65cc79f270cffd42a981a0d5",
+              clientName: "gulfash",
+              productName: order.line_items.map((item) => item.name).join(", "),
+              customerEmail: order.email,
+              customerAddress: order.shipping_address.address1,
+              contactNumber: order.shipping_address.phone,
+              date: order.created_at,
+              codAmount: order.total_price,
+            };
+
+            const newShipment = new ShipmentModel(shipmentData);
+            await newShipment.save();
+
+            console.log(
+              "Order posted to shipment API successfully:",
+              order.order_number
+            );
+          } catch (error) {
+            console.error("Error posting order to shipment API:", error);
+          }
+        })
+      );
+
+      // Check if there are more orders to fetch
+      if (orders.length < 250) {
+        hasMoreOrders = false;
+      } else {
+        page++;
+      }
+    }
+  } catch (error) {
+    console.error(
+      "Error fetching and posting orders to shipment API:",
+      error
+    );
+  }
+}
+
+function createAuthHeaders(url, method) {
   const timestamp = Math.round(new Date().getTime() / 1000);
-  const message = method + url + (body || "") + timestamp;
-  const hmac = crypto.createHmac("sha256", apiSecret);
+  const message = method + url + timestamp;
+  const hmac = crypto.createHmac("sha256", process.env.SHOP_API_SECRET);
   hmac.update(message);
   const hash = hmac.digest("hex");
 
   return {
-    "X-Shopify-Access-Token": accessToken,
+    "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN,
     "X-Shopify-Timestamp": timestamp,
     "X-Shopify-Hmac-Sha256": hash,
   };
 }
 
-// Endpoint to fetch orders
-app.get("/orders", async (req, res) => {
-  try {
-    const url = `https://${storeUrl}/admin/api/${apiVersion}/orders.json`;
-    const authHeaders = createAuthHeaders(url, "GET");
+function calculateWaitTime(retryCount) {
+  // Exponential backoff strategy
+  const baseWaitTime = 1000; // 1 second
+  const maxWaitTime = 60000; // 1 minute
+  const waitTime = Math.min(baseWaitTime * Math.pow(2, retryCount), maxWaitTime);
+  return waitTime;
+}
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+app.get("/shopify", async (req, res) => {
+  try {
+    // Construct the URL for fetching orders from Shopify API
+    const url = `https://${process.env.SHOP_STORE_URL}/admin/api/${process.env.SHOP_API_VERSION}/orders.json`;
+
+    // Construct authentication headers
+    const authHeaders = {
+      "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN,
+    };
+
+    // Make GET request to fetch orders
     const response = await axios.get(url, {
       headers: authHeaders,
     });
 
+    // Extract orders from response data
     const orders = response.data.orders;
-    res.json(orders);
+
+    // Send fetched orders in the response
+    res.json({ orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    // Send error response
+    res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
