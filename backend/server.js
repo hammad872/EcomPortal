@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const axios = require("axios");
+const crypto = require("crypto");
 const EmployeeModel = require("./models/Employee");
 const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
@@ -488,32 +490,32 @@ fetchAndUpdateOrdersToShipmentGrov();
 fetchAndUpdateOrdersToShipmentLuci();
 fetchAndUpdateOrdersToShipmentOstro();
 
-// app.get("/shopify", async (req, res) => {
-//   try {
-//     // Construct the URL for fetching orders from Shopify API
-//     const url = `https://${process.env.SHOP_STORE_URL_LUCI}/admin/api/${process.env.SHOP_API_VERSION_LUCI}/orders.json`;
+app.get("/shopify", async (req, res) => {
+  try {
+    // Construct the URL for fetching orders from Shopify API
+    const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json?status=closed`;
 
-//     // Construct authentication headers
-//     const authHeaders = {
-//       "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_LUCI,
-//     };
+    // Construct authentication headers
+    const authHeaders = {
+      "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_OSTRO,
+    };
 
-//     // Make GET request to fetch orders
-//     const response = await axios.get(url, {
-//       headers: authHeaders,
-//     });
+    // Make GET request to fetch orders
+    const response = await axios.get(url, {
+      headers: authHeaders,
+    });
 
-//     // Extract orders from response data
-//     const orders = response.data.orders;
+    // Extract orders from response data
+    const orders = response.data.orders;
 
-//     // Send fetched orders in the response
-//     res.json({ orders });
-//   } catch (error) {
-//     console.error("Error fetching orders:", error);
-//     // Send error response
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+    // Send fetched orders in the response
+    res.json({ orders });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    // Send error response
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
