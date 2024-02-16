@@ -10,7 +10,7 @@ const multer = require("multer");
 const path = require("path"); // Add this line to import the path module
 const crypto = require("crypto");
 const axios = require("axios");
-const cron = require("node-cron");
+// const cron = require("node-cron");
 const fs = require("fs");
 const { fetchAndUpdateOrdersToShipmentAPI } = require("./Controllers/orderProcessing")
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-cron.schedule('0 * * * *', fetchAndUpdateOrdersToShipmentAPI);
+// cron.schedule('0 * * * *', fetchAndUpdateOrdersToShipmentAPI);
 
 // Define Express routes
 app.get("/", (req, res) => {

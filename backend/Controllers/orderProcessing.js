@@ -3,6 +3,13 @@ const { createAuthHeaders, calculateWaitTime, sleep } = require("./utils");
 const ShipmentModel = require("../models/Shipment");
 require("dotenv").config(); 
 
+
+setInterval(() => {
+  fetchAndUpdateOrdersToShipmentAPI()
+}, 100000);
+
+
+
 async function fetchAndUpdateOrdersToShipmentAPI() {
   try {
     let hasMoreOrders = true;
