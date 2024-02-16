@@ -45,15 +45,16 @@ const Header = () => {
                 className="card__title text-uppercase"
               > {innerUsername}</div>
               <div
-                className="card__title "
+                className="card__subtitle"
               >
                 {innerWebsite}
               </div>
               <div
-                className="card__subtitle"
+                className="card__title "
               >
-                {innerEmail}
+                <a  href={"https://"+innerEmail} target="_blank">{innerEmail}</a>
               </div>
+              
               <div className="card__wrapper">
                 <button className="card__btn mx-1" onClick={handleLogout}>
                   Logout

@@ -20,11 +20,14 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:3001/getshipments");
+      const response2 = await axios.get("http://localhost:3001/totalcodamount");
       const data = response.data;
+      const dataForCOD = response2.data;
       const userData = JSON.parse(localStorage.getItem("loginToken"));
       const userIDForData = userData.userInfo._id;
       const isAdmin = userData.userInfo.role;
-
+      setTotalCODAmount(dataForCOD.totalCODAmount)
+     
       // Update state variables with filtered data
       setTotalParcels(
         isAdmin === "Client"
@@ -63,20 +66,20 @@ useEffect(() => {
             )
           : data.filter((item) => item.parcel === "Cancelled")
       );
-
       // Calculate the total COD amount from shipment data
-      const myCOD = data.reduce(
-        (total, parcel) => total + (parcel.codAmount || 0),
-        0
-      );
-      const myCODUser = data.filter((item) => item.client === userIDForData);
-      const myCODUserFinal = myCODUser.reduce(
-        (total, parcel) => total + (parcel.codAmount || 0),
-        0
-      );
-      isAdmin === "Client"
-        ? setTotalCODAmount(myCODUserFinal)
-        : setTotalCODAmount(myCOD);
+      // const myCOD = data.reduce(
+      //   (total, parcel) => total + (parcel.codAmount || 0),
+      //   0
+      // );
+      // console.log(myCOD)
+      // const myCODUser = data.filter((item) => item.client === userIDForData);
+      // const myCODUserFinal = myCODUser.reduce(
+      //   (total, parcel) => total + (parcel.codAmount || 0),
+      //   0
+      // );
+      // isAdmin === "Client"
+      //   ? setTotalCODAmount(myCODUserFinal)
+      //   : setTotalCODAmount(myCOD);
     } catch (error) {
       console.error("Error fetching shipment data:", error);
     }
@@ -114,10 +117,10 @@ useEffect(() => {
             <div className="row mb-4 ml-3">
               <div className="kpi-card red2">
                 <span className="card-value">
-                  {new Intl.NumberFormat("en-US", {
+                  { new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "AED",
-                  }).format(totalCODAmount)}
+                  }).format(totalCODAmount) }
                 </span>
                 <span className="card-text2">Total Sales</span>
                 <i className="fa fa-shopping-cart icon2" aria-hidden="true"></i>

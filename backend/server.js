@@ -8,11 +8,7 @@ const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
 const multer = require("multer");
 const path = require("path"); // Add this line to import the path module
-const crypto = require("crypto");
-const axios = require("axios");
-// const cron = require("node-cron");
-const fs = require("fs");
-const { fetchAndUpdateOrdersToShipmentAPI } = require("./Controllers/orderProcessing")
+const { fetchAndUpdateOrdersToShipmentGrov, fetchAndUpdateOrdersToShipmentLuci, fetchAndUpdateOrdersToShipmentOstro } = require("./Controllers/orderProcessing")
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -415,20 +411,34 @@ app.get("/totalcodamount", async (req, res) => {
 
     console.log("Shipments:", shipments);
 
+    // Calculate total COD amount for all shipments
     const totalCODAmount = shipments.reduce((acc, shipment) => {
-      const codAmount =
-        typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+      const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
       return acc + codAmount;
     }, 0);
 
-    console.log("Total COD Amount:", totalCODAmount);
+    // Calculate total COD amount for cancelled shipments
+    const cancelledCODAmount = shipments.reduce((acc, shipment) => {
+      if (shipment.parcel === "Cancelled") {
+        const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+        return acc + codAmount;
+      } else {
+        return acc;
+      }
+    }, 0);
 
-    res.json({ totalCODAmount });
+    // Deduct total COD amount for cancelled shipments from total COD amount
+    const totalCODAmountAfterDeduction = totalCODAmount - cancelledCODAmount;
+
+    console.log("Total COD Amount after deduction:", totalCODAmountAfterDeduction);
+
+    res.json({ totalCODAmount: totalCODAmountAfterDeduction });
   } catch (err) {
     console.error("Error calculating total COD amount:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // Add this code after your existing routes
 
@@ -474,34 +484,36 @@ app.patch("/editproduct/:id", async (req, res) => {
 });
 
 
-fetchAndUpdateOrdersToShipmentAPI();
+fetchAndUpdateOrdersToShipmentGrov();
+fetchAndUpdateOrdersToShipmentLuci();
+fetchAndUpdateOrdersToShipmentOstro();
 
-app.get("/shopify", async (req, res) => {
-  try {
-    // Construct the URL for fetching orders from Shopify API
-    const url = `https://${process.env.SHOP_STORE_URL}/admin/api/${process.env.SHOP_API_VERSION}/orders.json`;
+// app.get("/shopify", async (req, res) => {
+//   try {
+//     // Construct the URL for fetching orders from Shopify API
+//     const url = `https://${process.env.SHOP_STORE_URL_LUCI}/admin/api/${process.env.SHOP_API_VERSION_LUCI}/orders.json`;
 
-    // Construct authentication headers
-    const authHeaders = {
-      "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN,
-    };
+//     // Construct authentication headers
+//     const authHeaders = {
+//       "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_LUCI,
+//     };
 
-    // Make GET request to fetch orders
-    const response = await axios.get(url, {
-      headers: authHeaders,
-    });
+//     // Make GET request to fetch orders
+//     const response = await axios.get(url, {
+//       headers: authHeaders,
+//     });
 
-    // Extract orders from response data
-    const orders = response.data.orders;
+//     // Extract orders from response data
+//     const orders = response.data.orders;
 
-    // Send fetched orders in the response
-    res.json({ orders });
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    // Send error response
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+//     // Send fetched orders in the response
+//     res.json({ orders });
+//   } catch (error) {
+//     console.error("Error fetching orders:", error);
+//     // Send error response
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
