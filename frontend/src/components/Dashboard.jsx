@@ -19,8 +19,8 @@ const Dashboard = () => {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/getshipments");
-      const response2 = await axios.get("http://localhost:3001/totalcodamount");
+      const response = await axios.get("http://ecomapi-owct.onrender.com/getshipments");
+      const response2 = await axios.get("http://ecomapi-owct.onrender.com/totalcodamount");
       const data = response.data;
       const dataForCOD = response2.data;
       const userData = JSON.parse(localStorage.getItem("loginToken"));

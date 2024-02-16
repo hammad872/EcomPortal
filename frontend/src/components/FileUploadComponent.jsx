@@ -20,7 +20,7 @@ const FileUploadComponent = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/getregister");
+        const response = await axios.get("http://ecomapi-owct.onrender.com/getregister");
         const FilteredAdmin = response.data.filter(
           (item) => item.role === "Client"
         );
@@ -71,7 +71,7 @@ const FileUploadComponent = () => {
       formData.append("file", file, concatenatedFileName);
 
       const response = await axios.post(
-        "http://localhost:3001/upload",
+        "http://ecomapi-owct.onrender.com/upload",
         formData,
         {
           headers: {
