@@ -409,7 +409,7 @@ app.get("/totalcodamount", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
 
-    console.log("Shipments:", shipments);
+
 
     // Calculate total COD amount for all shipments
     const totalCODAmount = shipments.reduce((acc, shipment) => {
@@ -430,7 +430,7 @@ app.get("/totalcodamount", async (req, res) => {
     // Deduct total COD amount for cancelled shipments from total COD amount
     const totalCODAmountAfterDeduction = totalCODAmount - cancelledCODAmount;
 
-    console.log("Total COD Amount after deduction:", totalCODAmountAfterDeduction);
+
 
     res.json({ totalCODAmount: totalCODAmountAfterDeduction });
   } catch (err) {
