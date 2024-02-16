@@ -10,7 +10,7 @@ const FileDownloadComponent = () => {
 
   useEffect(() => {
     // Set the link when the component mounts
-    setLink(`http://localhost:3001/download/${currentUser}-invoice.xls`);
+    setLink(`https://ecomapi-owct.onrender.com/download/${currentUser}-invoice.xls`);
   }, [currentUser]); // Make sure to include currentUser in the dependency array
 
   return (
