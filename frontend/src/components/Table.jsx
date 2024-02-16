@@ -70,9 +70,9 @@ const Table = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/getshipments")
-      .then((shipmentResponse) => {
+    const fetchData = async () => {
+      try {
+        const shipmentResponse = await axios.get("http://localhost:3001/getshipments");
         const data = shipmentResponse.data;
         const userIDForData = userData.userInfo._id;
         const isAdmin = userData.userInfo.role;
@@ -111,13 +111,18 @@ const Table = () => {
                 )
               : data.filter((item) => item.parcel === "Cancelled"),
         });
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching shipment data:", error);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
+
+    const intervalId = setInterval(fetchData, 1000);
+
+    return () => clearInterval(intervalId);
   }, [userData.userInfo._id, userData.userInfo.role]);
 
   useEffect(() => {
@@ -382,6 +387,7 @@ const Table = () => {
                   onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
+                
               )}
             </div>
 

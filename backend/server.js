@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-// cron.schedule('0 * * * *', fetchAndUpdateOrdersToShipmentAPI);
+
 
 // Define Express routes
 app.get("/", (req, res) => {
@@ -33,9 +33,9 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    // Get the client ID from the request body
-    const clientId = req.body.clientId || "unknown"; // If client ID is not provided, use "unknown"
-    // Concatenate the client ID and current timestamp with the original filename
+
+    const clientId = req.body.clientId || "unknown"; 
+ 
     cb(null, `${file.originalname}`);
   },
 });

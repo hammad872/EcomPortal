@@ -16,76 +16,81 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true); // State to track loading
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/getshipments"
-        );
-        const data = response.data;
-        const userData = JSON.parse(localStorage.getItem("loginToken"));
-        const userIDForData = userData.userInfo._id;
-        const isAdmin = userData.userInfo.role;
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/getshipments");
+      const data = response.data;
+      const userData = JSON.parse(localStorage.getItem("loginToken"));
+      const userIDForData = userData.userInfo._id;
+      const isAdmin = userData.userInfo.role;
 
-        // Update state variables with filtered data
-        setTotalParcels(
-          isAdmin === "Client"
-            ? data.filter((item) => item.client === userIDForData)
-            : data
-        );
-        setDeliveredParcels(
-          isAdmin === "Client"
-            ? data.filter(
-                (item) =>
-                  item.parcel === "Delivered" && item.client === userIDForData
-              )
-            : data.filter((item) => item.parcel === "Delivered")
-        );
-        setInTransitParcels(
-          isAdmin === "Client"
-            ? data.filter(
-                (item) =>
-                  item.parcel === "In Transit" && item.client === userIDForData
-              )
-            : data.filter((item) => item.parcel === "In Transit")
-        );
-        setReturnedParcels(
-          isAdmin === "Client"
-            ? data.filter(
-                (item) =>
-                  item.parcel === "Returned" && item.client === userIDForData
-              )
-            : data.filter((item) => item.parcel === "Returned")
-        );
-        setCancelledParcels(
-          isAdmin === "Client"
-            ? data.filter(
-                (item) =>
-                  item.parcel === "Cancelled" && item.client === userIDForData
-              )
-            : data.filter((item) => item.parcel === "Cancelled")
-        );
-
-        // Calculate the total COD amount from shipment data
-        const myCOD = data.reduce(
-          (total, parcel) => total + (parcel.codAmount || 0),
-          0
-        );
-        const myCODUser = data.filter((item) => item.client === userIDForData);
-        const myCODUserFinal = myCODUser.reduce(
-          (total, parcel) => total + (parcel.codAmount || 0),
-          0
-        );
+      // Update state variables with filtered data
+      setTotalParcels(
         isAdmin === "Client"
-          ? setTotalCODAmount(myCODUserFinal)
-          : setTotalCODAmount(myCOD);
-      } catch (error) {
-        console.error("Error fetching shipment data:", error);
-      }
-    };
+          ? data.filter((item) => item.client === userIDForData)
+          : data
+      );
+      setDeliveredParcels(
+        isAdmin === "Client"
+          ? data.filter(
+              (item) =>
+                item.parcel === "Delivered" && item.client === userIDForData
+            )
+          : data.filter((item) => item.parcel === "Delivered")
+      );
+      setInTransitParcels(
+        isAdmin === "Client"
+          ? data.filter(
+              (item) =>
+                item.parcel === "In Transit" && item.client === userIDForData
+            )
+          : data.filter((item) => item.parcel === "In Transit")
+      );
+      setReturnedParcels(
+        isAdmin === "Client"
+          ? data.filter(
+              (item) =>
+                item.parcel === "Returned" && item.client === userIDForData
+            )
+          : data.filter((item) => item.parcel === "Returned")
+      );
+      setCancelledParcels(
+        isAdmin === "Client"
+          ? data.filter(
+              (item) =>
+                item.parcel === "Cancelled" && item.client === userIDForData
+            )
+          : data.filter((item) => item.parcel === "Cancelled")
+      );
 
-    fetchData();
-  }, []);
+      // Calculate the total COD amount from shipment data
+      const myCOD = data.reduce(
+        (total, parcel) => total + (parcel.codAmount || 0),
+        0
+      );
+      const myCODUser = data.filter((item) => item.client === userIDForData);
+      const myCODUserFinal = myCODUser.reduce(
+        (total, parcel) => total + (parcel.codAmount || 0),
+        0
+      );
+      isAdmin === "Client"
+        ? setTotalCODAmount(myCODUserFinal)
+        : setTotalCODAmount(myCOD);
+    } catch (error) {
+      console.error("Error fetching shipment data:", error);
+    }
+  };
+
+  // Fetch data initially
+  fetchData();
+
+  // Set up interval to fetch data every second
+  const intervalId = setInterval(fetchData, 1000);
+
+  // Cleanup function
+  return () => clearInterval(intervalId);
+}, []);
   useEffect(() => {
     // Simulate loading time
     const timeout = setTimeout(() => {
