@@ -19,7 +19,7 @@ async function fetchAndUpdateOrdersToShipmentGrov() {
     const maxRetries = 3;
 
     while (hasMoreOrders) {
-      const url = `https://${process.env.SHOP_STORE_URL_GROV}/admin/api/${process.env.SHOP_API_VERSION_GROV}/orders.json`;
+      const url = `https://${process.env.SHOP_STORE_URL_GROV}/admin/api/${process.env.SHOP_API_VERSION_GROV}/orders.json?status=closed`;
 
       const authHeaders = createAuthHeadersGrov(url, "GET");
 
@@ -136,7 +136,7 @@ async function fetchAndUpdateOrdersToShipmentLuci() {
     const maxRetries = 3;
 
     while (hasMoreOrders) {
-      const url = `https://${process.env.SHOP_STORE_URL_LUCI}/admin/api/${process.env.SHOP_API_VERSION_LUCI}/orders.json`;
+      const url = `https://${process.env.SHOP_STORE_URL_LUCI}/admin/api/${process.env.SHOP_API_VERSION_LUCI}/orders.json?status=closed`;
 
       const authHeaders = createAuthHeadersLuci(url, "GET");
 
@@ -253,7 +253,7 @@ async function fetchAndUpdateOrdersToShipmentOstro() {
     const maxRetries = 3;
 
     while (hasMoreOrders) {
-      const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json`;
+      const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json?status=closed`;
 
       const authHeaders = createAuthHeadersOstro(url, "GET");
 
