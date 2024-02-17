@@ -26,7 +26,13 @@ useEffect(() => {
       const userData = JSON.parse(localStorage.getItem("loginToken"));
       const userIDForData = userData.userInfo._id;
       const isAdmin = userData.userInfo.role;
-      setTotalCODAmount(dataForCOD.totalCODAmount)
+      if (isAdmin === 'Admin'){
+        setTotalCODAmount(dataForCOD.totalCODAmount)
+      }else{
+        const myResponse = await axios.get(`https://ecomapi-owct.onrender.com/totalcodamountforclient/${userIDForData}`);
+        setTotalCODAmount(JSON.stringify(myResponse.data.totalCODAmountForClient))
+      }
+
      
       // Update state variables with filtered data
       setTotalParcels(
