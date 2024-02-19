@@ -10,15 +10,16 @@ const ShipmentModel = require("./models/Shipment");
 const ProductModel = require("./models/Product");
 const multer = require("multer");
 const path = require("path"); // Add this line to import the path module
-const { fetchAndUpdateOrdersToShipmentGrov, fetchAndUpdateOrdersToShipmentLuci, fetchAndUpdateOrdersToShipmentOstro } = require("./Controllers/orderProcessing")
+const {
+  fetchAndUpdateOrdersToShipmentGrov,
+  fetchAndUpdateOrdersToShipmentLuci,
+  fetchAndUpdateOrdersToShipmentOstro,
+} = require("./Controllers/orderProcessing");
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-
-
-// Define Express routes
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
@@ -31,30 +32,27 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
+    const clientId = req.body.clientId || "unknown";
 
-    const clientId = req.body.clientId || "unknown"; 
- 
     cb(null, `${file.originalname}`);
   },
 });
 
 const upload = multer({ storage });
 
-// Serve uploaded files statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Handle file upload endpoint
+
 app.post("/upload", upload.single("file"), (req, res) => {
-  // Handle the uploaded file
+  
   console.log("File uploaded:", req.file);
   res.status(200).send("File uploaded successfully");
 });
 
-// Handle file download endpoint
 app.get("/download/:filename", (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(__dirname, "uploads", filename);
-  // Send the file for download
+  
   res.download(filePath, (err) => {
     if (err) {
       console.error("Error downloading file:", err);
@@ -83,9 +81,8 @@ app.post("/login", async (req, res) => {
 
     if (user) {
       if (user.password === password) {
-        // Return the objectId along with other user information
-        const { password, ...userInfo } = user._doc;
-        res.status(200).json({ message: "Login success", user: { userInfo } });
+        const { password, client, ...userInfo } = user._doc; // Exclude password and client from response
+        res.status(200).json({ message: "Login success", user: { userInfo, client } });
       } else {
         res.status(401).json({ error: "Incorrect password" });
       }
@@ -142,9 +139,9 @@ app.post("/addshipment", async (req, res) => {
       return res.status(404).json({ error: "Selected client not found" });
     }
 
-    const slugName = selectedUser.slug || ""; // Get the slugName of the selected user
+    const slugName = selectedUser.slug || "";
 
-    const orderID = slugName + orderNumber; // Concatenate slugName first
+    const orderID = slugName + orderNumber; 
 
     const users = await EmployeeModel.find({ _id: { $in: userIds } });
 
@@ -165,7 +162,6 @@ app.post("/addshipment", async (req, res) => {
       user: users.map((user) => user._id),
     });
 
-    // Update each user's shipments array using Promise.all
     await Promise.all(
       users.map(async (user) => {
         user.shipments.push(shipment._id);
@@ -184,7 +180,6 @@ app.get("/getshipments", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
     const formattedShipments = shipments.map((shipment) => {
-      // Check if the date is a valid date
       const formattedDate =
         shipment.date instanceof Date && !isNaN(shipment.date)
           ? new Date(shipment.date).toISOString().split("T")[0]
@@ -267,7 +262,6 @@ app.delete("/deleteshipment/:id", async (req, res) => {
       return res.status(404).json({ error: "Shipment not found" });
     }
 
-    // Remove the shipment from users
     const userIds = shipment.user;
 
     if (userIds && userIds.length > 0) {
@@ -345,7 +339,6 @@ app.post("/upload-csv", async (req, res) => {
     const selectedClient = req.body.clientName;
     const selectedClientId = req.body.client;
 
-    // Fetch slug for the selected client from getregister
     const clientInfo = await EmployeeModel.findOne({
       username: selectedClient,
       _id: selectedClientId,
@@ -368,7 +361,7 @@ app.post("/upload-csv", async (req, res) => {
         city: row["Shipping Province Name"],
         customerEmail: row["Email"],
         date: row["Fulfilled at"],
-        // Map other CSV fields to Shipment fields here
+        
       };
     });
 
@@ -412,14 +405,53 @@ app.get("/totalcodamount", async (req, res) => {
     const shipments = await ShipmentModel.find();
 
 
-
     // Calculate total COD amount for all shipments
+    const totalCODAmount = shipments.reduce((acc, shipment) => {
+      const codAmount =
+        typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+      return acc + codAmount;
+    }, 0);
+
+    // Calculate total COD amount for cancelled shipments
+    const cancelledCODAmount = shipments.reduce((acc, shipment) => {
+      if (shipment.parcel === "Cancelled") {
+        const codAmount =
+          typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+        return acc + codAmount;
+      } else {
+        return acc;
+      }
+    }, 0);
+
+    // Deduct total COD amount for cancelled shipments from total COD amount
+    const totalCODAmountAfterDeduction = totalCODAmount - cancelledCODAmount;
+
+    res.json({ totalCODAmount: totalCODAmountAfterDeduction });
+  } catch (err) {
+    console.error("Error calculating total COD amount:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+// Assuming you have defined your Mongoose model for shipments as ShipmentModel
+
+app.get("/totalcodamountforclient/:clientID", async (req, res) => {
+  try {
+    const LoggedClientID = req.params.clientID;
+    // console.log(LoggedClientID); // Logging the LoggedClientID
+    // console.log("userIDForData"); // Remove this line if you don't need it
+
+    const shipments = await ShipmentModel.find({ client: LoggedClientID });
+
+    // Calculate total COD amount for all shipments of the client
     const totalCODAmount = shipments.reduce((acc, shipment) => {
       const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
       return acc + codAmount;
     }, 0);
 
-    // Calculate total COD amount for cancelled shipments
+    // Calculate total COD amount for cancelled shipments of the client
     const cancelledCODAmount = shipments.reduce((acc, shipment) => {
       if (shipment.parcel === "Cancelled") {
         const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
@@ -432,17 +464,15 @@ app.get("/totalcodamount", async (req, res) => {
     // Deduct total COD amount for cancelled shipments from total COD amount
     const totalCODAmountAfterDeduction = totalCODAmount - cancelledCODAmount;
 
-
-
-    res.json({ totalCODAmount: totalCODAmountAfterDeduction });
+    res.json({ totalCODAmountForClient: totalCODAmountAfterDeduction });
   } catch (err) {
-    console.error("Error calculating total COD amount:", err);
+    console.error("Error calculating total COD amount for client:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
 
-// Add this code after your existing routes
+
 
 app.delete("/deleteproduct/:id", async (req, res) => {
   const productId = req.params.id;
@@ -484,7 +514,6 @@ app.patch("/editproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 fetchAndUpdateOrdersToShipmentGrov();
 fetchAndUpdateOrdersToShipmentLuci();

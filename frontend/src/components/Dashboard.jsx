@@ -19,14 +19,20 @@ const Dashboard = () => {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://ecomapi-owct.onrender.com/getshipments");
-      const response2 = await axios.get("http://ecomapi-owct.onrender.com/totalcodamount");
+      const response = await axios.get("https://ecomapi-owct.onrender.com/getshipments");
+      const response2 = await axios.get("https://ecomapi-owct.onrender.com/totalcodamount");
       const data = response.data;
       const dataForCOD = response2.data;
       const userData = JSON.parse(localStorage.getItem("loginToken"));
       const userIDForData = userData.userInfo._id;
       const isAdmin = userData.userInfo.role;
-      setTotalCODAmount(dataForCOD.totalCODAmount)
+      if (isAdmin === 'Admin'){
+        setTotalCODAmount(dataForCOD.totalCODAmount)
+      }else{
+        const myResponse = await axios.get(`https://ecomapi-owct.onrender.com/totalcodamountforclient/${userIDForData}`);
+        setTotalCODAmount(JSON.stringify(myResponse.data.totalCODAmountForClient))
+      }
+
      
       // Update state variables with filtered data
       setTotalParcels(
