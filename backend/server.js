@@ -515,9 +515,9 @@ app.patch("/editproduct/:id", async (req, res) => {
   }
 });
 
-fetchAndUpdateOrdersToShipmentGrov();
-fetchAndUpdateOrdersToShipmentLuci();
-fetchAndUpdateOrdersToShipmentOstro();
+// fetchAndUpdateOrdersToShipmentGrov();
+// fetchAndUpdateOrdersToShipmentLuci();
+// fetchAndUpdateOrdersToShipmentOstro();
 
 app.get("/shopify", async (req, res) => {
   try {
@@ -545,6 +545,75 @@ app.get("/shopify", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.get('/cloudinary/:folderPath', async (req, res) => {
+  const { folderPath } = req.params;
+
+  try {
+    const folderContents = await fetchFolderContents(folderPath);
+    res.json(folderContents);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Function to fetch folder contents from Cloudinary
+const fetchFolderContents = async (folderPath) => {
+  try {
+    const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources`;
+    const response = await axios.get(apiUrl, {
+      params: {
+        type: 'upload',
+        prefix: folderPath
+      },
+      auth: {
+        username: '563345587529758', // Your Cloudinary API key
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' // Your Cloudinary API secret
+      }
+    });
+
+    // Extract resource types from the response
+    const resourceTypes = response.data.resource_types;
+
+    // Initialize an empty array to store all resources
+    let allResources = [];
+
+    // Loop through each resource type
+    for (const resourceType of resourceTypes) {
+      // Fetch resources of the current resource type
+      const resources = await fetchResourcesOfType(folderPath, resourceType);
+      // Concatenate the fetched resources to the array
+      allResources = allResources.concat(resources);
+    }
+
+    return allResources;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Function to fetch resources of a specific type from Cloudinary
+const fetchResourcesOfType = async (folderPath, resourceType) => {
+  try {
+    const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources/${resourceType}`;
+    const response = await axios.get(apiUrl, {
+      params: {
+        type: 'upload',
+        prefix: folderPath
+      },
+      auth: {
+        username: '563345587529758', // Your Cloudinary API key
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' // Your Cloudinary API secret
+      }
+    });
+
+    return response.data.resources;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -76,11 +76,11 @@ const UploadInvoiceCloud = () => {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'i9xkbxyc'); // Include the upload preset
+    formData.append('upload_preset', 'yo0fksdr'); // Include the upload preset
     formData.append('public_id', `${selectedClient}/${selectedDate}/${file.name}`); // Include the folder name and selected date in the public_id
 
     try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/dyyzrmujz/upload`, {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/dus0ln30w/upload`, {
         method: 'POST',
         body: formData
       });
