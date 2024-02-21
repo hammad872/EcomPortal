@@ -501,7 +501,7 @@ app.patch("/editproduct/:id", async (req, res) => {
     const product = await ProductModel.findByIdAndUpdate(
       productId,
       { productTitle, sourcing },
-      { new: true } // To return the updated document
+      { new: true }
     );
 
     if (!product) {
@@ -515,33 +515,33 @@ app.patch("/editproduct/:id", async (req, res) => {
   }
 });
 
-// fetchAndUpdateOrdersToShipmentGrov();
-// fetchAndUpdateOrdersToShipmentLuci();
-// fetchAndUpdateOrdersToShipmentOstro();
+fetchAndUpdateOrdersToShipmentGrov();
+fetchAndUpdateOrdersToShipmentLuci();
+fetchAndUpdateOrdersToShipmentOstro();
 
 app.get("/shopify", async (req, res) => {
   try {
-    // Construct the URL for fetching orders from Shopify API
+
     const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json?status=closed`;
 
-    // Construct authentication headers
+
     const authHeaders = {
       "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_OSTRO,
     };
 
-    // Make GET request to fetch orders
+
     const response = await axios.get(url, {
       headers: authHeaders,
     });
 
-    // Extract orders from response data
+
     const orders = response.data.orders;
 
-    // Send fetched orders in the response
+
     res.json({ orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    // Send error response
+
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -557,7 +557,7 @@ app.get('/cloudinary/:folderPath', async (req, res) => {
   }
 });
 
-// Function to fetch folder contents from Cloudinary
+
 const fetchFolderContents = async (folderPath) => {
   try {
     const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources`;
@@ -567,22 +567,20 @@ const fetchFolderContents = async (folderPath) => {
         prefix: folderPath
       },
       auth: {
-        username: '563345587529758', // Your Cloudinary API key
-        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' // Your Cloudinary API secret
+        username: '563345587529758',
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
       }
     });
 
-    // Extract resource types from the response
     const resourceTypes = response.data.resource_types;
 
-    // Initialize an empty array to store all resources
     let allResources = [];
 
-    // Loop through each resource type
+
     for (const resourceType of resourceTypes) {
-      // Fetch resources of the current resource type
+
       const resources = await fetchResourcesOfType(folderPath, resourceType);
-      // Concatenate the fetched resources to the array
+
       allResources = allResources.concat(resources);
     }
 
@@ -592,7 +590,7 @@ const fetchFolderContents = async (folderPath) => {
   }
 };
 
-// Function to fetch resources of a specific type from Cloudinary
+
 const fetchResourcesOfType = async (folderPath, resourceType) => {
   try {
     const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources/${resourceType}`;
@@ -602,8 +600,8 @@ const fetchResourcesOfType = async (folderPath, resourceType) => {
         prefix: folderPath
       },
       auth: {
-        username: '563345587529758', // Your Cloudinary API key
-        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' // Your Cloudinary API secret
+        username: '563345587529758', 
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
       }
     });
 
