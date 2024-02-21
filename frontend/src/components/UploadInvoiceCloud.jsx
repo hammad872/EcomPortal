@@ -172,12 +172,6 @@ const UploadInvoiceCloud = () => {
             >
               Upload
             </button>
-            {uploadResult && (
-              <div>
-                <h2>Upload Result</h2>
-                <pre>{JSON.stringify(uploadResult, null, 2)}</pre>
-              </div>
-            )}
             {fileUploaded && (
               <span style={{ marginLeft: "10px", color: "green" }}>
                 ✓ File Uploaded
