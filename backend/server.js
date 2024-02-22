@@ -382,8 +382,8 @@ app.patch("/changestatus", async (req, res) => {
   const { newStatus, orderIds } = req.body;
 
   try {
-    // Validate newStatus
-    if (!["Delivered", "Returned", "Cancelled"].includes(newStatus)) {
+    // Validate newStatus بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+    if (!["Delivered", "Returned", "Cancelled", "In Transit", "Confirmation Pending"].includes(newStatus)) {
       return res.status(400).json({ error: "Invalid status" });
     }
 
