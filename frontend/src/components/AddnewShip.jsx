@@ -14,7 +14,7 @@ const AddnewShip = () => {
   const isAdminLoggedIn = userData.userInfo.role;
   const [productName, setProductName] = useState("");
   const [formData, setFormData] = useState({
-    parcel: "In Transit",
+    parcel: "Confirmation Pending",
     receiverName: "",
     productName: "",
     client: isAdminLoggedIn === "Admin" ? "" : userData.userInfo._id,

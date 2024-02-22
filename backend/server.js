@@ -352,7 +352,7 @@ app.post("/upload-csv", async (req, res) => {
         orderID,
         clientName: selectedClient,
         client: selectedClientId,
-        parcel: "In Transit",
+        parcel: "Confirmation Pending",
         productName: row["Lineitem name"],
         codAmount: row.Total,
         customerAddress: row["Billing Address1"],

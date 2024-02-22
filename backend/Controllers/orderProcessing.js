@@ -74,27 +74,10 @@ async function fetchAndUpdateOrdersToShipmentGrov() {
               return;
             }
 
-            // Determine fulfillment status based on order status
-            let fulfillmentStatus;
-            switch (order.financial_status) {
-              case "pending":
-                fulfillmentStatus = "In Transit";
-                break;
-              case "paid":
-                fulfillmentStatus = "Delivered";
-                break;
-              case "voided":
-                fulfillmentStatus = "Cancelled";
-                break;
-              case "refunded":
-                fulfillmentStatus = "Returned";
-                break;
-              default:
-                fulfillmentStatus = "in transit";
-            }
+        
 
             const shipmentData = {
-              parcel: "In Transit",
+              parcel: "Confirmation Pending",
               orderID,
               receiverName: order.shipping_address.name,
               city: order.shipping_address.city,
@@ -191,27 +174,8 @@ async function fetchAndUpdateOrdersToShipmentLuci() {
               return;
             }
 
-            // Determine fulfillment status based on order status
-            let fulfillmentStatus;
-            switch (order.financial_status) {
-              case "pending":
-                fulfillmentStatus = "In Transit";
-                break;
-              case "paid":
-                fulfillmentStatus = "Delivered";
-                break;
-              case "voided":
-                fulfillmentStatus = "Cancelled";
-                break;
-              case "refunded":
-                fulfillmentStatus = "Returned";
-                break;
-              default:
-                fulfillmentStatus = "in transit";
-            }
-
             const shipmentData = {
-              parcel: "In Transit",
+              parcel: "Confirmation Pending",
               orderID,
               receiverName: order.shipping_address.name,
               city: order.shipping_address.city,
@@ -308,27 +272,9 @@ async function fetchAndUpdateOrdersToShipmentOstro() {
               return;
             }
 
-            // Determine fulfillment status based on order status
-            let fulfillmentStatus;
-            switch (order.financial_status) {
-              case "pending":
-                fulfillmentStatus = "In Transit";
-                break;
-              case "paid":
-                fulfillmentStatus = "Delivered";
-                break;
-              case "voided":
-                fulfillmentStatus = "Cancelled";
-                break;
-              case "refunded":
-                fulfillmentStatus = "Returned";
-                break;
-              default:
-                fulfillmentStatus = "in transit";
-            }
 
             const shipmentData = {
-              parcel: "In Transit",
+              parcel: "Confirmation Pending",
               orderID,
               receiverName: order.shipping_address.name,
               city: order.shipping_address.city,
