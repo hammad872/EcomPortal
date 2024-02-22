@@ -196,6 +196,8 @@ const FindShip = () => {
                         <option value="Delivered">Delivered</option>
                         <option value="Returned">Returned</option>
                         <option value="Cancelled">Cancelled</option>
+                        <option value="Confirmation Pending">Confirmation Pending</option>
+                        <option value="In Transit">In Transit</option>
                       </select>
                     </div>
                     <button
