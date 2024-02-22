@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [inTransitParcels, setInTransitParcels] = useState([]);
   const [returnedParcels, setReturnedParcels] = useState([]);
   const [cancelledParcels, setCancelledParcels] = useState([]);
+  const [pendingParcels, sePendingParcels] = useState([]);
   const [totalCODAmount, setTotalCODAmount] = useState(0);
   const [loading, setLoading] = useState(true); // State to track loading
 
@@ -47,6 +48,14 @@ useEffect(() => {
                 item.parcel === "Delivered" && item.client === userIDForData
             )
           : data.filter((item) => item.parcel === "Delivered")
+      );
+      sePendingParcels(
+        isAdmin === "Client"
+          ? data.filter(
+              (item) =>
+                item.parcel === "Confirmation Pending" && item.client === userIDForData
+            )
+          : data.filter((item) => item.parcel === "Confirmation Pending")
       );
       setInTransitParcels(
         isAdmin === "Client"
@@ -135,235 +144,281 @@ useEffect(() => {
 
             {/* Parcel Statistics Cards */}
             {loading ? (
-               <div className="row justify-content-center align-items-center column-gap-sm-3">
-               <div className="col-lg-2-5">
-                 <div className="ship_stat p-3 mx-1">
-                   <Skeleton
-                     variant="rectangle"
-                     width={"60%"}
-                     height={80}
-                     sx={{
-                       fontSize: "1rem",
-                       margin: "0 auto",
-                       bgcolor: "grey.300",
-                     }}
-                   />
-                   <h2>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </h2>
-                   <p>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </p>
-                 </div>
-               </div>
-               <div className="col-lg-2-5">
-                 <div className="ship_stat p-3 mx-1">
-                   <Skeleton
-                     variant="rectangle"
-                     width={"60%"}
-                     height={80}
-                     sx={{
-                       fontSize: "1rem",
-                       margin: "0 auto",
-                       bgcolor: "grey.300",
-                     }}
-                   />
-                   <h2>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </h2>
-                   <p>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </p>
-                 </div>
-               </div>
-               <div className="col-lg-2-5">
-                 <div className="ship_stat p-3 mx-1">
-                   <Skeleton
-                     variant="rectangle"
-                     width={"60%"}
-                     height={80}
-                     sx={{
-                       fontSize: "1rem",
-                       margin: "0 auto",
-                       bgcolor: "grey.300",
-                     }}
-                   />
-                   <h2>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </h2>
-                   <p>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </p>
-                 </div>
-               </div>
-               <div className="col-lg-2-5">
-                 <div className="ship_stat p-3 mx-1">
-                   <Skeleton
-                     variant="rectangle"
-                     width={"60%"}
-                     height={80}
-                     sx={{
-                       fontSize: "1rem",
-                       margin: "0 auto",
-                       bgcolor: "grey.300",
-                     }}
-                   />
-                   <h2>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </h2>
-                   <p>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </p>
-                 </div>
-               </div>
-               <div className="col-lg-2-5">
-                 <div className="ship_stat p-3 mx-1">
-                   <Skeleton
-                     variant="rectangle"
-                     width={"60%"}
-                     height={80}
-                     sx={{
-                       fontSize: "1rem",
-                       margin: "0 auto",
-                       bgcolor: "grey.300",
-                     }}
-                   />
-                   <h2>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </h2>
-                   <p>
-                     <Skeleton
-                       variant="text"
-                       width={"60%"}
-                       height={20}
-                       sx={{
-                         fontSize: "1rem",
-                         margin: "0 auto",
-                         bgcolor: "grey.300",
-                       }}
-                     />
-                   </p>
-                 </div>
-               </div>
-             </div>
+              <div className="row justify-content-center align-items-center column-gap-sm-3">
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <Skeleton
+                      variant="rectangle"
+                      width={"60%"}
+                      height={80}
+                      sx={{
+                        fontSize: "1rem",
+                        margin: "0 auto",
+                        bgcolor: "grey.300",
+                      }}
+                    />
+                    <h2>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </h2>
+                    <p>
+                      <Skeleton
+                        variant="text"
+                        width={"60%"}
+                        height={20}
+                        sx={{
+                          fontSize: "1rem",
+                          margin: "0 auto",
+                          bgcolor: "grey.300",
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div className="row justify-content-center align-items-center column-gap-sm-3">
-                <div className="col-lg-2-5">
+                <div className="col-lg-2">
                   <div className="ship_stat p-3 mx-1">
                     <img src="\assets\box.png" alt="" />
                     <h2>{totalParcels.length}</h2>
                     <p>Total Parcels</p>
                   </div>
                 </div>
-                <div className="col-lg-2-5">
-                  <div className="ship_stat p-3 mx-1">
-                    <img src="\assets\delivery-truck.png" alt="" />
-                    <h2>{deliveredParcels.length}</h2>
-                    <p>Delivered</p>
-                  </div>
-                </div>
-                <div className="col-lg-2-5">
+                <div className="col-lg-2">
                   <div className="ship_stat p-3 mx-1">
                     <img src="\assets\reload.png" alt="" />
                     <h2>{inTransitParcels.length}</h2>
                     <p>In Transit</p>
                   </div>
                 </div>
-                <div className="col-lg-2-5">
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\waiting.png" alt="" />
+                    <h2>{pendingParcels.length}</h2>
+                    <p>Pending</p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
+                  <div className="ship_stat p-3 mx-1">
+                    <img src="\assets\delivery-truck.png" alt="" />
+                    <h2>{deliveredParcels.length}</h2>
+                    <p>Delivered</p>
+                  </div>
+                </div>
+                <div className="col-lg-2">
                   <div className="ship_stat p-3 mx-1">
                     <img src="\assets\restart.png" alt="" />
                     <h2>{returnedParcels.length}</h2>
                     <p>Returned</p>
                   </div>
                 </div>
-                <div className="col-lg-2-5">
+                <div className="col-lg-2">
                   <div className="ship_stat p-3 mx-1">
                     <img src="\assets\prohibition.png" alt="" />
                     <h2>{cancelledParcels.length}</h2>
                     <p>Cancelled</p>
                   </div>
                 </div>
+                
               </div>
             )}
 
