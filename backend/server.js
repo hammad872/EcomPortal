@@ -383,7 +383,7 @@ app.patch("/changestatus", async (req, res) => {
 
   try {
     // Validate newStatus
-    if (!["Delivered", "Returned", "Cancelled"].includes(newStatus)) {
+    if (!["Delivered", "Returned", "Cancelled", "In Transit", "Confirmation Pending"].includes(newStatus)) {
       return res.status(400).json({ error: "Invalid status" });
     }
 
