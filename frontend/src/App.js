@@ -12,7 +12,6 @@ import ProductTable from "./components/ProductTable";
 import FindShip from "./components/FindShip";
 import FindMultiShip from "./components/FindMultiShip";
 import ChangeStatus from "./components/ChangeStatus";
-import FileUploadComponent from "./components/FileUploadComponent";
 import FileDownloadComponent from "./components/FileDownloadComponent";
 import UploadInvoiceCloud from "./components/UploadInvoiceCloud";
 

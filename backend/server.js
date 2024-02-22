@@ -501,7 +501,7 @@ app.patch("/editproduct/:id", async (req, res) => {
     const product = await ProductModel.findByIdAndUpdate(
       productId,
       { productTitle, sourcing },
-      { new: true } // To return the updated document
+      { new: true }
     );
 
     if (!product) {
@@ -521,30 +521,97 @@ fetchAndUpdateOrdersToShipmentOstro();
 
 app.get("/shopify", async (req, res) => {
   try {
-    // Construct the URL for fetching orders from Shopify API
+
     const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json?status=closed`;
 
-    // Construct authentication headers
+
     const authHeaders = {
       "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_OSTRO,
     };
 
-    // Make GET request to fetch orders
+
     const response = await axios.get(url, {
       headers: authHeaders,
     });
 
-    // Extract orders from response data
+
     const orders = response.data.orders;
 
-    // Send fetched orders in the response
+
     res.json({ orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    // Send error response
+
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.get('/cloudinary/:folderPath', async (req, res) => {
+  const { folderPath } = req.params;
+
+  try {
+    const folderContents = await fetchFolderContents(folderPath);
+    res.json(folderContents);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+const fetchFolderContents = async (folderPath) => {
+  try {
+    const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources`;
+    const response = await axios.get(apiUrl, {
+      params: {
+        type: 'upload',
+        prefix: folderPath
+      },
+      auth: {
+        username: '563345587529758',
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
+      }
+    });
+
+    const resourceTypes = response.data.resource_types;
+
+    let allResources = [];
+
+
+    for (const resourceType of resourceTypes) {
+
+      const resources = await fetchResourcesOfType(folderPath, resourceType);
+
+      allResources = allResources.concat(resources);
+    }
+
+    return allResources;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+const fetchResourcesOfType = async (folderPath, resourceType) => {
+  try {
+    const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources/${resourceType}`;
+    const response = await axios.get(apiUrl, {
+      params: {
+        type: 'upload',
+        prefix: folderPath
+      },
+      auth: {
+        username: '563345587529758', 
+        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
+      }
+    });
+
+    return response.data.resources;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
