@@ -348,7 +348,7 @@ app.post("/upload-csv", async (req, res) => {
     const shipments = data.map((row) => {
       // Map CSV fields to Shipment fields
       const orderID = (clientSlug + row.Name).replace(/#/g, ""); // Remove '#' characters
-      const FinancialStatus = row["Fulfillment Status"] === "voided" ? "Cancelled" : "Confirmation Pending";
+      const FinancialStatus = row["Financial Status "] === "voided" ? "Cancelled" : "Confirmation Pending";
 
       return {
         orderID,
