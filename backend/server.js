@@ -42,9 +42,7 @@ const upload = multer({ storage });
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
 app.post("/upload", upload.single("file"), (req, res) => {
-  
   console.log("File uploaded:", req.file);
   res.status(200).send("File uploaded successfully");
 });
@@ -52,7 +50,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 app.get("/download/:filename", (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(__dirname, "uploads", filename);
-  
+
   res.download(filePath, (err) => {
     if (err) {
       console.error("Error downloading file:", err);
@@ -82,7 +80,9 @@ app.post("/login", async (req, res) => {
     if (user) {
       if (user.password === password) {
         const { password, client, ...userInfo } = user._doc; // Exclude password and client from response
-        res.status(200).json({ message: "Login success", user: { userInfo, client } });
+        res
+          .status(200)
+          .json({ message: "Login success", user: { userInfo, client } });
       } else {
         res.status(401).json({ error: "Incorrect password" });
       }
@@ -141,7 +141,7 @@ app.post("/addshipment", async (req, res) => {
 
     const slugName = selectedUser.slug || "";
 
-    const orderID = slugName + orderNumber; 
+    const orderID = slugName + orderNumber;
 
     const users = await EmployeeModel.find({ _id: { $in: userIds } });
 
@@ -349,12 +349,14 @@ app.post("/upload-csv", async (req, res) => {
       // Map CSV fields to Shipment fields
       const orderID = (clientSlug + row.Name).replace(/#/g, ""); // Remove '#' characters
 
-
       return {
         orderID,
         clientName: selectedClient,
         client: selectedClientId,
-        parcel: row["Financial Status"],
+        parcel:
+          row["Financial Status"] === "voided"
+            ? "Cancelled"
+            : "Confirmation Pending",
         productName: row["Lineitem name"],
         codAmount: row.Total,
         customerAddress: row["Billing Address1"],
@@ -363,7 +365,6 @@ app.post("/upload-csv", async (req, res) => {
         city: row["Shipping Province Name"],
         customerEmail: row["Email"],
         date: row["Fulfilled at"],
-        
       };
     });
 
@@ -385,7 +386,15 @@ app.patch("/changestatus", async (req, res) => {
 
   try {
     // Validate newStatus بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
-    if (!["Delivered", "Returned", "Cancelled", "In Transit", "Confirmation Pending"].includes(newStatus)) {
+    if (
+      ![
+        "Delivered",
+        "Returned",
+        "Cancelled",
+        "In Transit",
+        "Confirmation Pending",
+      ].includes(newStatus)
+    ) {
       return res.status(400).json({ error: "Invalid status" });
     }
 
@@ -405,7 +414,6 @@ app.patch("/changestatus", async (req, res) => {
 app.get("/totalcodamount", async (req, res) => {
   try {
     const shipments = await ShipmentModel.find();
-
 
     // Calculate total COD amount for all shipments
     const totalCODAmount = shipments.reduce((acc, shipment) => {
@@ -435,8 +443,6 @@ app.get("/totalcodamount", async (req, res) => {
   }
 });
 
-
-
 // Assuming you have defined your Mongoose model for shipments as ShipmentModel
 
 app.get("/totalcodamountforclient/:clientID", async (req, res) => {
@@ -449,14 +455,16 @@ app.get("/totalcodamountforclient/:clientID", async (req, res) => {
 
     // Calculate total COD amount for all shipments of the client
     const totalCODAmount = shipments.reduce((acc, shipment) => {
-      const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+      const codAmount =
+        typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
       return acc + codAmount;
     }, 0);
 
     // Calculate total COD amount for cancelled shipments of the client
     const cancelledCODAmount = shipments.reduce((acc, shipment) => {
       if (shipment.parcel === "Cancelled") {
-        const codAmount = typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
+        const codAmount =
+          typeof shipment.codAmount === "number" ? shipment.codAmount : 0;
         return acc + codAmount;
       } else {
         return acc;
@@ -472,9 +480,6 @@ app.get("/totalcodamountforclient/:clientID", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
-
 
 app.delete("/deleteproduct/:id", async (req, res) => {
   const productId = req.params.id;
@@ -523,22 +528,17 @@ fetchAndUpdateOrdersToShipmentOstro();
 
 app.get("/shopify", async (req, res) => {
   try {
-
     const url = `https://${process.env.SHOP_STORE_URL_OSTRO}/admin/api/${process.env.SHOP_API_VERSION_OSTRO}/orders.json?status=closed`;
-
 
     const authHeaders = {
       "X-Shopify-Access-Token": process.env.SHOP_ACCESS_TOKEN_OSTRO,
     };
 
-
     const response = await axios.get(url, {
       headers: authHeaders,
     });
 
-
     const orders = response.data.orders;
-
 
     res.json({ orders });
   } catch (error) {
@@ -548,7 +548,7 @@ app.get("/shopify", async (req, res) => {
   }
 });
 
-app.get('/cloudinary/:folderPath', async (req, res) => {
+app.get("/cloudinary/:folderPath", async (req, res) => {
   const { folderPath } = req.params;
 
   try {
@@ -559,28 +559,25 @@ app.get('/cloudinary/:folderPath', async (req, res) => {
   }
 });
 
-
 const fetchFolderContents = async (folderPath) => {
   try {
     const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources`;
     const response = await axios.get(apiUrl, {
       params: {
-        type: 'upload',
-        prefix: folderPath
+        type: "upload",
+        prefix: folderPath,
       },
       auth: {
-        username: '563345587529758',
-        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
-      }
+        username: "563345587529758",
+        password: "6nMLYj7B7yPwIrZKiG6Oxe_OJHE",
+      },
     });
 
     const resourceTypes = response.data.resource_types;
 
     let allResources = [];
 
-
     for (const resourceType of resourceTypes) {
-
       const resources = await fetchResourcesOfType(folderPath, resourceType);
 
       allResources = allResources.concat(resources);
@@ -592,19 +589,18 @@ const fetchFolderContents = async (folderPath) => {
   }
 };
 
-
 const fetchResourcesOfType = async (folderPath, resourceType) => {
   try {
     const apiUrl = `https://api.cloudinary.com/v1_1/dus0ln30w/resources/${resourceType}`;
     const response = await axios.get(apiUrl, {
       params: {
-        type: 'upload',
-        prefix: folderPath
+        type: "upload",
+        prefix: folderPath,
       },
       auth: {
-        username: '563345587529758', 
-        password: '6nMLYj7B7yPwIrZKiG6Oxe_OJHE' 
-      }
+        username: "563345587529758",
+        password: "6nMLYj7B7yPwIrZKiG6Oxe_OJHE",
+      },
     });
 
     return response.data.resources;
@@ -612,8 +608,6 @@ const fetchResourcesOfType = async (folderPath, resourceType) => {
     throw error;
   }
 };
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
