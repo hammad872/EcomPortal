@@ -11,7 +11,7 @@ async function deleteShipments() {
         const collection = database.collection('shipments');
 
         // Define the query to match documents with orderID starting with 'GM'
-        const query = { orderID: /^GM/ }; // Use /^GM/ to match documents with orderID starting with 'GM'
+        const query = { orderID: /^LX/ }; // Use /^GM/ to match documents with orderID starting with 'GM'
 
         // Delete all documents matching the query
         const result = await collection.deleteMany(query);

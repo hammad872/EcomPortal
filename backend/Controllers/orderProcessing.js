@@ -9,10 +9,10 @@ setInterval(() => {
 }, 1000000000);
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentOstro()
-}, 100000);
+}, 1000000000);
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentLuci()
-}, 100000);
+}, 1000000000);
 
 
 
