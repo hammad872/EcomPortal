@@ -348,13 +348,13 @@ app.post("/upload-csv", async (req, res) => {
     const shipments = data.map((row) => {
       // Map CSV fields to Shipment fields
       const orderID = (clientSlug + row.Name).replace(/#/g, ""); // Remove '#' characters
-      const FinancialStatus = row["Financial Status "]
+
 
       return {
         orderID,
         clientName: selectedClient,
         client: selectedClientId,
-        parcel: FinancialStatus ,
+        parcel: row["Financial Status"],
         productName: row["Lineitem name"],
         codAmount: row.Total,
         customerAddress: row["Billing Address1"],
