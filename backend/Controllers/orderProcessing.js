@@ -6,7 +6,7 @@ require("dotenv").config();
 
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentGrov()
-}, 100000);
+}, 1000000000);
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentOstro()
 }, 100000);
