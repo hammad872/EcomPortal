@@ -5,11 +5,14 @@ import withReactContent from "sweetalert2-react-content";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Alert from "@mui/material/Alert";
-import { notification } from 'antd';
+
+
+
 
 const MySwal = withReactContent(Swal);
 
 const UploadInvoiceCloud = () => {
+
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState("");
   const [file, setFile] = useState(null);
@@ -34,14 +37,6 @@ const UploadInvoiceCloud = () => {
     fetchClients();
   }, []);
 
-  const openNotification = () => {
-    notification.success({
-      message: 'Invoice agayi hai teri',
-      description: 'Nofil ne teri invoice dali hai bhen k kuss',
-      duration: 0
-    });
-  };
-
   const handleClientChange = (event) => {
     setSelectedClient(event.target.value);
     setSelectClient(false)
@@ -51,6 +46,7 @@ const UploadInvoiceCloud = () => {
     setFile(event.target.files[0]);
     setFileUploaded(true);
   };
+
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -77,7 +73,7 @@ const UploadInvoiceCloud = () => {
       });
       return;
     }
-    
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', 'yo0fksdr'); // Include the upload preset
@@ -91,7 +87,6 @@ const UploadInvoiceCloud = () => {
       const data = await response.json();
       setUploadResult(data);
       setFileUploaded(true);
-      openNotification();
       MySwal.fire({
         icon: 'success',
         title: 'Success!',
