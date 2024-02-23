@@ -129,7 +129,7 @@ const Table = () => {
 
     fetchData();
 
-    const intervalId = setInterval(fetchData, 10);
+    const intervalId = setInterval(fetchData, 1000);
 
     return () => clearInterval(intervalId);
   }, [userData.userInfo._id, userData.userInfo.role]);
