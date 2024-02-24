@@ -189,10 +189,8 @@ const FindShip = () => {
       <div className="container">
         <Header />
         <div className="row">
-          <div className="col-lg-3">
-            <Navbar />
-          </div>
-          <div className="col-lg-8 py-5">
+          
+          <div className="col-lg-10 py-5">
             <div className="row">
               <div className="col-lg-12">
                 <div className="auth-div mt-5">

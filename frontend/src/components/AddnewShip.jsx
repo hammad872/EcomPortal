@@ -5,7 +5,7 @@ import Header from "./Header";
 import Swal from "sweetalert2";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-
+import Drawer from "@mui/material/Drawer";
 
 const animatedComponents = makeAnimated();
 
@@ -39,12 +39,15 @@ const AddnewShip = () => {
       let userDataLocalParsed = JSON.parse(userDataLocal);
       let userId = userDataLocalParsed.userInfo._id;
 
-      const response = await axios.post("https://ecomapi-owct.onrender.com/addshipment", {
-        ...formData,
-        userIds: [userId],
-        orderID: `${formData.orderNumber}${formData.slugName}`,
-        productName: productName, // Include productName in the request
-      });
+      const response = await axios.post(
+        "https://ecomapi-owct.onrender.com/addshipment",
+        {
+          ...formData,
+          userIds: [userId],
+          orderID: `${formData.orderNumber}${formData.slugName}`,
+          productName: productName, // Include productName in the request
+        }
+      );
       console.log("Form data submitted:", response.data);
 
       if (response.status === 200) {
@@ -131,24 +134,26 @@ const AddnewShip = () => {
   const FilteredAdmin = employeeName.filter((item) => item.role === "Client");
   // const filteredEmployees = employeeName.filter((item) => item.client === formData.client);
   // console.log(getSlug)
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   return (
     <>
       <div className="container">
         <Header />
         <div className="row">
-          <div className="col-lg-2">
-            <Navbar />
-          </div>
-          <div className="col-lg-10 p-5 ">
+          <div className={open ? "col-lg-10" : "col-lg-12"}>
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                 borderRadius: "10px",
                 padding: "45px",
-                backgroundColor:"white"
+                backgroundColor: "white",
               }}
             >
-            <form ref={formRef} onSubmit={handleSubmit}>
+              <form ref={formRef} onSubmit={handleSubmit}>
                 <div className="space-y-12">
                   <h3>Shipment Entry</h3>
                   <div className="border-b border-gray-900/10 pb-12">
@@ -233,7 +238,7 @@ const AddnewShip = () => {
                               );
                             })}
                           </div>
-                          <input  
+                          <input
                             type="number"
                             name="orderNumber"
                             id="orderNumber"
@@ -266,7 +271,9 @@ const AddnewShip = () => {
                             label: e.productTitle,
                           }))}
                           onChange={(selectedOptions) => {
-                            const selectedProducts = selectedOptions.map((option) => option.value);
+                            const selectedProducts = selectedOptions.map(
+                              (option) => option.value
+                            );
                             setProductName(selectedProducts);
                             // Further processing or setting state with the array of objects
                             console.log(selectedProducts);

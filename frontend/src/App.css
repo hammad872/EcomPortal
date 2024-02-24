@@ -872,7 +872,7 @@ form h3 {
   font-size:500%;
   position: absolute;
   top:0rem;
-  right:-0.3rem;
+  right:50px;
   opacity: .16;
 }
 
@@ -1071,3 +1071,68 @@ form h3 {
   margin-top: 5px;
   color: #ff6262;
 }
+  .col-lg-10, .col-lg-12 {
+    transition: width 0.3s ease;
+  }
+  
+
+/* bar button css <> */
+
+/* 
+Button insperation by @ke1221
+Menu icon transofmation insperation by @Ali-Tahmazi99
+*/
+.bar-btn .menuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 13%;
+  color: #090909;
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 0.5em;
+  background: #ff6262;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+}
+
+.bar-btn .menuButton:hover {
+  border: 1px solid white;
+}
+
+.bar-btn .menuButton:active {
+  color: #fff;
+}
+
+.bar-btn input[type = "checkbox"] {
+  -webkit-appearance: none;
+  display: none;
+  visibility: hidden;
+}
+
+.bar-btn .menuButton span {
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 100px;
+  transition: 0.3s ease;
+}
+
+.bar-btn input[type]:checked ~ span.top {
+  transform: translateY(290%)rotate(45deg);
+  width: 40px;
+}
+
+.bar-btn input[type]:checked ~ span.bot {
+  transform: translateY(-270%) rotate(-45deg);
+  width: 40px;
+  box-shadow: 0 0 10px #495057;
+}
+
+.bar-btn input[type]:checked ~ span.mid {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+/* bar button css </> */

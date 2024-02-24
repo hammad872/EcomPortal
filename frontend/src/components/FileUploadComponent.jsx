@@ -95,10 +95,8 @@ const FileUploadComponent = () => {
       <div className="container">
         <Header />
         <div className="row">
-          <div className="col-lg-2">
-            <Navbar />
-          </div>
-          <div className="col-lg-10 p-5">
+          
+          <div className="col-lg-12 p-5">
             <div
               style={{
                 padding: "20px",

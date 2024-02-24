@@ -91,10 +91,7 @@ const ImportShip = () => {
       <Header /> {/* Include your Header component */}
       <div className="container">
         <div className="row">
-          <div className="col-lg-2">
-            <Navbar /> {/* Include your Navbar component */}
-          </div>
-          <div className="col-lg-10 p-5">
+          <div className="col-lg-12 p-5">
             <div
               style={{
                 padding: "20px",

@@ -70,10 +70,8 @@ const FileDownloadComponent = () => {
     <div className="container">
       <Header />
       <div className="row">
-        <div className="col-lg-2">
-          <Navbar />
-        </div>
-        <div className="col-lg-10 p-5">
+        
+        <div className="col-lg-12 p-5">
           <div className="auth-div mt-5">
             <h3 className="invoice-heading mb-5">Download Invoice</h3>
             <div style={{ height: 400, width: "75%" }}>

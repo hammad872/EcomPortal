@@ -67,10 +67,11 @@ const Navbar = () => {
     userData.userInfo.role,
     userData.userInfo.slug,
   ]);
+  
   return (
     <>
       <header />
-      <div className="container">
+      <div className="container my-navbar">
         <aside className="close">
           <a href="/dashboard">
             <img src="\assets\logo.png" alt="" />

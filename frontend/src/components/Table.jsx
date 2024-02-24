@@ -240,7 +240,7 @@ const Table = () => {
   // Now you can access properties like clientName
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="mt-4">
         <div className="custom-tabs">
           <button

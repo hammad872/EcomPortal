@@ -1,5 +1,7 @@
 import React, { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import Drawer from "@mui/material/Drawer";
 
 const Header = () => {
   const [divVisible, setDivVisible] = useState(false);
@@ -30,12 +32,37 @@ const Header = () => {
     setUser_email(userData.userInfo.link);
     setUser_slug(userData.userInfo.slug)
   }, [userData.userInfo.username,userData.userInfo.email,userData.userInfo.link,userData.userInfo.slug]); // The empty dependency array ensures this effect runs only once
+  const [open, setOpen] = useState(false);
 
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
   return (
     <header className="dashboard-header">
-      <div className="d-flex justify-content-end pt-2 px-3">
-        <div className="text-right user_div mx-2">
+      <div className="row">
+      <div className="col-lg-2">
+            {/* Navbar with collapsible functionality */}
+            <Drawer open={open} onClose={toggleDrawer(false)}>
+              <Navbar />
+            </Drawer>
+          </div>
+      </div>
+      <div className="row pt-2 px-3">
+      <button className="col-auto bar-btn thm-btn" onClick={toggleDrawer(true)}>
+                <label for="check" class="menuButton">
+                  <input
+                    id="check"
+                    type="checkbox"
+                    checked={open ? true : false}
+                  />
+                  <span class="top"></span>
+                  <span class="mid"></span>
+                  <span class="bot"></span>
+                </label>
+              </button>
+              <div className="col"></div>
+        <div className=" col-auto text-right user_div mx-2">
           <div className="user_profile_icon" onClick={handleAccountCard}>
             {innerSlug}
           </div>
@@ -63,7 +90,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="notification-container">
+        <div className="col-auto notification-container">
           <div className="text-right bell-noti mx2">
             <button className="button">
               <svg viewBox="0 0 448 512" className="bell">

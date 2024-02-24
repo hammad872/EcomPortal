@@ -44,10 +44,7 @@ const AddProduct = () => {
       <div className="container">
         <Header />
         <div className="row">
-          <div className="col-lg-2">
-            <Navbar />
-          </div>
-          <div className="col-lg-10 p-5" style={{}}>
+          <div className="col-lg-12 p-5" style={{}}>
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
