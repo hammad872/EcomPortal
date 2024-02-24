@@ -280,7 +280,6 @@ const Table = () => {
             Cancelled
           </button>
         </div>
-
         {activeTab === "tab1" && (
           <div>
             <CSVLink
@@ -504,7 +503,6 @@ const Table = () => {
             </Dialog>
           </div>
         )}
-
         {activeTab === "tab2" && (
           <div>
             <CSVLink
@@ -726,7 +724,6 @@ const Table = () => {
             </Dialog>
           </div>
         )}
-
         {activeTab === "tab3" && (
           <div>
             <CSVLink
@@ -948,7 +945,6 @@ const Table = () => {
             </Dialog>
           </div>
         )}
-
         {activeTab === "tab4" && (
           <div>
             <CSVLink
@@ -1314,7 +1310,7 @@ const Table = () => {
               onClick={() =>
                 setCSVData((prevCSVData) => ({
                   ...prevCSVData,
-                  tab5: generateCSVData(tableData.tab5),
+                  tab5: generateCSVData(tableData.tab6),
                 }))
               }
               data={csvData.tab5}
