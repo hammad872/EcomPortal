@@ -6,13 +6,13 @@ require("dotenv").config();
 
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentGrov()
-}, 1000);
+}, 10000);
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentOstro()
-}, 1000);
+}, 10000);
 setInterval(() => {
   fetchAndUpdateOrdersToShipmentLuci()
-}, 1000);
+}, 10000);
 
 
 
