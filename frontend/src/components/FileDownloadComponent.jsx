@@ -15,7 +15,7 @@ const FileDownloadComponent = () => {
   useEffect(() => {
     const fetchFolderContents = async () => {
       try {
-        const apiUrl = `https://ecomapi-owct.onrender.com/cloudinary/${folderPath}`;
+        const apiUrl = `https://my-node-app-nsih.onrender.com/cloudinary/${folderPath}`;
         const response = await axios.get(apiUrl);
         setFolderContents(response.data);
         console.log(response.data);

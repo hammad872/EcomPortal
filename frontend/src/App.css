@@ -482,6 +482,7 @@ aside button {
 nav li {
   transition: 0.3s;
 }
+/* Default styles */
 .custom-button {
   cursor: pointer;
   position: relative;
@@ -529,6 +530,26 @@ nav li {
   justify-content: center;
   gap: 1rem;
 }
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+  .custom-button {
+    padding: 4px 30px;
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .custom-button {
+    padding: 3px 20px;
+    font-size: 14px;
+  }
+
+  .custom-tabs {
+    flex-wrap: wrap;
+  }
+}
+
 
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {

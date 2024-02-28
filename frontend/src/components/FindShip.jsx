@@ -19,7 +19,7 @@ const FindShip = () => {
 
   const fetchShipments = async () => {
     try {
-      const response = await axios.get("https://ecomapi-owct.onrender.com/getshipments");
+      const response = await axios.get("https://my-node-app-nsih.onrender.com/getshipments");
 
       if (!response.data || !Array.isArray(response.data)) {
         throw new Error("Invalid response format");

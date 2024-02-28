@@ -24,7 +24,7 @@ const UploadInvoiceCloud = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get("https://ecomapi-owct.onrender.com/getregister");
+        const response = await axios.get("https://my-node-app-nsih.onrender.com/getregister");
         const FilteredAdmin = response.data.filter(
           (item) => item.role === "Client"
         );

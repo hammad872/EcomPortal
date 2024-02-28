@@ -4,7 +4,7 @@
 // const Page = () => {
 //     const sendDataToMongoDB = async (data) => {
 //         try {
-//           const response = await fetch('https://ecomapi-owct.onrender.com/upload', {
+//           const response = await fetch('https://my-node-app-nsih.onrender.com/upload', {
 //             method: 'POST',
 //             headers: {
 //               'Content-Type': 'application/json',

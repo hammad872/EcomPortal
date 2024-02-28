@@ -40,7 +40,7 @@ const AddnewShip = () => {
       let userId = userDataLocalParsed.userInfo._id;
 
       const response = await axios.post(
-        "https://ecomapi-owct.onrender.com/addshipment",
+        "https://my-node-app-nsih.onrender.com/addshipment",
         {
           ...formData,
           userIds: [userId],
@@ -111,7 +111,7 @@ const AddnewShip = () => {
 
   useEffect(() => {
     axios
-      .get("https://ecomapi-owct.onrender.com/getregister")
+      .get("https://my-node-app-nsih.onrender.com/getregister")
       .then((employeeNameResponse) => {
         setEmployeeName(employeeNameResponse.data);
       })
@@ -122,7 +122,7 @@ const AddnewShip = () => {
 
   useEffect(() => {
     axios
-      .get("https://ecomapi-owct.onrender.com/getproducts")
+      .get("https://my-node-app-nsih.onrender.com/getproducts")
       .then((ProductData) => {
         setProductList(ProductData.data);
       })

@@ -42,7 +42,7 @@ const ImportShip = () => {
   const sendDataToMongoDB = () => {
     // Modify the API endpoint accordingly
     axios
-      .post("https://ecomapi-owct.onrender.com/upload-csv", {
+      .post("https://my-node-app-nsih.onrender.com/upload-csv", {
         data: csvData,
         client: selectedClient.clientId,
         clientName: selectedClient.clientName,
@@ -71,7 +71,7 @@ const ImportShip = () => {
   // Modify the API endpoint accordingly
   useEffect(() => {
     axios
-      .get("https://ecomapi-owct.onrender.com/getregister")
+      .get("https://my-node-app-nsih.onrender.com/getregister")
       .then((response) => {
         const clientOptions = response.data
           .filter((item) => item.role === "Client")

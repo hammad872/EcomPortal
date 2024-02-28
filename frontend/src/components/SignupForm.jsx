@@ -32,7 +32,7 @@ export const SignupForm = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   axios.post('https://ecomapi-owct.onrender.com/register', {username, email, password, cnic, phone, link})
+  //   axios.post('https://my-node-app-nsih.onrender.com/register', {username, email, password, cnic, phone, link})
   //     .then(result => {console.log(result)
   //       navigate('/')
   //       window.location.reload();
@@ -44,7 +44,7 @@ export const SignupForm = () => {
     e.preventDefault();
 
     axios
-      .post("https://ecomapi-owct.onrender.com/register", {
+      .post("https://my-node-app-nsih.onrender.com/register", {
         username,
         email,
         password,

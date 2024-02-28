@@ -20,10 +20,10 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecomapi-owct.onrender.com/getshipments"
+          "https://my-node-app-nsih.onrender.com/getshipments"
         );
         const response2 = await axios.get(
-          "https://ecomapi-owct.onrender.com/totalcodamount"
+          "https://my-node-app-nsih.onrender.com/totalcodamount"
         );
         const data = response.data;
         const dataForCOD = response2.data;
@@ -34,7 +34,7 @@ const Dashboard = () => {
           setTotalCODAmount(dataForCOD.totalCODAmount);
         } else {
           const myResponse = await axios.get(
-            `https://ecomapi-owct.onrender.com/totalcodamountforclient/${userIDForData}`
+            `https://my-node-app-nsih.onrender.com/totalcodamountforclient/${userIDForData}`
           );
           setTotalCODAmount(
             JSON.stringify(myResponse.data.totalCODAmountForClient)
