@@ -156,20 +156,32 @@
 .auth-div .show-pwd-div i#pwdClose {
   display: none;
 }
+/* Media Queries */
 @media only screen and (max-width: 768px) {
   .auth-div {
     padding: 20px;
   }
   
   .auth-div img {
-    width: 60%;
+    width: 80%; /* Adjusted width for smaller screens */
+    max-width: 200px; /* Added max-width for better scaling */
   }
   
   .auth-div .form {
-    width: 80%;
+    width: 90%; /* Adjusted width for smaller screens */
     padding: 20px;
   }
+
+  .auth-div .inputForm {
+    height: 45px; /* Reduced height for smaller screens */
+  }
+
+  .auth-div .button-submit {
+    height: 45px; /* Reduced height for smaller screens */
+    font-size: 14px; /* Adjusted font size for smaller screens */
+  }
 }
+
 body {
   padding: 0;
   margin: 0;
