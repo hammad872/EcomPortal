@@ -74,7 +74,9 @@ const Table = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const shipmentResponse = await axios.get("https://my-node-app-nsih.onrender.com/getshipments");
+        const shipmentResponse = await axios.get(
+          "https://my-node-app-nsih.onrender.com/getshipments"
+        );
         const data = shipmentResponse.data;
         const userIDForData = userData.userInfo._id;
         const isAdmin = userData.userInfo.role;
@@ -116,7 +118,8 @@ const Table = () => {
             isAdmin === "Client"
               ? data.filter(
                   (item) =>
-                    item.parcel === "Confirmation Pending" && item.client === userIDForData
+                    item.parcel === "Confirmation Pending" &&
+                    item.client === userIDForData
                 )
               : data.filter((item) => item.parcel === "Confirmation Pending"),
         });
@@ -238,7 +241,8 @@ const Table = () => {
   // console.log(parsedData);
 
   // Now you can access properties like clientName
-
+  const userIDForData = userData.userInfo._id;
+  const isAdmin = userData.userInfo.role;
   return (
     <div className="container-fluid">
       <div className="mt-4">
@@ -303,97 +307,94 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                (
-                  <table
-                    style={{
-                      width: "100%",
-                      border: "2.5px solid #ccc",
-                    }}
-                  >
-                    <tr className="px-3">
-                      &nbsp;
-                      <div className="row">
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                <table
+                  style={{
+                    width: "100%",
+                    border: "2.5px solid #ccc",
+                  }}
+                >
+                  <tr className="px-3">
+                    &nbsp;
+                    <div className="row">
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                    <tr className="px-3">
-                    
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                  </table>
-                )
-              ) :  (
+                    </div>
+                  </tr>
+
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                </table>
+              ) : (
                 <DataGrid
                   rows={tableData.tab1}
                   columns={columns}
@@ -401,7 +402,6 @@ const Table = () => {
                   onCellClick={handleCellClick}
                   rowsPerPageOptions={[5]}
                 />
-                
               )}
             </div>
 
@@ -487,15 +487,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
@@ -526,97 +527,94 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                (
-                  <table
-                    style={{
-                      width: "100%",
-                      border: "2.5px solid #ccc",
-                    }}
-                  >
-                    <tr className="px-3">
-                      &nbsp;
-                      <div className="row">
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                <table
+                  style={{
+                    width: "100%",
+                    border: "2.5px solid #ccc",
+                  }}
+                >
+                  <tr className="px-3">
+                    &nbsp;
+                    <div className="row">
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                    <tr className="px-3">
-                    
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                  </table>
-                )
-              ) :  (
+                    </div>
+                  </tr>
+
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                </table>
+              ) : (
                 <DataGrid
                   rows={tableData.tab2}
                   columns={columns}
@@ -708,15 +706,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
@@ -747,97 +746,94 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                (
-                  <table
-                    style={{
-                      width: "100%",
-                      border: "2.5px solid #ccc",
-                    }}
-                  >
-                    <tr className="px-3">
-                      &nbsp;
-                      <div className="row">
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                <table
+                  style={{
+                    width: "100%",
+                    border: "2.5px solid #ccc",
+                  }}
+                >
+                  <tr className="px-3">
+                    &nbsp;
+                    <div className="row">
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                    <tr className="px-3">
-                    
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                  </table>
-                )
-              ) :  (
+                    </div>
+                  </tr>
+
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                </table>
+              ) : (
                 <DataGrid
                   rows={tableData.tab3}
                   columns={columns}
@@ -929,15 +925,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
@@ -968,96 +965,93 @@ const Table = () => {
               className="mt-4"
             >
               {loading ? (
-                (
-                  <table
-                    style={{
-                      width: "100%",
-                      border: "2.5px solid #ccc",
-                    }}
-                  >
-                    <tr className="px-3">
-                      &nbsp;
-                      <div className="row">
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
-                        <div className="col-lg-2 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                <table
+                  style={{
+                    width: "100%",
+                    border: "2.5px solid #ccc",
+                  }}
+                >
+                  <tr className="px-3">
+                    &nbsp;
+                    <div className="row">
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                    <tr className="px-3">
-                    
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                      <div className="col-lg-2 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                    </tr>
-                    <tr className="px-3">
-                      <div className="row">
-                        <div className="col-lg-12 px-5">
-                          <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
-                          <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
-                        </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
                       </div>
-                      &nbsp;
-                    </tr>
-                  </table>
-                )
+                    </div>
+                  </tr>
+
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                  </tr>
+                  <tr className="px-3">
+                    <div className="row">
+                      <div className="col-lg-12 px-5">
+                        <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
+                        <Skeleton variant="text" sx={{ fontSize: "0.5rem" }} />
+                      </div>
+                    </div>
+                    &nbsp;
+                  </tr>
+                </table>
               ) : (
                 <DataGrid
                   rows={tableData.tab4}
@@ -1150,15 +1144,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
@@ -1288,15 +1283,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
@@ -1426,15 +1422,16 @@ const Table = () => {
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                  <span className="text-success fw-bold">Edit</span>
-                </Button>
-                <Button
-                  onClick={() => handleDeleteShipment(parsedData.id)}
-                  color="secondary"
-                >
-                  <span className="text-danger fw-bold">Delete</span>
-                </Button>
+                <div>
+                  {isAdmin === "Admin" && ( // Only render the button if isAdmin is "Admin"
+                    <Button
+                      onClick={() => handleDeleteShipment(parsedData.id)}
+                      color="secondary"
+                    >
+                      <span className="text-danger fw-bold">Delete</span>
+                    </Button>
+                  )}
+                </div>
                 <Button onClick={handleCloseDialog} color="primary">
                   <span className="text-primary fw-bold">Close</span>
                 </Button>
