@@ -79,7 +79,7 @@ async function fetchAndUpdateOrdersToShipmentGrov() {
               city: order.shipping_address.city,
               client: "65cf5418727d403c7899792e",
               clientName: "grovmart",
-              productName: order.line_items.map((item) => item.name).join(", "),
+              productName: order.line_items.map(item => item.title).join(", "),
               customerEmail: order.email,
               customerAddress: order.shipping_address.address1,
               contactNumber: order.shipping_address.phone,
