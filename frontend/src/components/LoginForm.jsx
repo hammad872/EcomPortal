@@ -45,9 +45,7 @@ export const LoginForm = ({ setLoggedIn }) => {
 
       if (result.data.message === "Login success") {
         navigate("/dashboard");
-        let data = isEmail
-          ? { email: inputValue }
-          : { username: inputValue };
+        let data = isEmail ? { email: inputValue } : { username: inputValue };
         localStorage.setItem("loginToken", JSON.stringify(result.data.user));
         Swal.fire({
           icon: "success",
@@ -144,10 +142,14 @@ export const LoginForm = ({ setLoggedIn }) => {
                   </div>
                 </div>
                 {/* Button with loader */}
-                <button className="button-submit" disabled={isLoading}>
+                <button
+                  className="button-submit"
+                  disabled={isLoading}
+                  style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
+                >
                   {isLoading ? (
                     <div className="loader-container">
-                      <CircularProgress size={24} sx={{color:"white"}} />
+                      <CircularProgress size={24} sx={{ color: "white" }} />
                     </div>
                   ) : (
                     "Login"
