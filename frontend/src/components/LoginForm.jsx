@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import Swal from "sweetalert2";
-// import withReactContent from 'sweetalert2-react-content';
-
-// const MySwal = withReactContent(Swal);
 
 export const LoginForm = ({ setLoggedIn }) => {
   const showPwd = () => {
@@ -24,53 +22,56 @@ export const LoginForm = ({ setLoggedIn }) => {
   };
 
   const [password, setPassword] = useState("");
-  const [inputValue, setInputValue] = useState(""); // Single input for email or username
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Determine whether the input is an email or username
+    setIsLoading(true);
     const isEmail = inputValue.includes("@");
     const dataToSend = isEmail
       ? { email: inputValue, password }
       : { username: inputValue, password };
 
-    axios
-      .post("https://my-node-app-nsih.onrender.com/login", dataToSend)
-      .then((result) => {
-        console.log(result);
+    try {
+      const result = await axios.post(
+        "https://my-node-app-nsih.onrender.com/login",
+        dataToSend
+      );
 
-        if (result.data.message === "Login success") {
-          // Successful login, redirect to home
-          navigate("/dashboard");
-          
-          let data = isEmail ? { email: inputValue } : { username: inputValue };
-          localStorage.setItem("loginToken", JSON.stringify(result.data.user));
-          // console.log(localStorage.getItem("loginToken"));
-          Swal.fire({
-            icon: "success",
-            title: "Login Success",
-          });
-        } else {
-          // Handle other cases, e.g., incorrect password, user not found
-          console.log("Login failed:", result.data.error);
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed",
-            text: result.data.error,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+      console.log(result);
+
+      if (result.data.message === "Login success") {
+        navigate("/dashboard");
+        let data = isEmail
+          ? { email: inputValue }
+          : { username: inputValue };
+        localStorage.setItem("loginToken", JSON.stringify(result.data.user));
+        Swal.fire({
+          icon: "success",
+          title: "Login Success",
+        });
+      } else {
+        console.log("Login failed:", result.data.error);
         Swal.fire({
           icon: "error",
-          title: "Username Or Password is incorrect",
-          text: "Check Your Username Or Password!",
-          confirmButtonText: "Try Again !",
+          title: "Login Failed",
+          text: result.data.error,
         });
+      }
+    } catch (err) {
+      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: "Username Or Password is incorrect",
+        text: "Check Your Username Or Password!",
+        confirmButtonText: "Try Again !",
       });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -130,7 +131,11 @@ export const LoginForm = ({ setLoggedIn }) => {
                     id="togglePWD"
                     onClick={showPwd}
                   >
-                    <i className="fa fa-eye" aria-hidden="true" id="pwdOpen"></i>
+                    <i
+                      className="fa fa-eye"
+                      aria-hidden="true"
+                      id="pwdOpen"
+                    ></i>
                     <i
                       className="fa fa-eye-slash"
                       aria-hidden="true"
@@ -138,7 +143,16 @@ export const LoginForm = ({ setLoggedIn }) => {
                     ></i>
                   </div>
                 </div>
-                <button className="button-submit">Login</button>
+                {/* Button with loader */}
+                <button className="button-submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <div className="loader-container">
+                      <CircularProgress size={24} sx={{color:"white"}} />
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
+                </button>
               </form>
             </div>
           </div>
